@@ -26,4 +26,6 @@ if __name__ == '__main__':
     with app.app_context():
         # This line creates tables if they don't exist already.
         db.create_all()
-    app.run(debug=True)
+    host_ip = '172.30.1.97'
+    port = 5000
+    app.run(debug=True, host=host_ip, port=port)

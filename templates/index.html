@@ -211,7 +211,9 @@
             X
         </button>
     </div>
-    <iframe id="page-body" class="page-body" src="aktuelles.html"></iframe>
+    <iframe id="page-body" class="page-body" src="aktuelles"></iframe>
 </body>
 
-<script src="index.js"></script>
+<!--Use index.js from /static/-->
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+

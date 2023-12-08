@@ -72,10 +72,56 @@ def get_banner():
     return render_template('banner.html')
 
 # in your main.py or wherever you have your route definitions
-@main_bp.route('/banner', methods=['GET'])
+@main_bp.route('/banner', methods=['GET', 'POST'], endpoint='banner')
 def banner():
     return render_template('banner.html')
 
+@main_bp.route('/aktuelles')
+def aktuelles():
+    # Your view logic here
+    return render_template('aktuelles.html')
+
+@main_bp.route('/privates')
+def privates():
+    # Your view logic here
+    return render_template('privates.html')
+
+@main_bp.route('/cafe')
+def cafe():
+    # Your view logic here
+    return render_template('cafe.html')
+
+@main_bp.route('/learning')
+def learning():
+    # Your view logic here
+    return render_template('learning.html')
+
+@main_bp.route('/settings')
+def settings():
+    # Your view logic here
+    return render_template('settings.html')
+
+@main_bp.route('/logout')
+def logout():
+    # Your view logic here
+    return render_template('logout.html')
+
+@main_bp.route('/ihk_logo')
+def ihk_logo():
+    # return the picture
+    return render_template('logo.gif')
+
+@main_bp.route('/ihk_logo2')
+def ihk_logo2():
+    # return the picture
+    return render_template('logo2.jpg')
+
+
+@main_bp.route('/ihk', methods=['GET', 'POST'])
+def ihk():
+    """Redirect the user to the IHK Nordwest website."""
+
+    return redirect('https://www.ihk-nordwestfalen.de/')
 
 @main_bp.errorhandler(404)
 def page_not_found(e):

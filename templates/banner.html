@@ -14,27 +14,15 @@
 </style>
 
 <div class="banner">
-    <a target="_parent" href="https://ihk.de"><img src="/templates/logo.gif" title="ugly IHK Logo" class="ihk-button"></img></a>
+    <a target="_parent" href="{{ url_for('main.ihk') }}"><img src="{{ url_for('static', filename='logo2.jpg') }}" title="IHK Logo" class="ihk-button"></a>
     <div class="banner-navigator">
-        <button id="aktuelles-btn" class="navigation-button-base" style="left: 0;" onclick="window.top.location.href='/aktuelles'">
-            Aktuelles
-        </button>
-        <button id="privates-btn"  class="navigation-button-base" style="left: 25%;" onclick="window.top.location.href='/privates'">
-            Privat
-        </button>
-        <button id="cafe-btn"  class="navigation-button-base" style="left: 50%;" onclick="window.top.location.href='/cafe'">
-            Café
-        </button>
-        <button id="learning-btn"  class="navigation-button-base" style="left: 75%;" onclick="window.top.location.href='/learning'">
-            Lernen
-        </button>
+        <button id="aktuelles-btn" class="navigation-button-base" onclick="window.top.location.href='{{ url_for('main.aktuelles') }}'">Aktuelles</button>
+        <button id="privates-btn" class="navigation-button-base" onclick="window.top.location.href='{{ url_for('main.privates') }}'">Privat</button>
+        <button id="cafe-btn" class="navigation-button-base" onclick="window.top.location.href='{{ url_for('main.cafe') }}'">Café</button>
+        <button id="learning-btn" class="navigation-button-base" onclick="window.top.location.href='{{ url_for('main.learning') }}'">Lernen</button>
     </div>
-    <button id="settings-btn" class="settings-button-base" onclick="window.top.location.href='/settings'">
-        <span>&#9881;</span>
-    </button>
-    <button class="logout-button">
-        X
-    </button>
+    <button id="settings-btn" class="settings-button-base" onclick="window.top.location.href='{{ url_for('main.settings') }}'">&#9881;</button>
+    <button class="logout-button" onclick="window.top.location.href='{{ url_for('auth.logout') }}'">X</button>
 </div>
 
 <script>

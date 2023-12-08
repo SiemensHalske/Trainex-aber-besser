@@ -1,3 +1,4 @@
+import signal
 from flask import Flask
 from extensions import db, login_manager
 from blueprints.auth import auth_bp
@@ -22,10 +23,24 @@ def load_user(user_id):
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(main_bp)
 
+
+def signal_handler(signal, frame):
+    # Fetch the shortcut CTRL+ALT+^
+    print('You pressed Ctrl+{0}'.format(signal))
+    print('Exiting...')
+    exit(0)
+
+
 if __name__ == '__main__':
     with app.app_context():
         # This line creates tables if they don't exist already.
         db.create_all()
     host_ip = '0.0.0.0'
     port = 8000
+    """""
+    init the signal handler
+    Fetch the shortcut CTRL+ALT+'L'"""
+    trigger = signal.signal(signal.SIGINT, signal_handler)
+    print('Press Ctrl+{0} to exit'.format(trigger))
+    
     app.run(debug=True, host=host_ip, port=port)

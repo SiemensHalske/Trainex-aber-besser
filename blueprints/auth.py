@@ -17,6 +17,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
+            print("Login successful")
             user_id = user.get_UID(form.username.data, None)
             auth_token = generate_auth_token(user_id)
             session['auth_token'] = auth_token
@@ -25,7 +26,7 @@ def login():
         flash('Invalid username or password')
     print(form.errors)
     print(form.username.data)
-    print("Test")
+    print("Login failed")
     return render_template('login.html', form=form)
 
 def logout_user_token():

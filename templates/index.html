@@ -1,5 +1,5 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
 <style>
-    @import "banner";
     .page-body{
         position: absolute;
         width: 100%;
@@ -15,7 +15,15 @@
 
 <body style="font-family: Arial, Helvetica, sans-serif;">
     <script>
-        window.top.location.href="aktuelles";
+        window.top.location.href="/aktuelles";
     </script>
-    <iframe title="banner" id="banner" class="banner-frame" src="banner"></iframe>
+    <iframe title="banner" id="banner" class="banner-frame" src="{{ url_for('main.banner') }}"></iframe>
 </body>
+
+<script>
+    window.onmessage = function(e){
+        if(e.data == 'id'){
+            let banner = document.getElementById("banner").contentWindow.postMessage("index", "*");
+        }   
+    }
+</script>

@@ -1,5 +1,5 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
 <style>
-    @import "banner.css";
     .page-body{
         position: absolute;
         width: 100%;
@@ -9,7 +9,7 @@
         left: 0;
         bottom: 0;
         border: none;
-        background-color: blue;
+        background-color: green;
     }
 </style>
 
@@ -17,7 +17,7 @@
     <div class="page-body">
         Some Café stuff
     </div>
-    <iframe title="banner" id="banner" class="banner-frame" src="banner"></iframe>
+    <iframe title="banner" id="banner" class="banner-frame" src="{{ url_for('main.banner') }}"></iframe>
 </body>
 
 <script>

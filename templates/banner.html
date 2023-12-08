@@ -1,24 +1,35 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
 <style>
-    @import "banner.css";
+    .page-body{
+        position: absolute;
+        width: 100%;
+        height: 5000px;
+        top: 100px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        border: none;
+        background-color: green;
+    }
 </style>
 
 <div class="banner">
-    <a target="_parent" href="https://ihk.de"><img src="logo.gif" title="ugly IHK Logo" class="ihk-button"></img></a>
+    <a target="_parent" href="https://ihk.de"><img src="/templates/logo.gif" title="ugly IHK Logo" class="ihk-button"></img></a>
     <div class="banner-navigator">
-        <button id="aktuelles-btn" class="navigation-button-base" style="left: 0;" onclick="window.top.location.href='aktuelles.html'">
+        <button id="aktuelles-btn" class="navigation-button-base" style="left: 0;" onclick="window.top.location.href='/aktuelles'">
             Aktuelles
         </button>
-        <button id="privates-btn"  class="navigation-button-base" style="left: 25%;" onclick="window.top.location.href='privates.html'">
+        <button id="privates-btn"  class="navigation-button-base" style="left: 25%;" onclick="window.top.location.href='/privates'">
             Privat
         </button>
-        <button id="cafe-btn"  class="navigation-button-base" style="left: 50%;" onclick="window.top.location.href='cafe.html'">
+        <button id="cafe-btn"  class="navigation-button-base" style="left: 50%;" onclick="window.top.location.href='/cafe'">
             Café
         </button>
-        <button id="learning-btn"  class="navigation-button-base" style="left: 75%;" onclick="window.top.location.href='learning.html'">
+        <button id="learning-btn"  class="navigation-button-base" style="left: 75%;" onclick="window.top.location.href='/learning'">
             Lernen
         </button>
     </div>
-    <button id="settings-btn" class="settings-button-base" onclick="window.top.location.href='settings.html'">
+    <button id="settings-btn" class="settings-button-base" onclick="window.top.location.href='/settings'">
         <span>&#9881;</span>
     </button>
     <button class="logout-button">

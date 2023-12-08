@@ -67,6 +67,16 @@ def login():
 def login_success():
     return render_template('index.html')
 
+@main_bp.route('/get_banner', methods=['GET'])
+def get_banner():
+    return render_template('banner.html')
+
+# in your main.py or wherever you have your route definitions
+@main_bp.route('/banner', methods=['GET'])
+def banner():
+    return render_template('banner.html')
+
+
 @main_bp.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

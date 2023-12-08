@@ -2,7 +2,7 @@ from flask import Flask
 from extensions import db, login_manager
 from blueprints.auth import auth_bp
 from blueprints.main import main_bp
-from models import User
+from models import User, db
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev'
@@ -18,7 +18,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Register blueprints
+# Register blueprintsk
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(main_bp)
 
@@ -26,6 +26,6 @@ if __name__ == '__main__':
     with app.app_context():
         # This line creates tables if they don't exist already.
         db.create_all()
-    host_ip = '172.30.1.97'
-    port = 5000
+    host_ip = '0.0.0.0'
+    port = 8000
     app.run(debug=True, host=host_ip, port=port)

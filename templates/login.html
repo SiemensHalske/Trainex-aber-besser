@@ -9,13 +9,24 @@
 <body>
     <h1>Login</h1>
     
-    <form action="/login" method="post">
+    <form action="{{ url_for('auth.login') }}" method="post">
+        {% if form %}
+            {{ form.csrf_token }}
+            <!-- Other form related HTML -->
+        {% endif %}
+        
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        {% if form %}
+            {{ form.username(size=32) }}
+            <!-- Other form related HTML -->
+        {% endif %}
         
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        
+        {% if form %}
+            {{ form.password(size=32) }}
+            <!-- Other form related HTML -->
+        {% endif %}
+
         <button type="submit">Login</button>
     </form>
 </body>

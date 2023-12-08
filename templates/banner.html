@@ -1,0 +1,51 @@
+<style>
+    @import "banner.css";
+</style>
+
+<div class="banner">
+    <a target="_parent" href="https://ihk.de"><img src="logo.gif" title="ugly IHK Logo" class="ihk-button"></img></a>
+    <div class="banner-navigator">
+        <button id="aktuelles-btn" class="navigation-button-base" style="left: 0;" onclick="window.top.location.href='aktuelles.html'">
+            Aktuelles
+        </button>
+        <button id="privates-btn"  class="navigation-button-base" style="left: 25%;" onclick="window.top.location.href='privates.html'">
+            Privat
+        </button>
+        <button id="cafe-btn"  class="navigation-button-base" style="left: 50%;" onclick="window.top.location.href='cafe.html'">
+            Café
+        </button>
+        <button id="learning-btn"  class="navigation-button-base" style="left: 75%;" onclick="window.top.location.href='learning.html'">
+            Lernen
+        </button>
+    </div>
+    <button id="settings-btn" class="settings-button-base" onclick="window.top.location.href='settings.html'">
+        <span>&#9881;</span>
+    </button>
+    <button class="logout-button">
+        X
+    </button>
+</div>
+
+<script>
+    window.onmessage = function(e){
+        switch(e.data){
+            case 'aktuelles':
+                document.getElementById("aktuelles-btn").className = "navigation-button-selected";
+                break;
+            case 'privates':
+                document.getElementById("privates-btn").className = "navigation-button-selected";
+                break;
+            case 'cafe':
+                document.getElementById("cafe-btn").className = "navigation-button-selected";
+                break;
+            case 'learning':
+                document.getElementById("learning-btn").className = "navigation-button-selected";
+                break;
+            case 'settings':
+                document.getElementById("settings-btn").className = "settings-button-selected";
+                break;
+        }
+    }
+
+    window.top.postMessage("id", "*");
+</script>

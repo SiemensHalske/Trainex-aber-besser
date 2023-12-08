@@ -1,0 +1,150 @@
+.banner-frame{
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    top:0;
+    left: 0;
+    right: 0;
+    border: none;
+}
+
+.navigation-button-base{
+    background-color:transparent;
+    color: white;
+    border:none;
+    position:absolute;
+    font-size: 30px;
+    font-weight: bold; 
+    height: 100%;
+    width: 25%;
+    border-radius: 25px;
+}
+
+.navigation-button-base:hover{
+    background-color:rgb(125, 190, 215);
+}
+
+.navigation-button-base:active{
+    background-color:#46aad7;
+}
+
+.navigation-button-selected{
+    background-color:rgb(95, 180, 215);
+    color: white;
+    border-style: solid;
+    position:absolute;
+    font-size: 30px;
+    font-weight: bold; 
+    height: 100%;
+    width: 25%;
+    border-radius: 25px;
+}
+
+.navigation-button-selected:hover{
+    background-color:rgb(125, 190, 215);
+}
+
+.navigation-button-selected:active{
+    background-color:rgb(70, 170, 215);
+}
+
+.logout-button{
+    background-color: lightblue;
+    color: white;
+    border: none;
+    position:absolute;
+    right: 25px;
+    width:50px;
+    height:50px;
+    border-radius: 25px;
+    top: 25px;
+    font-size:30px;
+    font-weight: bold;
+}
+
+.logout-button:hover{
+    background-color:rgb(125, 191, 213);
+}
+
+.logout-button:active{
+    background-color:rgb(68, 176, 212);
+}
+
+.settings-button-base{
+    background-color: lightblue;
+    color: white;
+    border: none;
+    position:absolute;
+    right: 100px;
+    width:50px;
+    height:50px;
+    border-radius: 25px;
+    top: 25px;
+    font-size:30px;
+    font-weight: bold;
+    align-content: center;
+}
+
+.settings-button-base:hover{
+    background-color:rgb(125, 191, 213);
+}
+
+.settings-button-base:active{
+    background-color:rgb(68, 176, 212);
+}
+
+.settings-button-selected{
+    background-color: rgb(95, 180, 215);
+    color: white;
+    border-style: solid;
+    position:absolute;
+    right: 100px;
+    width:50px;
+    height:50px;
+    border-radius: 25px;
+    top: 25px;
+    font-size:30px;
+    font-weight: bold;
+    align-content: center;
+}
+
+.settings-button-selected:hover{
+    background-color:rgb(125, 191, 213);
+}
+
+.settings-button-selected:active{
+    background-color:rgb(68, 176, 212);
+}
+
+.ihk-button{
+    font-size: 30px;
+    font-weight: bold;
+    border:none;
+    position: absolute;
+    left: 25px;
+    height: 75px;
+    border-radius: 25px;
+    top: 12.5px;
+    text-align: center;
+}
+
+.banner{
+    background-color: rgb(53, 143, 176);
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    left: 0;
+    top: 0;
+}
+
+.banner-navigator{
+    background-color: lightblue;
+    position: absolute;
+    width: 800px;
+    left: 50%;
+    margin-left: -400px;
+    height: 50px;
+    border-radius: 25px;
+    top: 50%;
+    margin-top: -25px;
+}

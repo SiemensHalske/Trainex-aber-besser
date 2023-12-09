@@ -16,6 +16,9 @@ def login():
     print(f"Form: {form}")  # Debug print
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
+        print(f"User: {user}")
+        print(f"User: {user.username}")
+        print(f"User: {user.password_hash}")
         if user and user.check_password(form.password.data):
             print("Login successful")
             user_id = user.get_UID(form.username.data, None)

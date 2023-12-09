@@ -6,6 +6,7 @@ from blueprints.auth import auth_bp
 from blueprints.main import main_bp
 from models import User, db
 from sqlalchemy.orm import Session
+import os
 
 def generate_secret_key(length=24):
     # Generates a secret key
@@ -19,9 +20,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = generate_secret_key()
 app.config['SECURITY_PASSWORD_SALT'] = generate_salt()
 
-# C:\Users\Hendrik\Documents\Github\Trainex aber besser\database
-database = 'sqlite:///C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\database\\users.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = database
+# database/users.db
+database = 'database/users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.path.dirname(__file__), database)}'
 
 # Initialize extensions
 db.init_app(app)

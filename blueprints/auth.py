@@ -8,6 +8,7 @@ from flask import request
 from flask import current_app
 from itsdangerous import URLSafeTimedSerializer
 
+
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @auth_bp.route('/login', methods=['GET', 'POST'])

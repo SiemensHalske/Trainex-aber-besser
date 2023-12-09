@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user
 from forms.login_form import LoginForm
-from models import User
+from models import User, AuditLog
+from extensions import db
 from flask import session
 from functools import wraps
 from flask import request
@@ -10,6 +11,15 @@ from itsdangerous import URLSafeTimedSerializer
 
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+def set_audit_log(user_id, action):
+    print(f"AUDIT LOG - User ID: {user_id}")
+    audit_log = AuditLog()
+    audit_log.user_id = user_id
+    audit_log.action = action
+    db.session.add(audit_log)
+    db.session.commit()
+    print(f"AUDIT LOG - Action: {action}")
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -21,11 +31,14 @@ def login():
         print(f"User: {user.username}")
         print(f"User: {user.password_hash}")
         if user and user.check_password(form.password.data):
+            login_user(user)
             print("Login successful")
+            set_audit_log(user.id, 'login')
             user_id = user.get_UID(form.username.data, None)
             auth_token = generate_auth_token(user_id)
             session['auth_token'] = auth_token
-            login_user(user)
+            
+            
             return redirect(url_for('main.login_success'))
         flash('Invalid username or password')
     print(form.errors)

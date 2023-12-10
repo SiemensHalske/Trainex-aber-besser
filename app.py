@@ -13,13 +13,14 @@ from logging.handlers import RotatingFileHandler
 log_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\logs\\app.log'
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger("myapp")
-handler = RotatingFileHandler(log_path, maxBytes=10000000, backupCount=5)
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+def init_logging(name: str, log_path: str):
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger(name)
+    handler = RotatingFileHandler(log_path, maxBytes=10000000, backupCount=5)
+    handler.setLevel(logging.INFO)
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
 def generate_secret_key(length=24):
     # Generates a secret key
@@ -81,6 +82,31 @@ def signal_handler(signal, frame):
     print('You pressed Ctrl+{0}'.format(signal))
     print('Exiting...')
     exit(0)
+    
+
+def initialize_logging():
+    log_dict = {
+        'default': 'logs/default.log',
+        'app': 'logs/app.log',
+        'auth': 'logs/auth.log',
+        'main': 'logs/main.log',
+        'models': 'logs/models.log',
+        'extensions': 'logs/extensions.log',
+        'blueprints': 'logs/blueprints.log',
+        'database': 'logs/database.log',
+        'forms': 'logs/forms.log',
+        'utils': 'logs/utils.log',
+        'test': 'logs/test.log',
+        'config': 'logs/config.log',
+        'templates': 'logs/templates.log',
+        'static': 'logs/static.log',
+        'migrations': 'logs/migrations.log',
+        'logs': 'logs/logs.log',
+        'database': 'logs/database.log',
+    }
+    # Initialize logging
+    for key, value in log_dict.items():
+        init_logging(key+"_logger", value)
 
 
 if __name__ == '__main__':

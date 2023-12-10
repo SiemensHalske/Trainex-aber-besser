@@ -10,7 +10,7 @@ from flask import current_app
 from itsdangerous import URLSafeTimedSerializer
 import logging
 
-auth_logger = logging.getLogger("myapp")
+auth_logger = logging.getLogger("auth_logger")
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 

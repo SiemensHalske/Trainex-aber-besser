@@ -10,10 +10,12 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 
+log_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\logs\\app.log'
+
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("myapp")
-handler = RotatingFileHandler('logs/app.log', maxBytes=10000000, backupCount=5)
+handler = RotatingFileHandler(log_path, maxBytes=10000000, backupCount=5)
 handler.setLevel(logging.INFO)
 formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
 handler.setFormatter(formatter)

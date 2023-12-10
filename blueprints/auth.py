@@ -8,7 +8,9 @@ from functools import wraps
 from flask import request
 from flask import current_app
 from itsdangerous import URLSafeTimedSerializer
+import logging
 
+auth_logger = logging.getLogger("myapp")
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -23,6 +25,11 @@ def set_audit_log(user_id, action):
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    timestamp = request.headers.get('X-Forwarded-For', request.remote_addr)
+    user_ip = request.remote_addr
+    
+    auth_logger.info(f"Login attempt from {user_ip} at {timestamp}")
+       
     form = LoginForm()
     print(f"Form: {form}")  # Debug print
     if form.validate_on_submit():

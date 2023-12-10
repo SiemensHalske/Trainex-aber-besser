@@ -62,7 +62,7 @@ def logout_user_token():
 @auth_bp.route('/logout')
 def logout():
     logout_user_token()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('auth.login'))
 
 def token_required(f):
     @wraps(f)

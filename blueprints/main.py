@@ -87,13 +87,11 @@ def settings():
     # Your view logic here
     return render_template('settings.html')	
 
-@main_bp.route('/logout')
+@main_bp.route('/logout_deprecated')
 @token_required
 def logout():
-    u_id = get_session_id()
     # Your view logic here
     session.pop('auth_token', None)
-    auth_logger.info(f"User {u_id} logged out")
     return render_template('logout.html')
 
 @main_bp.route('/ihk_logo')

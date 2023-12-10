@@ -1,12 +1,23 @@
 import os
 import signal
-from flask import Flask
+from flask import Flask, request
 from extensions import db, login_manager
 from blueprints.auth import auth_bp
 from blueprints.main import main_bp
 from models import User, db
 from sqlalchemy.orm import Session
 import os
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger("myapp")
+handler = RotatingFileHandler('logs/app.log', maxBytes=10000000, backupCount=5)
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 def generate_secret_key(length=24):
     # Generates a secret key
@@ -33,6 +44,18 @@ def load_user(user_id):
     with app.app_context():
         session = Session(bind=db.engine)
         return session.get(User, int(user_id))
+    
+@app.before_request
+def before_request():
+    """
+    Log information about incoming requests for debugging purposes.
+    """
+    print("Incoming Request:")
+    print(f"Method: {request.method}")
+    print(f"Path: {request.path}")
+    print(f"Headers: {request.headers}")
+    print(f"Data: {request.get_data(as_text=True)}")
+    # You can add more information to log as needed
 
 @app.after_request
 def add_header(response):

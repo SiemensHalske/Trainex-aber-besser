@@ -231,4 +231,12 @@ def get_user_role():
 
 @main_bp.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html', error=e), 404
+
+@main_bp.errorhandler(405)
+def method_not_allowed(e):
+    return render_template('405.html', error=e), 405
+
+@main_bp.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html', error=e), 500

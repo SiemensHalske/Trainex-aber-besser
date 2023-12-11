@@ -7,7 +7,27 @@ from functools import wraps
 from flask import request
 
 from models import User
-from app import Config
+
+class Config:
+    log_dict = {
+        'default': 'logs/default.log',
+        'app': 'logs/app.log',
+        'auth': 'logs/auth.log',
+        'main': 'logs/main.log',
+        'models': 'logs/models.log',
+        'extensions': 'logs/extensions.log',
+        'blueprints': 'logs/blueprints.log',
+        'database': 'logs/database.log',
+        'forms': 'logs/forms.log',
+        'utils': 'logs/utils.log',
+        'test': 'logs/test.log',
+        'config': 'logs/config.log',
+        'templates': 'logs/templates.log',
+        'static': 'logs/static.log',
+        'migrations': 'logs/migrations.log',
+        'logs': 'logs/logs.log',
+        'database': 'logs/database.log',
+    }
 
 
 main_logger = logging.getLogger("main_logger")

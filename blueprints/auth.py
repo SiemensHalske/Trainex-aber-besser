@@ -44,6 +44,7 @@ def login():
             user_id = user.get_UID(form.username.data, None)
             auth_token = generate_auth_token(user_id)
             session['auth_token'] = auth_token
+            session['user_id'] = user_id
             
             
             return redirect(url_for('main.login_success'))

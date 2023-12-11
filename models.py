@@ -36,6 +36,9 @@ class User(UserMixin, db.Model):
     
     def get_email(self, user_id):
         return self.query.filter_by(id=user_id).first().email
+    
+    def get_user_role(self, user_id):
+        return self.query.filter_by(id=user_id).first().roles
 
 class UserRole(db.Model):
     id = db.Column(db.Integer, primary_key=True)

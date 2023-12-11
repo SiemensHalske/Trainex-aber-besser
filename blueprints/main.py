@@ -1,11 +1,13 @@
+import json
 import logging
-from flask import Blueprint, redirect, render_template, abort, url_for
+from flask import Blueprint, jsonify, redirect, render_template, abort, url_for
 from jinja2 import TemplateNotFound
 from flask import session
 from functools import wraps
 from flask import request
 
 from models import User
+from app import Config
 
 
 main_logger = logging.getLogger("main_logger")
@@ -111,52 +113,51 @@ def ihk():
 
     return redirect('https://www.ihk-nordwestfalen.de/')
 
-@main_bp.route('/logging', methods=['GET', 'POST'])
-def logging():
+@main_bp.route('/logging', methods=['POST'])
+def logging_endpoint():
     """
     Handle logging requests.
     
-    This function receives a logger name and a log message as query parameters and logs the message using the specified logger.
+    This function receives a JSON payload with logger name, timestamp, and log message, 
+    and logs the message using the specified logger.
     
-    Args:
-        logger (str): The name of the logger to use for logging.
-        message (str): The log message to be logged.
-    
-    Returns:
-        int: Returns 1 if the log message was successfully logged, -1 otherwise.
-    """
-    log_dict = {
-        'default': 'logs/default.log',
-        'app': 'logs/app.log',
-        'auth': 'logs/auth.log',
-        'main': 'logs/main.log',
-        'models': 'logs/models.log',
-        'extensions': 'logs/extensions.log',
-        'blueprints': 'logs/blueprints.log',
-        'database': 'logs/database.log',
-        'forms': 'logs/forms.log',
-        'utils': 'logs/utils.log',
-        'test': 'logs/test.log',
-        'config': 'logs/config.log',
-        'templates': 'logs/templates.log',
-        'static': 'logs/static.log',
-        'migrations': 'logs/migrations.log',
-        'logs': 'logs/logs.log',
-        'database': 'logs/database.log',
+    The data to be logged is sent in the request body as JSON data.
+    Example:
+    {
+        "logger": "app",
+        "timestamp": "2021-01-01 12:00:00",
+        "message": "This is a log message"
     }
     
-    desired_logger: str = request.args.get('logger', 'default')
-    timestamp: str = request.args.get('timestamp', None)  # timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_message: str = request.args.get('message', None)
-    
-    if desired_logger is None:
-        return -1
-    
-    if desired_logger in log_dict:
+    Returns:
+        JSON: Returns a JSON response with the status of the log operation.
+    """
+
+    # Parse JSON data from the request body
+    try:
+        data = request.json
+        desired_logger = data.get('logger', 'default')
+        timestamp = data.get('timestamp')
+        log_message = data.get('message')
+    except json.JSONDecodeError:
+        return jsonify({'status': 'error', 'message': 'Invalid JSON data'}), 400
+
+    # Basic validation
+    if not log_message or not timestamp:
+        return jsonify({'status': 'error', 'message': 'Missing timestamp or message'}), 400
+
+    # Check if the desired logger exists
+    if desired_logger not in Config.log_dict:
+        return jsonify({'status': 'error', 'message': 'Invalid logger name'}), 400
+
+    # Logging the message
+    try:
         logger = logging.getLogger(desired_logger)
         log_message_with_timestamp = f"{timestamp} - {log_message}"
         logger.info(log_message_with_timestamp)
-        return 1
+        return jsonify({'status': 'success', 'message': 'Log message recorded'}), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @main_bp.errorhandler(404)
 def page_not_found(e):

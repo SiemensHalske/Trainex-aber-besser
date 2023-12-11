@@ -12,6 +12,27 @@ from logging.handlers import RotatingFileHandler
 
 log_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\logs\\app.log'
 
+class Config:
+    log_dict = {
+        'default': 'logs/default.log',
+        'app': 'logs/app.log',
+        'auth': 'logs/auth.log',
+        'main': 'logs/main.log',
+        'models': 'logs/models.log',
+        'extensions': 'logs/extensions.log',
+        'blueprints': 'logs/blueprints.log',
+        'database': 'logs/database.log',
+        'forms': 'logs/forms.log',
+        'utils': 'logs/utils.log',
+        'test': 'logs/test.log',
+        'config': 'logs/config.log',
+        'templates': 'logs/templates.log',
+        'static': 'logs/static.log',
+        'migrations': 'logs/migrations.log',
+        'logs': 'logs/logs.log',
+        'database': 'logs/database.log',
+    }
+
 # Configure logging
 def init_logging(name: str, log_path: str):
     logging.basicConfig(level=logging.DEBUG)
@@ -85,27 +106,9 @@ def signal_handler(signal, frame):
     
 
 def initialize_logging():
-    log_dict = {
-        'default': 'logs/default.log',
-        'app': 'logs/app.log',
-        'auth': 'logs/auth.log',
-        'main': 'logs/main.log',
-        'models': 'logs/models.log',
-        'extensions': 'logs/extensions.log',
-        'blueprints': 'logs/blueprints.log',
-        'database': 'logs/database.log',
-        'forms': 'logs/forms.log',
-        'utils': 'logs/utils.log',
-        'test': 'logs/test.log',
-        'config': 'logs/config.log',
-        'templates': 'logs/templates.log',
-        'static': 'logs/static.log',
-        'migrations': 'logs/migrations.log',
-        'logs': 'logs/logs.log',
-        'database': 'logs/database.log',
-    }
+    
     # Initialize logging
-    for key, value in log_dict.items():
+    for key, value in Config.log_dict.items():
         init_logging(key+"_logger", value)
 
 

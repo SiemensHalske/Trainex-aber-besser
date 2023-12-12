@@ -7,11 +7,7 @@ from functools import wraps
 from flask import request
 
 from models import User
-from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask import current_app
-
-
-jwt = current_app.extensions['flask-jwt-extended']
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 
 class Config:
     log_dict = {

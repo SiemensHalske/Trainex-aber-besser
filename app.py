@@ -58,6 +58,9 @@ app.config['SECRET_KEY'] = generate_secret_key()
 app.config['SECURITY_PASSWORD_SALT'] = generate_salt()
 app.config['JWT_SECRET_KEY'] = generate_secret_key()
 
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_SECURE'] = True
+
 jwt = JWTManager(app)
 
 # database/users.db

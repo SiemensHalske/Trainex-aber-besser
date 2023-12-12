@@ -56,11 +56,6 @@ def login():
     print("Login failed")
     return render_template('login.html', form=form)
 
-def logout_user_token():
-    session.pop('auth_token', None)
-    logout_user()
-    session.clear()
-
 @auth_bp.route('/logout')
 def logout():
     response = make_response(redirect(url_for('auth.login')))

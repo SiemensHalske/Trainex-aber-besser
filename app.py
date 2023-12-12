@@ -10,6 +10,7 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from waitress import serve
 
 log_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\logs\\app.log'
 
@@ -130,4 +131,6 @@ if __name__ == '__main__':
 
     ssl_context = ('pfad/zum/zertifikat.crt', 'pfad/zum/private/key.key')
 
-    app.run(debug=True, host=host_ip, port=port, ssl_context=ssl_context)
+    # app.run(debug=True, host=host_ip, port=port, ssl_context=ssl_context)
+    
+    serve(app, host=host_ip, port=port, url_scheme='https', threads=4)

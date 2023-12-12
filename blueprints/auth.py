@@ -42,7 +42,7 @@ def login():
             access_token = create_access_token(identity=username)
             response = jsonify(message="Login succeeded!")
             
-            response.set_cookie('access_token', access_token, httponly=True, secure=True, samesite='Lax')
+            response.set_cookie('access_token_cookie', access_token, httponly=True, secure=True, samesite='Lax')
             
             access_token = create_access_token(identity=username)
             response = make_response(redirect(url_for('main.login_success')))

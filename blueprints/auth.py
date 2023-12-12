@@ -13,7 +13,6 @@ import logging
 
 auth_logger = logging.getLogger("auth_logger")
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
-jwt = current_app.extensions['flask-jwt-extended']
 
 
 def set_audit_log(user_id, action):
@@ -37,6 +36,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
+            jwt = current_app.extensions['flask-jwt-extended']
             set_audit_log(user.id, 'login')
 
             username = form.username.data

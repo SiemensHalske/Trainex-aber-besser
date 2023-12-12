@@ -174,89 +174,83 @@ def logging_endpoint():
 def get_user_id():
     """
     Retrieves the user ID based on the provided username.
-    
-    Input data is sent in the request body as JSON data.
+
+    Username is sent as a query parameter.
     Example:
-    {
-        "user_name": "John Doe"
-    }
+    /get_user_id?user_name=JohnDoe
 
     Returns:
         A JSON response containing the user ID.
     """
-    data = request.json
-    user_name = data.get('user_name')
+    user_name = request.args.get('user_name')
+    if not user_name:
+        return jsonify({'error': 'No user name provided'}), 400
+
     user = User.query.filter_by(username=user_name).first()
-    return jsonify({'user_id': user.id}), 200
+    if user:
+        return jsonify({'user_id': user.id}), 200
+    else:
+        return jsonify({'error': 'User not found'}), 404
 
 @main_bp.route('/get_user_name', methods=['GET'])
 def get_user_name():
     """
     Get the username of a user based on their user ID.
-    
-    Input data is sent in the request body as JSON data.
+
+    User ID is sent as a query parameter.
     Example:
-    {
-        "user_id": 1
-    }
+    /get_user_name?user_id=1
 
     Returns:
         A JSON response containing the user's username.
     """
-    data = request.json
-    user_id = data.get('user_id')
+    user_id = request.args.get('user_id')
+    if not user_id:
+        return jsonify({'error': 'No user ID provided'}), 400
+
     user = User.query.filter_by(id=user_id).first()
-    return jsonify({'user_name': user.username}), 200
+    if user:
+        return jsonify({'user_name': user.username}), 200
+    else:
+        return jsonify({'error': 'User not found'}), 404
 
 @main_bp.route('/get_user_role', methods=['GET'])
 def get_user_role():
     """
     Get the role of a user based on their user ID or email address.
-    
-    Input data is sent in the request body as JSON data.
-    Example 1:
-    {
-        "user_id": 1
-    }
-    
-    Example 2:
-    {
-        "user_email": "test1234@gmail.com"
-    }
-    
+
+    User ID or email is sent as a query parameter.
+    Examples:
+    /get_user_role?user_id=1
+    /get_user_role?user_email=test1234@gmail.com
+
     Returns:
         A JSON response containing the user's role.
     """
-    data = request.json
-    
-    try:
-        user_id = data.get('user_id')
-    except json.JSONDecodeError:
-        return jsonify({'user_role': 'error'}), 400
-    
+    user_id = request.args.get('user_id')
+    user_email = request.args.get('user_email')
+
     if user_id:
         user = User.query.filter_by(id=user_id).first()
-        return jsonify({'user_role': user.roles}), 200
-    
-    try:
-        user_email = data.get('user_email')
-    except json.JSONDecodeError:
-        return jsonify({'user_role': 'error'}), 400
-    
-    if user_email:
+    elif user_email:
         user = User.query.filter_by(email=user_email).first()
+    else:
+        return jsonify({'error': 'No user ID or email provided'}), 400
+
+    if user:
         return jsonify({'user_role': user.roles}), 200
-    
-    return jsonify({'user_role': 'error'}), 400
+    else:
+        return jsonify({'error': 'User not found'}), 404
+
 
 @main_bp.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html', error=e), 404
+    return render_template('/error/404.html', error=e), 404
 
 @main_bp.errorhandler(405)
 def method_not_allowed(e):
-    return render_template('405.html', error=e), 405
+    return render_template('/error/405.html', error=e), 405
 
 @main_bp.errorhandler(500)
 def internal_server_error(e):
-    return render_template('500.html', error=e), 500
+    return render_template('/error/500.html', error=e), 500

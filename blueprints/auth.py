@@ -26,7 +26,7 @@ def set_audit_log(user_id, action):
     db.session.commit()
     print(f"AUDIT LOG - Action: {action}")
 
-@auth_bp.route('/login', methods=['POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     timestamp = request.headers.get('X-Forwarded-For', request.remote_addr)
     user_ip = request.remote_addr

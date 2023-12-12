@@ -38,15 +38,10 @@ def login():
         if user and user.check_password(form.password.data):
             set_audit_log(user.id, 'login')
 
-            username = form.username.data
-            access_token = create_access_token(identity=username)
-            response = jsonify(message="Login succeeded!")
-            
-            response.set_cookie('access_token_cookie', access_token, httponly=True, secure=True, samesite='Lax')
-            
+            username = form.username.data            
             access_token = create_access_token(identity=username)
             response = make_response(redirect(url_for('main.login_success')))
-            response.set_cookie('access_token', access_token, httponly=True)
+            response.set_cookie('access_token_cookie', access_token, httponly=True)
             return response
         
         flash('Invalid username or password')

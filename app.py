@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager
 from waitress import serve
 
 log_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\logs\\app.log'
@@ -57,6 +57,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = generate_secret_key()
 app.config['SECURITY_PASSWORD_SALT'] = generate_salt()
 app.config['JWT_SECRET_KEY'] = generate_secret_key()
+
+jwt = JWTManager(app)
 
 # database/users.db
 database = 'database/users.db'

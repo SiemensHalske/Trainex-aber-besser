@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, jsonify, make_response, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user
 from forms.login_form import LoginForm
 from models import User, AuditLog
@@ -8,13 +8,12 @@ from functools import wraps
 from flask import request
 from flask import current_app
 from itsdangerous import URLSafeTimedSerializer
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies
 import logging
-
 
 auth_logger = logging.getLogger("auth_logger")
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
-
+jwt = current_app.extensions['flask-jwt-extended']
 
 
 def set_audit_log(user_id, action):
@@ -37,20 +36,20 @@ def login():
     print(f"Form: {form}")  # Debug print
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        print(f"User: {user}")
-        print(f"User: {user.username}")
-        print(f"User: {user.password_hash}")
         if user and user.check_password(form.password.data):
             set_audit_log(user.id, 'login')
 
-            user_id = user.get_UID(form.username.data, None)
-            auth_token = generate_auth_token(user_id)
-
-            session['auth_token'] = auth_token
-            session['user_id'] = user_id
+            username = form.username.data
+            access_token = create_access_token(identity=username)
+            response = jsonify(message="Login succeeded!")
             
+            response.set_cookie('access_token', access_token, httponly=True, secure=True, samesite='Lax')
             
-            return redirect(url_for('main.login_success'))
+            access_token = create_access_token(identity=username)
+            response = make_response(redirect(url_for('main.login_success')))
+            response.set_cookie('access_token', access_token, httponly=True)
+            return response
+        
         flash('Invalid username or password')
     print(form.errors)
     print(form.username.data)
@@ -65,8 +64,10 @@ def logout_user_token():
 
 @auth_bp.route('/logout')
 def logout():
-    logout_user_token()
-    return redirect(url_for('auth.login'))
+    response = make_response(redirect(url_for('auth.login')))
+    unset_jwt_cookies(response)  # Diese Funktion entfernt die JWT-Cookies
+    logout_user()  # Flask-Login's logout_user Funktion aufrufen, falls verwendet
+    return response
 
 def token_required(f):
     @wraps(f)

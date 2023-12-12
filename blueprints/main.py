@@ -7,6 +7,11 @@ from functools import wraps
 from flask import request
 
 from models import User
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask import current_app
+
+
+jwt = current_app.extensions['flask-jwt-extended']
 
 class Config:
     log_dict = {
@@ -58,7 +63,7 @@ def login():
     return render_template('login.html')
 
 @main_bp.route('/login_success', methods=['GET', 'POST'])
-@token_required
+@jwt_required()
 def login_success():
     return render_template('index.html')
 
@@ -72,36 +77,36 @@ def banner():
     return render_template('banner.html')
 
 @main_bp.route('/aktuelles')
-@token_required
+@jwt_required()
 def aktuelles():
     return render_template('aktuelles.html')
 
 @main_bp.route('/privates')
-@token_required
+@jwt_required()
 def privates():
     # Your view logic here
     return render_template('privates.html')
 
 @main_bp.route('/cafe')
-@token_required
+@jwt_required()
 def cafe():
     # Your view logic here
     return render_template('cafe.html')
 
 @main_bp.route('/learning')
-@token_required
+@jwt_required()
 def learning():
     # Your view logic here
     return render_template('learning.html')
 
 @main_bp.route('/settings')
-@token_required
+@jwt_required()
 def settings():
     # Your view logic here
     return render_template('settings.html')	
 
 @main_bp.route('/logout_deprecated')
-@token_required
+@jwt_required()
 def logout():
     # Your view logic here
     session.pop('auth_token', None)

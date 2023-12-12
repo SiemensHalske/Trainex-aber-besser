@@ -124,6 +124,9 @@ if __name__ == '__main__':
 
     trigger = signal.signal(signal.SIGINT, signal_handler)
     print('Press Ctrl+{0} to exit'.format(trigger))
+    
+    cert_path = None
+    key_path = None
 
     ssl_context = ('pfad/zum/zertifikat.crt', 'pfad/zum/private/key.key')
 

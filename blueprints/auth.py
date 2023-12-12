@@ -8,11 +8,14 @@ from functools import wraps
 from flask import request
 from flask import current_app
 from itsdangerous import URLSafeTimedSerializer
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import logging
 
-auth_logger = logging.getLogger("auth_logger")
 
+auth_logger = logging.getLogger("auth_logger")
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+
 
 def set_audit_log(user_id, action):
     print(f"AUDIT LOG - User ID: {user_id}")
@@ -23,7 +26,7 @@ def set_audit_log(user_id, action):
     db.session.commit()
     print(f"AUDIT LOG - Action: {action}")
 
-@auth_bp.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/login', methods=['POST'])
 def login():
     timestamp = request.headers.get('X-Forwarded-For', request.remote_addr)
     user_ip = request.remote_addr
@@ -38,11 +41,11 @@ def login():
         print(f"User: {user.username}")
         print(f"User: {user.password_hash}")
         if user and user.check_password(form.password.data):
-            login_user(user)
-            print("Login successful")
             set_audit_log(user.id, 'login')
+
             user_id = user.get_UID(form.username.data, None)
             auth_token = generate_auth_token(user_id)
+
             session['auth_token'] = auth_token
             session['user_id'] = user_id
             

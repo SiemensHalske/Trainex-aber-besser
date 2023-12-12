@@ -170,6 +170,41 @@ def logging_endpoint():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
     
+@main_bp.route('/get_user_info', methods=['GET'])
+def get_user_info():
+    """
+    Retrieves user information based on the provided user ID or email address.
+
+    User ID or email is sent as a query parameter.
+    Examples:
+    /get_user_info?user_id=1
+    /get_user_info?email=test@test.de
+    
+    Returns:
+        A JSON response containing the user's information.
+    """
+    
+    user_id = request.args.get('user_id')
+    user_email = request.args.get('email')
+    
+    if user_id:
+        user = User.query.filter_by(id=user_id).first()
+    elif user_email:
+        user = User.query.filter_by(email=user_email).first()
+    else:
+        return jsonify({'error': 'No user ID or email provided'}), 400
+    
+    if user:
+        return jsonify({
+            'user_id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'roles': user.roles
+        }), 200
+    else:
+        return jsonify({'error': 'User not found'}), 404
+    
+    
 @main_bp.route('/get_user_id', methods=['GET'])
 def get_user_id():
     """

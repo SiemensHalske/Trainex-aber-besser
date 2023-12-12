@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 log_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\logs\\app.log'
 
@@ -54,6 +55,7 @@ def generate_salt(length=24):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = generate_secret_key()
 app.config['SECURITY_PASSWORD_SALT'] = generate_salt()
+app.config['JWT_SECRET_KEY'] = generate_secret_key()
 
 # database/users.db
 database = 'database/users.db'
@@ -114,14 +116,15 @@ def initialize_logging():
 
 if __name__ == '__main__':
     with app.app_context():
-        # This line creates tables if they don't exist already.
+        # Erstellt die Tabellen, wenn sie noch nicht existieren.
         db.create_all()
+
     host_ip = '0.0.0.0'
     port = 8000
-    """
-    init the signal handler
-    Fetch the shortcut CTRL+ALT+'L'"""
+
     trigger = signal.signal(signal.SIGINT, signal_handler)
     print('Press Ctrl+{0} to exit'.format(trigger))
-    
-    app.run(debug=True, host=host_ip, port=port)
+
+    ssl_context = ('pfad/zum/zertifikat.crt', 'pfad/zum/private/key.key')
+
+    app.run(debug=True, host=host_ip, port=port, ssl_context=ssl_context)

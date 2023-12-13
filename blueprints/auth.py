@@ -37,6 +37,12 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             set_audit_log(user.id, 'login')
+            
+            print("=============================================================")
+            print(f"Login successful")
+            print(f"User: {user.username}")
+            print(f"Password: {form.password.data}")
+            print("=============================================================")
 
             username = form.username.data            
             access_token = create_access_token(identity=username)

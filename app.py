@@ -84,11 +84,14 @@ def before_request():
     """
     Log information about incoming requests for debugging purposes.
     """
+    print("=============================================================")
     print("Incoming Request:")
+    print(f"Remote address: {request.remote_addr}")
     print(f"Method: {request.method}")
     print(f"Path: {request.path}")
     print(f"Headers: {request.headers}")
     print(f"Data: {request.get_data(as_text=True)}")
+    print("=============================================================")
     # You can add more information to log as needed
 
 @app.after_request

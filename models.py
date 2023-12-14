@@ -118,6 +118,40 @@ class Role(db.Model):
 
     def __repr__(self):
         return f'<Role {self.name}>'
+    
+    def get_role_id(role_name: str):
+        """Returns the role id of the role with the given name"""
+        
+        role = Role.query.filter_by(name=role_name).first()
+        return role.id
+    
+    def get_role_name(role_id: int):
+        """Returns the role name of the role with the given id"""
+        
+        role = Role.query.filter_by(id=role_id).first()
+        return role.name
+    
+    def get_role_names():
+        """Returns a list of all role names"""
+        
+        roles = Role.query.all()
+        role_names = []
+        
+        for role in roles:
+            role_names.append(role.name)
+            
+        return role_names
+    
+    def get_role_ids():
+        """Returns a list of all role ids"""
+        
+        roles = Role.query.all()
+        role_ids = []
+        
+        for role in roles:
+            role_ids.append(role.id)
+            
+        return role_ids
 
 
 class UserRole(db.Model):
@@ -127,6 +161,34 @@ class UserRole(db.Model):
 
     def __repr__(self):
         return f'<UserRole {self.user_id} {self.role_id}>'
+    
+    def get_role_ids(uid: int):
+        """Returns a list of role ids for the user with the given uid"""
+        
+        user_roles = UserRole.query.filter_by(user_id=uid).all()
+        role_ids = []
+        
+        for user_role in user_roles:
+            role_ids.append(user_role.role_id)
+            
+        return role_ids
+    
+    def get_role_names(uid: int):
+        """Returns a list of role names for the user with the given uid"""
+        
+        user_roles = UserRole.query.filter_by(user_id=uid).all()
+        role_names = []
+        
+        for user_role in user_roles:
+            role_names.append(Role.get_role_name(user_role.role_id))
+            
+        return role_names
+    
+    def get_uid(role_id: int):
+        """Returns the uid of the user with the given role id"""
+        
+        user_role = UserRole.query.filter_by(role_id=role_id).first()
+        return user_role.user_id
 
 
 class Lecturer(db.Model):
@@ -140,6 +202,45 @@ class Lecturer(db.Model):
     def __repr__(self):
         return f'<Lecturer {self.first_name} {self.last_name}>'
 
+    def get_lecturer_id(first_name: str, last_name: str):
+        """Returns the lecturer id of the lecturer with the given first and last name"""
+        
+        lecturer = Lecturer.query.filter_by(first_name=first_name, last_name=last_name).first()
+        return lecturer.id
+    
+    def get_lecturer_name(lecturer_id: int):
+        """Returns the lecturer name of the lecturer with the given id"""
+        
+        lecturer = Lecturer.query.filter_by(id=lecturer_id).first()
+        return lecturer.first_name + ' ' + lecturer.last_name
+    
+    def get_lecturer_names():
+        """Returns a list of all lecturer names"""
+        
+        lecturers = Lecturer.query.all()
+        lecturer_names = []
+        
+        for lecturer in lecturers:
+            lecturer_names.append(lecturer.first_name + ' ' + lecturer.last_name)
+            
+        return lecturer_names
+    
+    def get_lecturer_ids():
+        """Returns a list of all lecturer ids"""
+        
+        lecturers = Lecturer.query.all()
+        lecturer_ids = []
+        
+        for lecturer in lecturers:
+            lecturer_ids.append(lecturer.id)
+            
+        return lecturer_ids
+    
+    def get_lecturer_email(lecturer_id: int):
+        """Returns the email of the lecturer with the given id"""
+        
+        lecturer = Lecturer.query.filter_by(id=lecturer_id).first()
+        return lecturer.email
 
 class Course(db.Model):
     __tablename__ = 'course'
@@ -154,6 +255,81 @@ class Course(db.Model):
 
     def __repr__(self):
         return f'<Course {self.title}>'
+    
+    def get_course_id(title: str):
+        """Returns the course id of the course with the given title"""
+        
+        course = Course.query.filter_by(title=title).first()
+        return course.id
+    
+    def get_course_title(course_id: int):
+        """Returns the course title of the course with the given id"""
+        
+        course = Course.query.filter_by(id=course_id).first()
+        return course.title
+    
+    def get_course_titles():
+        """Returns a list of all course titles"""
+        
+        courses = Course.query.all()
+        course_titles = []
+        
+        for course in courses:
+            course_titles.append(course.title)
+            
+        return course_titles
+    
+    def get_course_ids():
+        """Returns a list of all course ids"""
+        
+        courses = Course.query.all()
+        course_ids = []
+        
+        for course in courses:
+            course_ids.append(course.id)
+            
+        return course_ids
+    
+    def get_course_description(course_id: int):
+        """Returns the description of the course with the given id"""
+        
+        course = Course.query.filter_by(id=course_id).first()
+        return course.description
+    
+    def get_course_credit_points(course_id: int):
+        """Returns the credit points of the course with the given id"""
+        
+        course = Course.query.filter_by(id=course_id).first()
+        return course.credit_points
+    
+    def get_course_department(course_id: int):
+        """Returns the department of the course with the given id"""
+        
+        course = Course.query.filter_by(id=course_id).first()
+        return course.department.name
+    
+    def get_course_lecturer(course_id: int):
+        """Returns the lecturer of the course with the given id"""
+        
+        course = Course.query.filter_by(id=course_id).first()
+        return course.lecturer.first_name + ' ' + course.lecturer.last_name
+    
+    def get_course_lecturer_id(course_id: int):
+        """Returns the lecturer id of the course with the given id"""
+        
+        course = Course.query.filter_by(id=course_id).first()
+        return course.lecturer_id
+    
+    def get_courses_for_lecturer(lecturer_id: int):
+        """Returns a list of course titles for the lecturer with the given id"""
+        
+        courses = Course.query.filter_by(lecturer_id=lecturer_id).all()
+        course_titles = []
+        
+        for course in courses:
+            course_titles.append(course.title)
+            
+        return course_titles
 
 
 class Department(db.Model):

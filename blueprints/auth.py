@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, make_response, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user
 from forms.login_form import LoginForm
-from models import User, AuditLog
+from models import User, Logging
 from extensions import db
 from flask import session
 from functools import wraps
@@ -10,19 +10,25 @@ from flask import current_app
 from itsdangerous import URLSafeTimedSerializer
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies
 import logging
+from datetime import datetime
 
 auth_logger = logging.getLogger("auth_logger")
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
 def set_audit_log(user_id, action):
-    print(f"AUDIT LOG - User ID: {user_id}")
-    audit_log = AuditLog()
+    username = User.query.filter_by(id=user_id).first().username
+    
+    print(f"Logging action: {action} for user {username}")
+    audit_log = Logging()
+    audit_log.timestamp = datetime.now()
+    audit_log.level = 'INFO'
     audit_log.user_id = user_id
-    audit_log.action = action
+    audit_log.username = username
+    audit_log.message = f"User {username} | {action}"
     db.session.add(audit_log)
     db.session.commit()
-    print(f"AUDIT LOG - Action: {action}")
+    print(f"Logging action: {action} for user {username} done")
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():

@@ -67,7 +67,7 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 jwt = JWTManager(app)
 
 # database/users.db
-database = 'database/users.db'
+database = 'database/educampus.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.path.dirname(__file__), database)}'
 
 # Initialize extensions

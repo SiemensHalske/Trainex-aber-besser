@@ -49,6 +49,7 @@ def generate_secret_key(length=24):
     # Generates a secret key
     return os.urandom(length)
 
+
 def generate_salt(length=24):
     # Generates a salt
     return os.urandom(length).hex()

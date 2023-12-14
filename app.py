@@ -12,7 +12,7 @@ from logging.handlers import RotatingFileHandler
 from flask_jwt_extended import JWTManager
 from waitress import serve
 
-log_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\logs\\app.log'
+log_path = '.\\logs\\app.log'
 
 class Config:
     log_dict = {

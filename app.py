@@ -141,6 +141,6 @@ if __name__ == '__main__':
 
     ssl_context = ('pfad/zum/zertifikat.crt', 'pfad/zum/private/key.key')
 
-    # app.run(debug=True, host=host_ip, port=port, ssl_context=ssl_context)
+    app.run(debug=True, host=host_ip, port=port, ssl_context=ssl_context)
     
-    serve(app, host=host_ip, port=port, url_scheme='https', threads=4)
+    # serve(app, host=host_ip, port=port, url_scheme='https', threads=4)

@@ -136,9 +136,9 @@ def logging_endpoint():
     The data to be logged is sent in the request body as JSON data.
     Example:
     {
-        "logger": "app",
+        "logger": "auth",
         "timestamp": "2021-01-01 12:00:00",
-        "message": "This is a log message"
+        "message": "User xyz logged in"
     }
     
     Returns:

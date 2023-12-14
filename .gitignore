@@ -1,1 +1,3 @@
 *.pyc
+*.pyc
+blueprints/__pycache__/

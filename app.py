@@ -49,6 +49,7 @@ def generate_secret_key(length=24):
     # Generates a secret key
     return os.urandom(length)
 
+
 def generate_salt(length=24):
     # Generates a salt
     return os.urandom(length).hex()
@@ -141,6 +142,6 @@ if __name__ == '__main__':
 
     ssl_context = ('pfad/zum/zertifikat.crt', 'pfad/zum/private/key.key')
 
-    # app.run(debug=True, host=host_ip, port=port, ssl_context=ssl_context)
+    app.run(debug=True, host=host_ip, port=port)
     
-    serve(app, host=host_ip, port=port, url_scheme='https', threads=4)
+    # serve(app, host=host_ip, port=port, url_scheme='https', threads=4)

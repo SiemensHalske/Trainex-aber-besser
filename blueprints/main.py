@@ -6,7 +6,8 @@ from flask import session
 from functools import wraps
 from flask import request
 
-from models import User
+from extensions import db
+from models import User, Event
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 
 
@@ -298,18 +299,90 @@ def get_user_role():
         return jsonify({'user_role': user.roles}), 200
     else:
         return jsonify({'error': 'User not found'}), 404
+    
+# =============================================================
+# Calendar endpoints
 
+
+@main_bp.route('/calendar_events/<int:user_id>', methods=['GET'])
+def calendar_events(user_id: int) -> list[dict]:
+    """
+    Retrieve calendar events for a specific user.
+
+    Args:
+        user_id (int): The ID of the user.
+
+    Returns:
+        list: A list of dictionaries containing event details, including title, start time, and end time.
+    """
+
+    try:
+        events = Event.query.filter_by(user_id=user_id).all()
+        if not events:
+            return jsonify({'error': 'No events found for the user'}), 404
+
+        events_data = {
+            'message': f'Event list for user {user_id}',
+            'events': [{'title': event.title, 'start': event.start_time.isoformat(), 'end': event.end_time.isoformat()} for event in events]
+        }
+        return jsonify(events_data), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@main_bp.route('/calendar_events', methods=['GET'])
+def calendar_events_all() -> list[dict]:
+    """
+    Retrieve all calendar events.
+
+    Returns:
+        list: A list of dictionaries containing event details, including title, start time, and end time.
+    """
+    try:
+        events = Event.query.all()
+        events_data = {
+            'message': f'Event list for all users',
+            'events': [{'title': event.title, 'start': event.start_time.isoformat(), 'end': event.end_time.isoformat()} for event in events]
+        }
+        return jsonify(events_data), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@main_bp.route('/calendar_events', methods=['POST'])
+def calendar_events_add() -> dict:
+    """
+    Add a new calendar event.
+
+    Returns:
+        dict: A dictionary containing the status of the operation.
+    """
+    try:
+        data = request.json
+        event = Event()
+        event.title = data.get('title')
+        event.start_time = data.get('start_time')
+        event.end_time = data.get('end_time')
+        event.user_id = data.get('user_id')
+        db.session.add(event)
+        db.session.commit()
+        return jsonify({'status': 'success', 'message': 'Event added'}), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+# =============================================================
+# Error handlers
+# =============================================================
 
 @main_bp.errorhandler(404)
-def page_not_found(e):
+def page_not_found(e: Exception) -> tuple[str, int]:
     return render_template('/error/404.html', error=e), 404
 
 
 @main_bp.errorhandler(405)
-def method_not_allowed(e):
+def method_not_allowed(e: Exception) -> tuple[str, int]:
     return render_template('/error/405.html', error=e), 405
 
 
 @main_bp.errorhandler(500)
-def internal_server_error(e):
+def internal_server_error(e: Exception) -> tuple[str, int]:
     return render_template('/error/500.html', error=e), 500

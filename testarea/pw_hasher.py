@@ -1,6 +1,7 @@
 import sqlite3
 from werkzeug.security import generate_password_hash
 
+
 def add_user_with_role(database_path, username, email, password, first_name, last_name, is_active, is_admin, role_name):
     # Passwort hashen
     password_hash = generate_password_hash(password)
@@ -28,12 +29,15 @@ def add_user_with_role(database_path, username, email, password, first_name, las
     user_id = cursor.lastrowid
 
     # Verknüpfung zwischen Nutzer und Rolle einfügen
-    cursor.execute("INSERT INTO user_role (user_id, role_id) VALUES (?, ?)", (user_id, role_id))
+    cursor.execute(
+        "INSERT INTO user_role (user_id, role_id) VALUES (?, ?)", (user_id, role_id))
     conn.commit()
 
     # Verbindung schließen
     conn.close()
-    print(f"Nutzer {username} mit der Rolle {role_name} wurde erfolgreich hinzugefügt.")
+    print(
+        f"Nutzer {username} mit der Rolle {role_name} wurde erfolgreich hinzugefügt.")
+
 
 # Pfad zur Datenbankdatei
 database_path = "C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\database\\educampus.db"
@@ -49,4 +53,5 @@ is_admin = input("Ist der Benutzer ein Admin? (j/n): ") == 'j'
 role_name = input("Rollenname: ")
 
 # Funktion aufrufen
-add_user_with_role(database_path, username, email, password, first_name, last_name, is_active, is_admin, role_name)
+add_user_with_role(database_path, username, email, password,
+                   first_name, last_name, is_active, is_admin, role_name)

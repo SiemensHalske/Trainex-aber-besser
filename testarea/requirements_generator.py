@@ -23,7 +23,7 @@ for root, dirs, files in os.walk(repo_path):
                             package = parts[1].split('.')[0]
                         elif parts[0] == 'from':
                             package = parts[1].split('.')[0]
-                        
+
                         # Add the package name to the set
                         packages.add(package)
 

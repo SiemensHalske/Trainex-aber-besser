@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 from flask import Blueprint, jsonify, redirect, render_template, abort, url_for
@@ -299,19 +300,20 @@ def get_user_role():
         return jsonify({'user_role': user.roles}), 200
     else:
         return jsonify({'error': 'User not found'}), 404
-    
+
 # =============================================================
 # Calendar endpoints
+# =============================================================
 
 
 @main_bp.route('/calendar_events/<int:user_id>', methods=['GET'])
 def calendar_events(user_id: int) -> list[dict]:
     """
     Retrieve calendar events for a specific user.
-    
+
     Route:
         /calendar_events/<int:user_id>
-        
+
     Route info:
         - GET: Retrieve calendar events for a specific user.
         - args: user_id (int): The ID of the user.
@@ -336,28 +338,51 @@ def calendar_events(user_id: int) -> list[dict]:
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
 @main_bp.route('/calendar_events', methods=['GET'])
-def calendar_events_all() -> list[dict]:
+def calendar_events_all():
     """
     Retrieve all calendar events.
 
+    Route:
+        /calendar_events
+
+    Route info:
+        - GET: Retrieve all calendar events.
+
     Returns:
-        list: A list of dictionaries containing event details, including title, start time, and end time.
+        list: A list of dictionaries containing event details. Each event includes:
+              - title (str): Title of the event
+              - start_time (str): Start time of the event in ISO format (e.g., '2023-03-15T09:00:00')
+              - end_time (str): End time of the event in ISO format (e.g., '2023-03-15T10:00:00')
     """
     try:
         events = Event.query.all()
         events_data = {
-            'message': f'Event list for all users',
+            'message': 'Event list for all users',
             'events': [{'title': event.title, 'start': event.start_time.isoformat(), 'end': event.end_time.isoformat()} for event in events]
         }
         return jsonify(events_data), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@main_bp.route('/calendar_events', methods=['POST'])
-def calendar_events_add() -> dict:
+
+@main_bp.route('/set_calendar_event', methods=['POST'])
+def calendar_event_add():
     """
     Add a new calendar event.
+
+    Route:
+        /set_calendar_event
+
+    Route info:
+        - POST: Add a new calendar event.
+
+    Expects a JSON payload with:
+    - title (str): Title of the event
+    - start_time (str): Start time of the event in ISO format (e.g., '2023-03-15T09:00:00')
+    - end_time (str): End time of the event in ISO format (e.g., '2023-03-15T10:00:00')
+    - user_id (int): ID of the user to whom the event belongs
 
     Returns:
         dict: A dictionary containing the status of the operation.
@@ -366,12 +391,99 @@ def calendar_events_add() -> dict:
         data = request.json
         event = Event()
         event.title = data.get('title')
-        event.start_time = data.get('start_time')
-        event.end_time = data.get('end_time')
+        event.start_time = datetime.fromisoformat(data.get('start_time'))
+        event.end_time = datetime.fromisoformat(data.get('end_time'))
         event.user_id = data.get('user_id')
         db.session.add(event)
         db.session.commit()
         return jsonify({'status': 'success', 'message': 'Event added'}), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@main_bp.route('/delete_calendar_event', methods=['POST'])
+def calendar_event_delete():
+    """
+    Delete a calendar event.
+
+    Expects a JSON payload with:
+    - event_id (int): The ID of the event to be deleted
+
+    Returns:
+        dict: A dictionary containing the status of the operation.
+    """
+    try:
+        data = request.json
+        event_id = data.get('event_id')
+        event = Event.query.filter_by(id=event_id).first()
+        if event:
+            db.session.delete(event)
+            db.session.commit()
+            return jsonify({'status': 'success', 'message': 'Event deleted'}), 200
+        else:
+            return jsonify({'status': 'error', 'message': 'Event not found'}), 404
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@main_bp.route('/add_calendar_events', methods=['POST'])
+def add_calendar_events():
+    """
+    Add a list of new calendar events.
+
+    Route:
+        /add_calendar_events
+
+    Route info:
+        - POST: Add a list of new calendar events.
+
+    Expects a JSON payload with a list of event objects, each containing:
+    - title (str): Title of the event
+    - start_time (str): Start time of the event in ISO format
+    - end_time (str): End time of the event in ISO format
+    - user_id (int): ID of the user to whom the event belongs
+
+    Returns:
+        dict: A dictionary containing the status of the operation.
+    """
+    try:
+        events_data = request.json.get('events')
+        for data in events_data:
+            event = Event()
+            event.title = data.get('title')
+            event.start_time = datetime.fromisoformat(data.get('start_time'))
+            event.end_time = datetime.fromisoformat(data.get('end_time'))
+            event.user_id = data.get('user_id')
+            db.session.add(event)
+        db.session.commit()
+        return jsonify({'status': 'success', 'message': f'{len(events_data)} events added'}), 200
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+
+@main_bp.route('/delete_calendar_events', methods=['POST'])
+def delete_calendar_events():
+    """
+    Delete a list of calendar events.
+
+    Route:
+        /delete_calendar_events
+
+    Route info:
+        - POST: Delete a list of calendar events.
+
+    Expects a JSON payload with:
+    - event_ids (list): A list of event IDs to be deleted
+
+    Returns:
+        dict: A dictionary containing the status of the operation.
+    """
+    try:
+        event_ids = request.json.get('event_ids')
+        Event.query.filter(Event.id.in_(event_ids)).delete(
+            synchronize_session=False)
+        db.session.commit()
+        return jsonify({'status': 'success', 'message': f'{len(event_ids)} events deleted'}), 200
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 

@@ -133,4 +133,5 @@ def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time
         if time_since_last_attempt < current_penalty_time:
             return False, current_penalty_time - time_since_last_attempt
 
+
     return True, None

@@ -35,4 +35,4 @@ Der Changelog bietet eine detaillierte Übersicht über alle Änderungen und Upd
 
 ## Lizenz
 
-(Informationen zur Lizenzierung des Projekts.)
+[Informationen zur Lizenzierung des Projekts.](CHANGELOG.md)

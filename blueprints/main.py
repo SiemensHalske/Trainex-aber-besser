@@ -308,6 +308,13 @@ def get_user_role():
 def calendar_events(user_id: int) -> list[dict]:
     """
     Retrieve calendar events for a specific user.
+    
+    Route:
+        /calendar_events/<int:user_id>
+        
+    Route info:
+        - GET: Retrieve calendar events for a specific user.
+        - args: user_id (int): The ID of the user.
 
     Args:
         user_id (int): The ID of the user.

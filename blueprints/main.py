@@ -36,9 +36,11 @@ main_logger = logging.getLogger("main_logger")
 auth_logger = logging.getLogger("auth_logger")
 main_bp = Blueprint('main', __name__)
 
+
 def get_session_id():
     # Get the user id from the session
     return session.get('user_id', None)
+
 
 def token_required(f):
     @wraps(f)
@@ -50,33 +52,41 @@ def token_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+
 @main_bp.route('/', methods=['GET', 'POST'])
 def index():
     # Redirect to url 'auth.login'
     return redirect(url_for('auth.login'))
-        
+
+
 @main_bp.route('/login_page', methods=['GET', 'POST'])
 def login():
     return render_template('login.html')
+
 
 @main_bp.route('/login_success', methods=['GET', 'POST'])
 @jwt_required()
 def login_success():
     return render_template('index.html')
 
+
 @main_bp.route('/get_banner', methods=['GET'])
 def get_banner():
     return render_template('banner.html')
 
 # in your main.py or wherever you have your route definitions
+
+
 @main_bp.route('/banner', methods=['GET', 'POST'], endpoint='banner')
 def banner():
     return render_template('banner.html')
+
 
 @main_bp.route('/aktuelles')
 @jwt_required()
 def aktuelles():
     return render_template('aktuelles.html')
+
 
 @main_bp.route('/privates')
 @jwt_required()
@@ -84,11 +94,13 @@ def privates():
     # Your view logic here
     return render_template('privates.html')
 
+
 @main_bp.route('/cafe')
 @jwt_required()
 def cafe():
     # Your view logic here
     return render_template('cafe.html')
+
 
 @main_bp.route('/learning')
 @jwt_required()
@@ -96,11 +108,13 @@ def learning():
     # Your view logic here
     return render_template('learning.html')
 
+
 @main_bp.route('/settings')
 @jwt_required()
 def settings():
     # Your view logic here
-    return render_template('settings.html')	
+    return render_template('settings.html')
+
 
 @main_bp.route('/logout_deprecated')
 @jwt_required()
@@ -109,10 +123,12 @@ def logout():
     session.pop('auth_token', None)
     return render_template('logout.html')
 
+
 @main_bp.route('/ihk_logo')
 def ihk_logo():
     # return the picture
     return render_template('logo.gif')
+
 
 @main_bp.route('/ihk_logo2')
 def ihk_logo2():
@@ -126,14 +142,15 @@ def ihk():
 
     return redirect('https://www.ihk-nordwestfalen.de/')
 
+
 @main_bp.route('/logging', methods=['POST'])
 def logging_endpoint():
     """
     Handle logging requests.
-    
+
     This function receives a JSON payload with logger name, timestamp, and log message, 
     and logs the message using the specified logger.
-    
+
     The data to be logged is sent in the request body as JSON data.
     Example:
     {
@@ -141,7 +158,7 @@ def logging_endpoint():
         "timestamp": "2021-01-01 12:00:00",
         "message": "User xyz logged in"
     }
-    
+
     Returns:
         JSON: Returns a JSON response with the status of the log operation.
     """
@@ -171,7 +188,8 @@ def logging_endpoint():
         return jsonify({'status': 'success', 'message': 'Log message recorded'}), 200
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
-    
+
+
 @main_bp.route('/get_user_info', methods=['GET'])
 def get_user_info():
     """
@@ -181,21 +199,21 @@ def get_user_info():
     Examples:
     /get_user_info?user_id=1
     /get_user_info?email=test@test.de
-    
+
     Returns:
         A JSON response containing the user's information.
     """
-    
+
     user_id = request.args.get('user_id')
     user_email = request.args.get('email')
-    
+
     if user_id:
         user = User.query.filter_by(id=user_id).first()
     elif user_email:
         user = User.query.filter_by(email=user_email).first()
     else:
         return jsonify({'error': 'No user ID or email provided'}), 400
-    
+
     if user:
         return jsonify({
             'user_id': user.id,
@@ -205,8 +223,8 @@ def get_user_info():
         }), 200
     else:
         return jsonify({'error': 'User not found'}), 404
-    
-    
+
+
 @main_bp.route('/get_user_id', methods=['GET'])
 def get_user_id():
     """
@@ -229,6 +247,7 @@ def get_user_id():
     else:
         return jsonify({'error': 'User not found'}), 404
 
+
 @main_bp.route('/get_user_name', methods=['GET'])
 def get_user_name():
     """
@@ -250,6 +269,7 @@ def get_user_name():
         return jsonify({'user_name': user.username}), 200
     else:
         return jsonify({'error': 'User not found'}), 404
+
 
 @main_bp.route('/get_user_role', methods=['GET'])
 def get_user_role():
@@ -284,9 +304,11 @@ def get_user_role():
 def page_not_found(e):
     return render_template('/error/404.html', error=e), 404
 
+
 @main_bp.errorhandler(405)
 def method_not_allowed(e):
     return render_template('/error/405.html', error=e), 405
+
 
 @main_bp.errorhandler(500)
 def internal_server_error(e):

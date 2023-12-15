@@ -15,6 +15,7 @@ from prometheus_flask_exporter import PrometheusMetrics
 
 log_path = '.\\logs\\app.log'
 
+
 class Config:
     log_dict = {
         'default': 'logs/default.log',
@@ -37,14 +38,18 @@ class Config:
     }
 
 # Configure logging
+
+
 def init_logging(name: str, log_path: str):
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(name)
     handler = RotatingFileHandler(log_path, maxBytes=10000000, backupCount=5)
     handler.setLevel(logging.INFO)
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
+    formatter = logging.Formatter(
+        '[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
+
 
 def generate_secret_key(length=24):
     # Generates a secret key
@@ -54,6 +59,7 @@ def generate_secret_key(length=24):
 def generate_salt(length=24):
     # Generates a salt
     return os.urandom(length).hex()
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = generate_secret_key()
@@ -75,12 +81,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.path.dirnam
 db.init_app(app)
 login_manager.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     with app.app_context():
         session = Session(bind=db.engine)
         return session.get(User, int(user_id))
-    
+
+
 @app.before_request
 def before_request():
     """
@@ -96,6 +104,7 @@ def before_request():
     print("=============================================================")
     # You can add more information to log as needed
 
+
 @app.after_request
 def add_header(response):
     """
@@ -106,6 +115,7 @@ def add_header(response):
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '-1'
     return response
+
 
 # Register blueprints
 # Register blueprintsk
@@ -118,10 +128,10 @@ def signal_handler(signal, frame):
     print('You pressed Ctrl+{0}'.format(signal))
     print('Exiting...')
     exit(0)
-    
+
 
 def initialize_logging():
-    
+
     # Initialize logging
     for key, value in Config.log_dict.items():
         init_logging(key+"_logger", value)
@@ -137,12 +147,12 @@ if __name__ == '__main__':
 
     trigger = signal.signal(signal.SIGINT, signal_handler)
     print('Press Ctrl+{0} to exit'.format(trigger))
-    
+
     cert_path = None
     key_path = None
 
     ssl_context = ('pfad/zum/zertifikat.crt', 'pfad/zum/private/key.key')
 
     app.run(debug=True, host=host_ip, port=port)
-    
+
     # serve(app, host=host_ip, port=port, url_scheme='https', threads=4)

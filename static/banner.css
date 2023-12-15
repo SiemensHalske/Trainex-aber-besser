@@ -27,7 +27,6 @@
     justify-content: space-around;
     align-items: center;
     width: 800px;
-    /* height: 50px; */
     border-radius: 25px;
 }
 
@@ -146,12 +145,4 @@
     background-image: url('{{ url_for('static', filename='images/logo.gif') }}');
     background-size: cover; /* Covers the entire area of the button */
     background-position: center; /* Centers the background image */
-}
-
-.ihk-button:hover {
-    background-color: rgb(125, 191, 213);
-}
-
-.ihk-button:active {
-    background-color: rgb(68, 176, 212);
 }

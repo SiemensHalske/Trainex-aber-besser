@@ -26,7 +26,7 @@ Der Changelog bietet eine detaillierte Übersicht über alle Änderungen und Upd
 - **[v2023-12-14]**: Integration von PrometheusMetrics und Weiterentwicklung des Datenmodells.
 - **[v2023-12-10]**: Aktualisierungen in der Logout-Routinen und Logging-Konfiguration.
 
-(Vollständige Liste im Changelog ansehen.)
+[Vollständige Liste im Changelog ansehen.](CHANGELOG.md)
 
 ## Mitwirkende
 
@@ -35,4 +35,4 @@ Der Changelog bietet eine detaillierte Übersicht über alle Änderungen und Upd
 
 ## Lizenz
 
-[Informationen zur Lizenzierung des Projekts.](CHANGELOG.md)
+(Informationen zur Lizenzierung des Projekts.)

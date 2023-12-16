@@ -159,8 +159,8 @@ class LoginAttempt(db.Model):
 class Messages(db.Model):
     __tablename__ = 'messages'
     id = db.Column(db.Integer, primary_key=True)
-    u_id1 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    u_id2 = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    u_id1 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    u_id2 = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     message_timestamp = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
     message = db.Column(db.Text, nullable=False)

@@ -71,11 +71,16 @@ app.config['JWT_COOKIE_SECURE'] = True
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 
+username = 'postgres'
+password = 'zoRRo123'
+host = 'localhost'  # localhost or the IP address of your Postgres server
+port = '5432'  # default PostgreSQL port
+database = 'educampus'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{username}:{password}@{host}:{port}/{database}'
+
 jwt = JWTManager(app)
 
 # database/users.db
-database = 'database/educampus.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.path.dirname(__file__), database)}'
 
 # Initialize extensions
 db.init_app(app)

@@ -3,9 +3,9 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from werkzeug.security import generate_password_hash
 
 # Replace these variables with your actual database connection info
-db_name = "your_database_name"
-db_user = "your_username"
-db_password = "your_password"
+db_name = "educampus"
+db_user = "postgres"
+db_password = "zoRRo123"
 db_host = "localhost"  # or your database server IP
 
 # Connect to PostgreSQL

@@ -11,7 +11,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 from flask_jwt_extended import JWTManager
 from waitress import serve
-from prometheus_flask_exporter import PrometheusMetrics
 
 log_path = '.\\logs\\app.log'
 

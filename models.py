@@ -139,7 +139,7 @@ class Logging(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     level = db.Column(db.Text, nullable=False)
     message = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Add nullable=False and ForeignKey constraint
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates='logs')
 
 

@@ -174,7 +174,7 @@ class Messages(db.Model):
 
 class CourseRegistration(db.Model):
     __tablename__ = 'course_registration'
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     course_id = db.Column(db.Integer, db.ForeignKey(
         'course.id'), primary_key=True)
     semester_id = db.Column(db.Integer, db.ForeignKey(
@@ -192,7 +192,7 @@ class ResourceBooking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     resource_id = db.Column(db.Integer, db.ForeignKey(
         'resource.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
     end_time = db.Column(db.DateTime, nullable=False)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))

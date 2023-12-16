@@ -16,7 +16,7 @@ class User(db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     roles = db.relationship(
         'Role', secondary='user_role', back_populates='users')
-    logs = db.relationship('Logging', back_populates='user')
+    logs = db.relationship('Logging', back_populates='user', foreign_keys='Logging.user_id')  # Add foreign key constraint
     
     login_attempts = db.relationship('LoginAttempt', back_populates='user')
     

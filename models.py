@@ -105,13 +105,14 @@ class DepartmentBuilding(db.Model):
     building = db.relationship('Building', back_populates='building_departments')
 
 
-class Adress(db.Model):
-    __tablename__ = 'adress'
+class Building(db.Model):
+    __tablename__ = 'building'
     id = db.Column(db.Integer, primary_key=True)
-    street = db.Column(db.Text, nullable=False)
-    zip_code = db.Column(db.Text, nullable=False)
-    city = db.Column(db.Text, nullable=False)
-    country = db.Column(db.Text, nullable=False)
+    name = db.Column(db.Text, nullable=False)
+    story_count = db.Column(db.Integer)
+    rooms = db.relationship('Room', back_populates='building')
+    address_id = db.Column(db.Integer, db.ForeignKey('adress.id'))
+    building_departments = db.relationship('DepartmentBuilding', back_populates='building')
 
 
 class Room(db.Model):

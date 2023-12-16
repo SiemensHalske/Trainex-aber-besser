@@ -146,7 +146,7 @@ class Logging(db.Model):
 class LoginAttempt(db.Model):
     __tablename__ = 'login_attempts'
     id = db.Column(db.Integer, primary_key=True)
-    u_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    u_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     attempt_time = db.Column(
         db.DateTime, default=datetime.utcnow, nullable=False)
     success = db.Column(db.Boolean, nullable=False)

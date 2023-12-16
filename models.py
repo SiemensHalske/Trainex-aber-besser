@@ -130,6 +130,7 @@ class Building(db.Model):
     name = db.Column(db.Text, nullable=False)
     story_count = db.Column(db.Integer)
     rooms = db.relationship('Room', back_populates='building')
+    address_id = db.Column(db.Integer, db.ForeignKey('adress.id'))
     building_departments = db.relationship('DepartmentBuilding', back_populates='building')
 
 

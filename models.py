@@ -80,6 +80,7 @@ class Semester(db.Model):
 class Event(db.Model):
     __tablename__ = 'event'
     id = db.Column(db.Integer, primary_key=True)
+    event_type_id = db.Column(db.Integer, db.ForeignKey('event_type.id'))
     title = db.Column(db.Text, nullable=False)
     start_time = db.Column(db.DateTime, nullable=False)
     end_time = db.Column(db.DateTime, nullable=False)

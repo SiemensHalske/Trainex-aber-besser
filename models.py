@@ -44,7 +44,8 @@ class UserRole(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
     
-    users = db.relationship('User', secondary='user_role', back_populates='roles')
+    user = db.relationship('User', backref='user_roles')
+    role = db.relationship('Role', backref='role_users')
 
 
 class Lecturer(db.Model):

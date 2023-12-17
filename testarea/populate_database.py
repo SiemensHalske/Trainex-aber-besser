@@ -286,36 +286,70 @@ Session = sessionmaker(bind=engine)
 
 
 def create_fake_event_types(session):
-    event_type_names = ['Conference', 'Meeting', 'Lecture', 'Workshop']
-    for name in event_type_names:
-        event_type = EventType(name=name)
-        session.add(event_type)
-    session.commit()
+    try:
+        event_type_names = ['Conference', 'Meeting', 'Lecture', 'Workshop']
+        for name in event_type_names:
+            event_type = EventType(name=name)
+            session.add(event_type)
+        session.commit()
+    except Exception as e:
+        print(f"An error occurred while creating fake event types: {str(e)}")
+        session.rollback()
+    finally:
+        session.close()
 
 
 def create_fake_rooms(session, number_of_rooms):
-    for _ in range(number_of_rooms):
-        room_number = f'{random.randint(1, 5)}' + \
-            re.sub(r'\D', '', faker.bothify(text='???-###'))
-        room = Room(building_id=random.randint(BUILDING_ID_MIN, BUILDING_ID_MAX),
-                    room_number=room_number, capacity=random.randint(ROOM_CAPACITY_MIN, ROOM_CAPACITY_MAX))
-        session.add(room)
-    session.commit()
+    try:
+        for _ in range(number_of_rooms):
+            room_number = f'{random.randint(1, 5)}' + \
+                re.sub(r'\D', '', faker.bothify(text='???-###'))
+            room = Room(building_id=random.randint(BUILDING_ID_MIN, BUILDING_ID_MAX),
+                        room_number=room_number, capacity=random.randint(ROOM_CAPACITY_MIN, ROOM_CAPACITY_MAX))
+            session.add(room)
+        session.commit()
+    except Exception as e:
+        print(f"An error occurred while creating fake rooms: {str(e)}")
+        session.rollback()
+    finally:
+        session.close()
 
 
 def create_fake_events(session, number_of_events):
-    event_types = session.query(EventType).all()
-    rooms = session.query(Room).all()
-    for _ in range(number_of_events):
-        event = Event(
-            event_type_id=random.choice(event_types).id,
-            title=faker.sentence(),
-            start_time=faker.date_time(),
-            end_time=faker.date_time(),
-            room_id=random.choice(rooms).id
-        )
-        session.add(event)
-    session.commit()
+    try:
+        event_types = session.query(EventType).all()
+        rooms = session.query(Room).all()
+        for _ in range(number_of_events):
+            event = Event(
+                event_type_id=random.choice(event_types).id,
+                title=faker.sentence(),
+                start_time=faker.date_time(),
+                end_time=faker.date_time(),
+                room_id=random.choice(rooms).id
+            )
+            session.add(event)
+        session.commit()
+    except Exception as e:
+        print(f"An error occurred while creating fake events: {str(e)}")
+        session.rollback()
+    finally:
+        session.close()
+
+def create_fake_buildings(session, number_of_buildings=5):
+    try:
+        for _ in range(number_of_buildings):
+            building = Building(
+                name=faker.company(),
+                story_count=random.randint(BUILDING_ID_MIN, BUILDING_ID_MAX),
+                address_id=random.randint(1, 1)
+            )
+            session.add(building)
+        session.commit()
+    except Exception as e:
+        print(f"An error occurred while creating fake buildings: {str(e)}")
+        session.rollback()
+    finally:
+        session.close()
 
 
 def populate_database():
@@ -323,6 +357,7 @@ def populate_database():
     create_fake_event_types(session)
     create_fake_rooms(session, NUMBER_OF_ROOMS)
     create_fake_events(session, NUMBER_OF_EVENTS)
+    create_fake_buildings(session)  # Call the create_fake_buildings method
     session.close()
 
 

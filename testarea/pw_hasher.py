@@ -23,13 +23,21 @@ def add_user(conn, username, email, first_name, last_name, is_active, is_admin, 
         conn.commit()
 
 def add_users_from_file(conn, file_path):
-    with open(file_path, 'r') as file:
-        for line in file:
-            username, email, password, first_name, last_name, is_active_str, is_admin_str = line.strip().split(',')
-            is_active = is_active_str.strip().lower() in ('true', 't', '1')
-            is_admin = is_admin_str.strip().lower() in ('true', 't', '1')
-            add_user(conn, username, email, password, first_name, last_name, is_active, is_admin)
-            print(f"Added user {username}")
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                try:
+                    username, email, password, first_name, last_name, is_active_str, is_admin_str = line.strip().split(',')
+                    is_active = is_active_str.strip().lower() in ('true', 't', '1')
+                    is_admin = is_admin_str.strip().lower() in ('true', 't', '1')
+                    add_user(conn, username, email, password, first_name, last_name, is_active, is_admin)
+                    print(f"Added user {username}")
+                except ValueError:
+                    print(f"Invalid data format in line: {line}")
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 def main():
     conn = None

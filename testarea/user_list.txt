@@ -1,4 +1,3 @@
-hendrik.siemens, hendriksiemens1@gmail.com, zoRRo123, Hendrik, Siemens, True, True
 hideaki.toro, florian@ostendorf.de, itbw18, Florian, Ostendorf, True, True
 gabriel.janich, gabriel@janich.de, itbw18, Gabriel, Janich, True, True
 oliver.schlueter, oliver@schlueter.de, itbw18, Oliver, Schlüter, True, False

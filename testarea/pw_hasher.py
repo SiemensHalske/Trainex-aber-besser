@@ -11,7 +11,7 @@ def create_connection():
         host="localhost",
     )
 
-def add_user(conn, username, email, first_name, last_name, is_active, is_admin, password = 'itbw18'):
+def add_user(conn, username, email, password, first_name, last_name, is_active, is_admin):
     with conn.cursor() as cursor:
         password_hash = generate_password_hash(password)
         insert_query = sql.SQL("""

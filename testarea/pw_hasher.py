@@ -4,10 +4,10 @@ from werkzeug.security import generate_password_hash
 
 def create_connection():
     return psycopg2.connect(
-        dbname="your_db_name",
-        user="your_db_user",
-        password="your_db_password",
-        host="your_db_host"
+        dbname="educampus",
+        user="postgres",
+        password="zoRRo123",
+        host="localhost",
     )
 
 def add_user(conn, username, email, password, first_name, last_name, is_active, is_admin):

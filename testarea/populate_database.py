@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 import random
 import re
+from models import *
 
 # Konfigurationsvariablen
 DB_USERNAME = 'postgres'
@@ -21,30 +22,6 @@ BUILDING_ID_MAX = 5
 
 faker = Faker()
 Base = declarative_base()
-
-class EventType(Base):
-    __tablename__ = 'event_type'
-    id = Column(Integer, primary_key=True)
-    name = Column(Text, nullable=False)
-
-class Room(Base):
-    __tablename__ = 'room'
-    id = Column(Integer, primary_key=True)
-    building_id = Column(Integer, ForeignKey('building.id'))
-    room_number = Column(Text, nullable=False)
-    capacity = Column(Integer)
-    building = relationship('Building', back_populates='rooms')
-    events = relationship('Event', back_populates='room')
-
-class Event(Base):
-    __tablename__ = 'event'
-    id = Column(Integer, primary_key=True)
-    event_type_id = Column(Integer, ForeignKey('event_type.id'))
-    title = Column(Text, nullable=False)
-    start_time = Column(DateTime, nullable=False)
-    end_time = Column(DateTime, nullable=False)
-    room_id = Column(Integer, ForeignKey('room.id'))
-    room = relationship('Room', back_populates='events')
 
 engine = create_engine(DATABASE_URL)
 Base.metadata.create_all(engine)

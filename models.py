@@ -90,12 +90,22 @@ class Event(db.Model):
     description = db.Column(db.Text)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room', back_populates='events')
-
+    event_type = db.relationship('EventType')
 
 class EventType(db.Model):
     __tablename__ = 'event_type'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
+
+
+class Room(db.Model):
+    __tablename__ = 'room'
+    id = db.Column(db.Integer, primary_key=True)
+    building_id = db.Column(db.Integer, db.ForeignKey('building.id'))
+    room_number = db.Column(db.Text, nullable=False)
+    capacity = db.Column(db.Integer)
+    building = db.relationship('Building', back_populates='rooms')
+    events = db.relationship('Event', back_populates='room')
 
 
 class DepartmentBuilding(db.Model):
@@ -120,14 +130,6 @@ class Adress(db.Model):
     country = db.Column(db.Text, nullable=False)
 
 
-class Room(db.Model):
-    __tablename__ = 'room'
-    id = db.Column(db.Integer, primary_key=True)
-    building_id = db.Column(db.Integer, db.ForeignKey('building.id'))
-    room_number = db.Column(db.Text, nullable=False)
-    capacity = db.Column(db.Integer)
-    building = db.relationship('Building', back_populates='rooms')
-    events = db.relationship('Event', back_populates='room')
 
 
 class Building(db.Model):

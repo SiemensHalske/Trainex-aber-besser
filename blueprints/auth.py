@@ -11,6 +11,7 @@ from itsdangerous import URLSafeTimedSerializer
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies
 import logging
 from datetime import datetime, timedelta
+from sqlalchemy import text
 
 auth_logger = logging.getLogger("auth_logger")
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -100,7 +101,7 @@ def log_login_attempt(u_id: int, success: bool):
     # conn.commit()
 
     values = (u_id, datetime.now(), success)
-    sql_query = "INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (?, ?, ?)"
+    sql_query = text( "INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (?, ?, ?)")
     db.session.execute(sql_query, values)
 
 

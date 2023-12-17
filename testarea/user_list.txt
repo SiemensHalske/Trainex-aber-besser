@@ -1,7 +1,7 @@
-hideaki.toro, florian@ostendorf.de, itbw18, Florian, Ostendorf, True, True
-gabriel.janich, gabriel@janich.de, itbw18, Gabriel, Janich, True, True
-oliver.schlueter, oliver@schlueter.de, itbw18, Oliver, Schlüter, True, False
-henning.franzen, henning@franzen.de, itbw18, Henning, Franzen, True, False
-jan.osing, jan@osing.de, itbw18, Jan, Osing, True, False
-jan.schneiders, jan@schneiders, itbw18, Jan, Schneiders, True, False
-lennard.brill, lennard@brill.de, itbw18, Lennard, Brill, True, False
+hideaki.toro,florian@ostendorf.de,itbw18,Florian,Ostendorf,True,True
+gabriel.janich,gabriel@janich.de,itbw18,Gabriel,Janich,True,True
+oliver.schlueter,oliver@schlueter.de,itbw18,Oliver,Schlüter,True,False
+henning.franzen,henning@franzen.de,itbw18,Henning,Franzen,True,False
+jan.osing,jan@osing.de,itbw18,Jan,Osing,True,False
+jan.schneiders,jan@schneiders,itbw18,Jan,Schneiders,True,False
+lennard.brill,lennard@brill.de,itbw18,Lennard,Brill,True,False

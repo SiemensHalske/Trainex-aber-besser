@@ -154,8 +154,7 @@ class LoginAttempt(db.Model):
     success = db.Column(db.Boolean, nullable=False)
 
     # Beziehung zu User definieren, um auf User-Objekte zugreifen zu können
-    user = db.relationship(
-        'User', backref=db.backref('login_attempts', lazy=True))
+    user = db.relationship('User', back_populates='login_attempts')
 
 
 class Messages(db.Model):

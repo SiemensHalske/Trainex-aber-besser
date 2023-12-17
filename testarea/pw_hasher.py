@@ -1,86 +1,45 @@
 import psycopg2
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from psycopg2 import sql
 from werkzeug.security import generate_password_hash
 
-# Replace these variables with your actual database connection info
-db_name = "educampus"
-db_user = "postgres"
-db_password = "zoRRo123"
-db_host = "localhost"  # or your database server IP
+def create_connection():
+    return psycopg2.connect(
+        dbname="your_db_name",
+        user="your_db_user",
+        password="your_db_password",
+        host="your_db_host"
+    )
 
-# Connect to PostgreSQL
-conn = psycopg2.connect(dbname=db_name, user=db_user, password=db_password, host=db_host)
-conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+def add_user(conn, username, email, password, first_name, last_name, is_active, is_admin):
+    with conn.cursor() as cursor:
+        password_hash = generate_password_hash(password)
+        insert_query = sql.SQL("""
+            INSERT INTO users (username, password_hash, email, first_name, last_name, is_active, is_admin)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """)
 
-# Cursor to execute queries
-cur = conn.cursor()
-
-# Function to add user and assign a role in the database
-def add_user_and_role(username, password, email, role_name, is_active=True, is_admin=False):
-    # Hash the password
-    password_hash = generate_password_hash(password)  # Replace with your actual hash function
-    
-    try:
-        # Insert the new role if it does not exist
-        cur.execute("SELECT id FROM role WHERE name = %s", (role_name,))
-        role = cur.fetchone()
-        if role is None:
-            cur.execute("INSERT INTO role (name) VALUES (%s) RETURNING id", (role_name,))
-            role_id = cur.fetchone()[0]
-        else:
-            role_id = role[0]
-
-        # Insert a new user
-        cur.execute("""
-            INSERT INTO users (username, password_hash, email, is_active, is_admin) 
-            VALUES (%s, %s, %s, %s, %s) RETURNING id
-            """, (username, password_hash, email, is_active, is_admin))
-        user_id = cur.fetchone()[0]
-
-        # Assign the role to the user
-        cur.execute("INSERT INTO user_role (user_id, role_id) VALUES (%s, %s)", (user_id, role_id))
-
-        # Commit the transaction
+        cursor.execute(insert_query, (username, password_hash, email, first_name, last_name, is_active, is_admin))
         conn.commit()
-        print(f"User {username} with role {role_name} has been added to the database with email {email}.")
 
+def main():
+    conn = None
+    try:
+        conn = create_connection()
+        username = input("Enter username: ")
+        email = input("Enter email: ")
+        password = input("Enter password: ")
+        first_name = input("Enter first name: ")
+        last_name = input("Enter last name: ")
+        is_active = input("Is user active? (True/False): ").lower() in ('true', '1', 't')
+        is_admin = input("Is user admin? (True/False): ").lower() in ('true', '1', 't')
+
+        add_user(conn, username, email, password, first_name, last_name, is_active, is_admin)
+        print("User added successfully.")
     except Exception as e:
-        # If any error occurs, rollback the transaction
-        conn.rollback()
         print(f"An error occurred: {e}")
-
     finally:
-        # Close the cursor and connection
-        cur.close()
-        conn.close()
+        if conn:
+            conn.close()
 
-def create_password_hash(password):
-    """
-    Generate a password hash using werkzeug's security module.
-
-    Args:
-        password (str): The plain text password to hash.
-
-    Returns:
-        str: A password hash.
-    """
-    # The method='bcrypt' parameter defines the hash method to use.
-    password_hash = generate_password_hash(password, method='bcrypt')
-    return password_hash
-
-# Example usage
 if __name__ == "__main__":
-    # Input username, password, email, and role
-    username = input("Enter the username: ")
-    password = input("Enter the password: ")
-    email = input("Enter the email: ")
-    role_name = input("Enter the role name: ")
-    is_active_input = input("Is the user active? (y/n): ")
-    is_admin_input = input("Is the user an admin? (y/n): ")
-
-    # Convert is_active and is_admin to boolean
-    is_active = True if is_active_input.lower() == 'y' else False
-    is_admin = True if is_admin_input.lower() == 'y' else False
-
-    # Call the function with the user input
-    add_user_and_role(username, password, email, role_name, is_active, is_admin)
+    main()

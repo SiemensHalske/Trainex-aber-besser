@@ -22,13 +22,14 @@ def add_user(conn, username, email, first_name, last_name, is_active, is_admin, 
         cursor.execute(insert_query, (username, password_hash, email, first_name, last_name, is_active, is_admin))
         conn.commit()
 
-def bulk_add_users(conn, file_path):
+def add_users_from_file(conn, file_path):
     with open(file_path, 'r') as file:
         for line in file:
             username, email, password, first_name, last_name, is_active_str, is_admin_str = line.strip().split(',')
-            is_active = is_active_str.lower() in ('true', '1', 't')
-            is_admin = is_admin_str.lower() in ('true', '1', 't')
+            is_active = is_active_str.strip().lower() in ('true', 't', '1')
+            is_admin = is_admin_str.strip().lower() in ('true', 't', '1')
             add_user(conn, username, email, password, first_name, last_name, is_active, is_admin)
+            print(f"Added user {username}")
 
 def main():
     conn = None
@@ -36,7 +37,7 @@ def main():
         conn = create_connection()
         if '-b' in sys.argv:
             bulk_file_path = sys.argv[sys.argv.index('-b') + 1]
-            bulk_add_users(conn, bulk_file_path)
+            add_users_from_file(conn, bulk_file_path)
         else:
             username = input("Enter username: ")
             email = input("Enter email: ")

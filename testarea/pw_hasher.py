@@ -23,6 +23,7 @@ def add_user(conn, username, email, first_name, last_name, is_active, is_admin, 
         conn.commit()
 
 def add_users_from_file(conn, file_path):
+    print(f"Adding users from file: {file_path}")
     try:
         with open(file_path, 'r') as file:
             for line in file:

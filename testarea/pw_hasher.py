@@ -43,8 +43,8 @@ def main():
             password = input("Enter password: ")
             first_name = input("Enter first name: ")
             last_name = input("Enter last name: ")
-            is_active = input("Is user active? (True/False): ").lower() in ('true', '1', 't')
-            is_admin = input("Is user admin? (True/False): ").lower() in ('true', '1', 't')
+            is_active = str(input("Is user active? (True/False): ").lower() in ('true', '1', 't'))
+            is_admin = str(input("Is user admin? (True/False): ").lower() in ('true', '1', 't'))
 
             add_user(conn, username, email, password, first_name, last_name, is_active, is_admin)
             print("User added successfully.")

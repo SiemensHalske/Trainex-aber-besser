@@ -4,23 +4,38 @@ from psycopg2 import sql
 from werkzeug.security import generate_password_hash
 
 def create_connection():
-    return psycopg2.connect(
-        dbname="educampus",
-        user="postgres",
-        password="zoRRo123",
-        host="localhost",
-    )
+    try:
+        conn = psycopg2.connect(
+            dbname="educampus",
+            user="postgres",
+            password="zoRRo123",
+            host="localhost",
+        )
+        print("Connection established successfully.")
+        return conn
+    except psycopg2.Error as e:
+        print(f"Error connecting to the database: {e}")
+        return None
 
 def add_user(conn, username, email, password, first_name, last_name, is_active, is_admin):
-    with conn.cursor() as cursor:
-        password_hash = generate_password_hash(password)
-        insert_query = sql.SQL("""
-            INSERT INTO users (username, password_hash, email, first_name, last_name, is_active, is_admin)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """)
+    try:
+        if not all([username, email, password, first_name, last_name]):
+            raise ValueError("Missing required fields")
 
-        cursor.execute(insert_query, (username, password_hash, email, first_name, last_name, is_active, is_admin))
-        conn.commit()
+        with conn.cursor() as cursor:
+            password_hash = generate_password_hash(password)
+            insert_query = sql.SQL("""
+                INSERT INTO users (username, password_hash, email, first_name, last_name, is_active, is_admin)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """)
+
+            cursor.execute(insert_query, (username, password_hash, email, first_name, last_name, is_active, is_admin))
+            conn.commit()
+            print("User added successfully.")
+    except ValueError as ve:
+        print(f"Invalid input: {ve}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 def add_users_from_file(conn, file_path):
     print(f"Adding users from file: {file_path}")

@@ -60,7 +60,7 @@ def login():
                 access_token = create_access_token(identity=username)
                 # Stelle sicher, dass 'main_bp.login_success' existiert
                 response = make_response(
-                    redirect(url_for('main_bp.login_success')))
+                    redirect(url_for('main.login_success')))
                 response.set_cookie('access_token_cookie',
                                     access_token, httponly=True)
                 return response

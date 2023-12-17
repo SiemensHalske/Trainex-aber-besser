@@ -96,14 +96,10 @@ def generate_auth_token(user_id):
 
 
 def log_login_attempt(u_id: int, success: bool):
-    # cursor.execute("INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (?, ?, ?)",
-    #                (u_id, datetime.now(), success))
-    # conn.commit()
-
-    values = [(u_id, datetime.now(), success)]
-    sql_query = text( "INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (?, ?, ?)")
+    values = {'u_id': u_id, 'attempt_time': datetime.now(), 'success': success}
+    sql_query = text("INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (:u_id, :attempt_time, :success)")
     db.session.execute(sql_query, values)
-
+    db.session.commit()
 
 def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time, incremental_penalty, max_penalty_time):
     last_attempts = LoginAttempt.query.filter_by(u_id=u_id, success=False) \

@@ -100,7 +100,7 @@ def log_login_attempt(u_id: int, success: bool):
     #                (u_id, datetime.now(), success))
     # conn.commit()
 
-    values = (u_id, datetime.now(), success)
+    values = [(u_id, datetime.now(), success)]
     sql_query = text( "INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (?, ?, ?)")
     db.session.execute(sql_query, values)
 

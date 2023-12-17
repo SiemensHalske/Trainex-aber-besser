@@ -101,7 +101,7 @@ def log_login_attempt(u_id: int, success: bool):
 
     values = (u_id, datetime.now(), success)
     sql_query = "INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (?, ?, ?)"
-    db.engine.execute(sql_query, values)
+    db.session.execute(sql_query, values)
 
 
 def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time, incremental_penalty, max_penalty_time):

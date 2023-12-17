@@ -354,10 +354,10 @@ def create_fake_buildings(session, number_of_buildings=5):
 
 def populate_database():
     session = Session()
-    create_fake_event_types(session)
-    create_fake_rooms(session, NUMBER_OF_ROOMS)
-    create_fake_events(session, NUMBER_OF_EVENTS)
     create_fake_buildings(session)  # Call the create_fake_buildings method
+    create_fake_rooms(session, NUMBER_OF_ROOMS)
+    create_fake_event_types(session)
+    create_fake_events(session, NUMBER_OF_EVENTS)
     session.close()
 
 

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from faker import Faker
 from sqlalchemy import LargeBinary, create_engine, Column, Integer, Text, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base

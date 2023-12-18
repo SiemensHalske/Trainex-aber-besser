@@ -56,8 +56,7 @@ def login():
 
             if user.check_password(form.password.data):
                 log_login_attempt(user.id, True)
-                username = form.username.data
-                access_token = create_access_token(identity=username)
+                access_token = create_access_token(identity=user.id)
                 # Stelle sicher, dass 'main_bp.login_success' existiert
                 response = make_response(
                     redirect(url_for('main.login_success')))

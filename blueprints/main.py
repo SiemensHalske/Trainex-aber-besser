@@ -11,7 +11,7 @@ from models import *
 from extensions import db
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from sqlalchemy import and_
-
+from werkzeug.exceptions import Unauthorized, Forbidden
 class Config:
     log_dict = {
         'default': 'logs/default.log',
@@ -319,11 +319,12 @@ def get_calendar_events():
         
     Query string parameters:
         - user_id (int): ID of the user whose events are to be retrieved.
+        - lecturer_id (int, optional): ID of the lecturer to filter the events (default: 1).
         
     Example:
-        /calendar_events?user_id=1
+        /calendar_events?user_id=1&lecturer_id=1
         
-        Retrieves calendar events for user with ID 1.
+        Retrieves calendar events for user with ID 1 and lecturer with ID 1.
     
         example response:
         [
@@ -333,14 +334,6 @@ def get_calendar_events():
                 "start_time": "2021-01-01T09:00:00",
                 "end_time": "2021-01-01T10:00:00",
                 "description": "Event 1 description",
-                "lecturer_id": 1
-            },
-            {
-                "id": 2,
-                "title": "Event 2",
-                "start_time": "2021-01-01T10:00:00",
-                "end_time": "2021-01-01T11:00:00",
-                "description": "Event 2 description",
                 "lecturer_id": 1
             }
         ]
@@ -353,9 +346,12 @@ def get_calendar_events():
         500: If an error occurs while fetching the events.
     """
     # Get user_id from the query string parameters
-    user_id = request.args.get('user_id', type=int)
-    if not user_id:
-        return jsonify({"error": "user_id is required"}), 400
+    user_id = get_jwt_identity()
+    u_id_valid = User.query.filter_by(id=user_id).first()
+    if not user_id or not u_id_valid:
+        raise Unauthorized("No user ID provided")
+
+    lecturer_id = request.args.get('lecturer_id', default=1, type=int)
 
     try:
         # Construct an efficient query
@@ -363,9 +359,9 @@ def get_calendar_events():
             join(Course, Event.course_id == Course.id).\
             join(CourseRegistration, and_(Course.id == CourseRegistration.course_id, CourseRegistration.user_id == user_id)).\
             join(Lecturer, Course.lecturer_id == Lecturer.id).\
-            filter(Lecturer.id == 1).\
+            filter(Lecturer.id == lecturer_id).\
             all()
-        
+
         events_data = [{
             'id': event.id,
             'title': event.title,
@@ -381,6 +377,9 @@ def get_calendar_events():
     except Exception as e:
         # Log the error or send it to a monitoring system
         print(f"An error occurred: {e}")
+        error_message = f"An error occurred: {e}"
+        error_level = 'ERROR_calender_events'
+        log_error(user_id, error_level, error_message)
         return jsonify({"error": "An error occurred fetching events."}), 500
 
 
@@ -401,3 +400,23 @@ def method_not_allowed(e: Exception) -> tuple[str, int]:
 @main_bp.errorhandler(500)
 def internal_server_error(e: Exception) -> tuple[str, int]:
     return render_template('/error/500.html', error=e), 500
+
+
+# =============================================================
+# Helper functions
+# =============================================================
+
+def log_error(user_id = 0, error_level: str = 'INFO', error_message: str = '') -> None:
+    """
+    Logs an error to the database.
+    
+    Args:
+        error_message (str): The error message to log.
+    """
+    error_log = Logging()
+    error_log.timestamp = datetime.utcnow()
+    error_log.level = error_level
+    error_log.user_id = user_id
+    error_log.message = error_message
+    db.session.add(error_log)
+    db.session.commit()

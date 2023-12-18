@@ -356,10 +356,10 @@ def get_calendar_events():
     try:
         # Construct an efficient query
         events = db.session.query(Event).\
-            join(Course, Event.course_id == Course.id).\
+            join(Lecturer, Event.lecturer_id == Lecturer.id).\
+            join(Course, Lecturer.id == Course.lecturer_id).\
             join(CourseRegistration, and_(Course.id == CourseRegistration.course_id, CourseRegistration.user_id == user_id)).\
-            join(Lecturer, Course.lecturer_id == Lecturer.id).\
-            filter(Lecturer.id == lecturer_id).\
+            filter(Event.lecturer_id == lecturer_id).\
             all()
 
         events_data = [{

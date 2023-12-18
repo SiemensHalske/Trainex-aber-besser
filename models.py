@@ -47,7 +47,8 @@ class UserRole(db.Model):
         'users.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
 
-    user = db.relationship('User', backref='user_roles')
+    user = db.relationship('User', backref='user_roles',
+                           overlaps="roles,users")
     role = db.relationship('Role', backref='role_users')
 
 
@@ -58,6 +59,7 @@ class Lecturer(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, unique=True, nullable=False)
     courses = db.relationship('Course', back_populates='lecturer')
+    events = db.relationship('Event', back_populates='lecturer')
 
 
 class Course(db.Model):
@@ -91,6 +93,9 @@ class Event(db.Model):
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room', back_populates='events')
     event_type = db.relationship('EventType')
+    lecturer_id = db.Column(db.Integer, db.ForeignKey('lecturer.id'))
+    lecturer = db.relationship('Lecturer', back_populates='events')
+
 
 class EventType(db.Model):
     __tablename__ = 'event_type'
@@ -128,8 +133,6 @@ class Adress(db.Model):
     zip_code = db.Column(db.Text, nullable=False)
     city = db.Column(db.Text, nullable=False)
     country = db.Column(db.Text, nullable=False)
-
-
 
 
 class Building(db.Model):

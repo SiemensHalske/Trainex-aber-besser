@@ -92,7 +92,7 @@ class Event(db.Model):
     description = db.Column(db.Text)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     room = db.relationship('Room', back_populates='events')
-    event_type = db.relationship('EventType')
+    event_type = db.relationship('EventType', back_populates='events')
     lecturer_id = db.Column(db.Integer, db.ForeignKey('lecturer.id'))
     lecturer = db.relationship('Lecturer', back_populates='events')
 
@@ -101,7 +101,7 @@ class EventType(db.Model):
     __tablename__ = 'event_type'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False)
-
+    events = db.relationship('Event', back_populates='event_type')
 
 class Room(db.Model):
     __tablename__ = 'room'

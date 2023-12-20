@@ -7,7 +7,7 @@ import random
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import Boolean
-# from models import *
+
 
 # Konfigurationsvariablen
 DB_USERNAME = 'postgres'
@@ -363,3 +363,4 @@ def populate_database():
 
 if __name__ == "__main__":
     populate_database()
+

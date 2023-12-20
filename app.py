@@ -40,6 +40,16 @@ class Config:
 
 
 def init_logging(name: str, log_path: str):
+    """
+    Initialize logging for a specific logger.
+
+    Args:
+        name (str): The name of the logger.
+        log_path (str): The path to the log file.
+
+    Returns:
+        None
+    """
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(name)
     handler = RotatingFileHandler(log_path, maxBytes=10000000, backupCount=5)
@@ -51,12 +61,28 @@ def init_logging(name: str, log_path: str):
 
 
 def generate_secret_key(length=24):
-    # Generates a secret key
+    """
+    Generate a secret key.
+
+    Args:
+        length (int): The length of the secret key. Default is 24.
+
+    Returns:
+        bytes: The generated secret key.
+    """
     return os.urandom(length)
 
 
 def generate_salt(length=24):
-    # Generates a salt
+    """
+    Generate a salt.
+
+    Args:
+        length (int): The length of the salt. Default is 24.
+
+    Returns:
+        str: The generated salt.
+    """
     return os.urandom(length).hex()
 
 
@@ -88,6 +114,15 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
+    """
+    Load a user from the database.
+
+    Args:
+        user_id (int): The ID of the user.
+
+    Returns:
+        User: The loaded user object.
+    """
     with app.app_context():
         session = Session(bind=db.engine)
         return session.get(User, int(user_id))
@@ -114,6 +149,12 @@ def add_header(response):
     """
     Add headers to both force latest IE rendering engine or Chrome Frame,
     and also to cache the rendered page for 10 minutes.
+
+    Args:
+        response (flask.Response): The response object.
+
+    Returns:
+        flask.Response: The response object with added headers.
     """
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, public, max-age=0'
     response.headers['Pragma'] = 'no-cache'
@@ -128,15 +169,28 @@ app.register_blueprint(main_bp)
 
 
 def signal_handler(signal, frame):
-    # Fetch the shortcut CTRL+ALT+^
+    """
+    Handle the signal when the user presses Ctrl+C.
+
+    Args:
+        signal: The signal number.
+        frame: The current stack frame.
+
+    Returns:
+        None
+    """
     print('You pressed Ctrl+{0}'.format(signal))
     print('Exiting...')
     exit(0)
 
 
 def initialize_logging():
+    """
+    Initialize logging for all loggers defined in the Config class.
 
-    # Initialize logging
+    Returns:
+        None
+    """
     for key, value in Config.log_dict.items():
         init_logging(key+"_logger", value)
 

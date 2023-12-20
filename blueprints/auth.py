@@ -18,6 +18,14 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
 def set_audit_log(user_id, action):
+    """
+        Sets an audit log entry for the given user_id and action
+        
+        :param user_id: The user_id of the user who performed the action
+        :param action: The action that was performed
+        
+        :return: None
+    """
     username = User.query.filter_by(id=user_id).first().username
 
     print(f"Logging action: {action} for user {username}")
@@ -34,6 +42,11 @@ def set_audit_log(user_id, action):
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    Login route for the application. Checks if the user exists and if the password is correct.
+    
+    :return: The login template or the login_success template if the login was successful, otherwise the user is redirected to the login template
+    """
     timestamp = datetime.utcnow()
     user_ip = request.remote_addr
     # auth_logger.info(f"Login attempt from {user_ip} at {timestamp}")
@@ -131,3 +144,4 @@ def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time
 
 
     return True, None
+

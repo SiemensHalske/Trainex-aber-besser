@@ -4,6 +4,12 @@ from psycopg2 import sql
 from werkzeug.security import generate_password_hash
 
 def create_connection():
+    """
+    Creates a connection to the PostgreSQL database.
+
+    Returns:
+        conn (psycopg2.extensions.connection): The database connection object.
+    """
     try:
         conn = psycopg2.connect(
             dbname="educampus",
@@ -18,6 +24,19 @@ def create_connection():
         return None
 
 def add_user(conn, username, email, password, first_name, last_name, is_active, is_admin):
+    """
+    Adds a user to the database.
+
+    Args:
+        conn (psycopg2.extensions.connection): The database connection object.
+        username (str): The username of the user.
+        email (str): The email address of the user.
+        password (str): The password of the user.
+        first_name (str): The first name of the user.
+        last_name (str): The last name of the user.
+        is_active (bool): Indicates if the user is active.
+        is_admin (bool): Indicates if the user is an admin.
+    """
     try:
         if not all([username, email, password, first_name, last_name]):
             raise ValueError("Missing required fields")
@@ -38,6 +57,13 @@ def add_user(conn, username, email, password, first_name, last_name, is_active, 
         print(f"An error occurred: {e}")
 
 def add_users_from_file(conn, file_path):
+    """
+    Adds users from a file to the database.
+
+    Args:
+        conn (psycopg2.extensions.connection): The database connection object.
+        file_path (str): The path to the file containing user data.
+    """
     print(f"Adding users from file: {file_path}")
     try:
         with open(file_path, 'r') as file:
@@ -56,6 +82,9 @@ def add_users_from_file(conn, file_path):
         print(f"An error occurred: {e}")
 
 def main():
+    """
+    The main function of the script.
+    """
     conn = None
     try:
         conn = create_connection()

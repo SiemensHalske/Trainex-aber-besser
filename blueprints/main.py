@@ -12,6 +12,7 @@ from extensions import db
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from sqlalchemy import and_
 from werkzeug.exceptions import Unauthorized, Forbidden
+from auth import jwt_required_optional
 
 class Config:
     log_dict = {
@@ -68,7 +69,7 @@ def login():
 
 
 @main_bp.route('/login_success', methods=['GET', 'POST'])
-@jwt_required()
+@jwt_required_optional()
 def login_success():
     return render_template('index.html')
 
@@ -86,41 +87,41 @@ def banner():
 
 
 @main_bp.route('/aktuelles')
-@jwt_required()
+@jwt_required_optional()
 def aktuelles():
     return render_template('aktuelles.html')
 
 
 @main_bp.route('/privates')
-@jwt_required()
+@jwt_required_optional()
 def privates():
     # Your view logic here
     return render_template('privates.html')
 
 
 @main_bp.route('/cafe')
-@jwt_required()
+@jwt_required_optional()
 def cafe():
     # Your view logic here
     return render_template('cafe.html')
 
 
 @main_bp.route('/learning')
-@jwt_required()
+@jwt_required_optional()
 def learning():
     # Your view logic here
     return render_template('learning.html')
 
 
 @main_bp.route('/settings')
-@jwt_required()
+@jwt_required_optional()
 def settings():
     # Your view logic here
     return render_template('settings.html')
 
 
 @main_bp.route('/logout_deprecated')
-@jwt_required()
+@jwt_required_optional()
 def logout():
     # Your view logic here
     session.pop('auth_token', None)

@@ -12,9 +12,27 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 import logging
 from datetime import datetime, timedelta
 from sqlalchemy import text
+from flask_jwt_extended import verify_jwt_in_request
 
 auth_logger = logging.getLogger("auth_logger")
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+def jwt_required_optional(fallback_endpoint='auth.login'):
+    """Ein Dekorator, der prüft, ob ein gültiges JWT-Cookie vorhanden ist. 
+    Leitet zu einer alternativen Seite um, wenn das Cookie fehlt."""
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            try:
+                verify_jwt_in_request()
+                return f(*args, **kwargs)
+            except Exception as e:
+                return redirect(url_for(fallback_endpoint))
+
+        return decorated_function
+
+    return decorator
 
 
 def set_audit_log(user_id: int = -1, action: str = "Unknown action") -> None:

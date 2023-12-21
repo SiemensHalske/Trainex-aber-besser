@@ -105,7 +105,7 @@ def login() -> str:
 @auth_bp.route('/logout')
 def logout() -> str:
     response = make_response(redirect(url_for('auth.login')))
-    unset_jwt_cookies(response)
+    unset_jwt_cookies(response, 'access_token_cookie')
     logout_user()  # Flask-Login's logout_user Funktion aufrufen, falls verwendet
     response.set_cookie('access_token_cookie', '', expires=0)  # Setzt den Cookie manuell auf ein abgelaufenes Datum
     return response

@@ -12,7 +12,7 @@ from extensions import db
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from sqlalchemy import and_
 from werkzeug.exceptions import Unauthorized, Forbidden
-from auth import jwt_required_optional
+from blueprints.auth import jwt_required_optional
 
 class Config:
     log_dict = {

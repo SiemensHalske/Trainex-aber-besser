@@ -391,16 +391,43 @@ def get_calendar_events():
 
 @main_bp.errorhandler(404)
 def page_not_found(e: Exception) -> tuple[str, int]:
+    """
+    Handle the 404 error and render the 404.html template with the given error.
+
+    Args:
+        e (Exception): The exception object representing the error.
+
+    Returns:
+        tuple[str, int]: A tuple containing the rendered template and the HTTP status code 404.
+    """
     return render_template('/error/404.html', error=e), 404
 
 
 @main_bp.errorhandler(405)
 def method_not_allowed(e: Exception) -> tuple[str, int]:
+    """
+    Error handler for HTTP 405 Method Not Allowed.
+
+    Args:
+        e (Exception): The exception object.
+
+    Returns:
+        tuple[str, int]: A tuple containing the rendered template and the HTTP status code.
+    """
     return render_template('/error/405.html', error=e), 405
 
 
 @main_bp.errorhandler(500)
 def internal_server_error(e: Exception) -> tuple[str, int]:
+    """
+    Error handler for internal server errors (status code 500).
+    
+    Args:
+        e (Exception): The exception that occurred.
+    
+    Returns:
+        tuple[str, int]: A tuple containing the rendered template for the error page and the status code 500.
+    """
     return render_template('/error/500.html', error=e), 500
 
 

@@ -17,7 +17,7 @@ auth_logger = logging.getLogger("auth_logger")
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
-def set_audit_log(user_id, action):
+def set_audit_log(user_id: int = -1, action: str = "Unknown action") -> None:
     """
         Sets an audit log entry for the given user_id and action
         
@@ -41,7 +41,7 @@ def set_audit_log(user_id, action):
 
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
-def login():
+def login() -> str:
     """
     Login route for the application. Checks if the user exists and if the password is correct.
     
@@ -85,16 +85,31 @@ def login():
 
 
 @auth_bp.route('/logout')
-def logout():
+def logout() -> str:
     response = make_response(redirect(url_for('auth.login')))
-    unset_jwt_cookies(response)  # Diese Funktion entfernt die JWT-Cookies
+    unset_jwt_cookies(response)
     logout_user()  # Flask-Login's logout_user Funktion aufrufen, falls verwendet
+    response.set_cookie('access_token_cookie', '', expires=0)  # Setzt den Cookie manuell auf ein abgelaufenes Datum
     return response
 
 
-def token_required(f):
+def token_required(f: object) -> object:
+    """
+    Decorator function to require a valid authentication token.
+
+    This decorator can be used to protect routes that require authentication.
+    It checks if the 'auth_token' is present in the session and redirects to the login page if not.
+    If the token is present, it performs token validation logic before executing the decorated function.
+
+    Args:
+        f: The function to be decorated.
+
+    Returns:
+        The decorated function.
+
+    """
     @wraps(f)
-    def decorated_function(*args, **kwargs):
+    def decorated_function(*args, **kwargs) -> object:
         if 'auth_token' not in session:
             return redirect(url_for('login', next=request.url))
         # Token validation logic here
@@ -102,18 +117,41 @@ def token_required(f):
     return decorated_function
 
 
-def generate_auth_token(user_id):
+def generate_auth_token(user_id: int = -1) -> str:
+    if user_id == -1:
+        return None
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return serializer.dumps(user_id, salt=current_app.config['SECURITY_PASSWORD_SALT'])
 
 
-def log_login_attempt(u_id: int, success: bool):
+def log_login_attempt(u_id: int = -1, success: bool = False) -> None:
+    """
+        Logs the login attempt for the given user_id and success
+        
+        :param u_id: The user_id of the user who performed the action
+        :param success: Whether the login attempt was successful or not
+        
+        :return: None
+    """
+    if u_id == -1:
+        return None
     values = {'u_id': u_id, 'attempt_time': datetime.now(), 'success': success}
     sql_query = text("INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (:u_id, :attempt_time, :success)")
     db.session.execute(sql_query, values)
     db.session.commit()
 
-def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time, incremental_penalty, max_penalty_time):
+def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time, incremental_penalty, max_penalty_time) -> tuple:
+    """
+        Checks if the user is allowed to login or not
+        
+        :param u_id: The user_id of the user who performed the action
+        :param max_attempts_before_penalty: The maximum number of failed login attempts before the user gets penalized
+        :param initial_penalty_time: The initial penalty time in seconds
+        :param incremental_penalty: The incremental penalty time in seconds
+        :param max_penalty_time: The maximum penalty time in seconds
+        
+        :return: A tuple containing a boolean indicating whether the user is allowed to login and the time left until the user can login again
+    """
     last_attempts = LoginAttempt.query.filter_by(u_id=u_id, success=False) \
                                       .order_by(LoginAttempt.attempt_time.desc()).all()
 

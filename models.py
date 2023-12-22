@@ -36,7 +36,7 @@ class User(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     is_active = db.Column(db.Boolean, default=True)
     is_admin = db.Column(db.Boolean, default=False)
-    roles = db.relationship('Role', secondary='user_role', backref=db.backref('users', lazy='dynamic'))
+    roles = db.relationship('Role', secondary='user_role', backref=db.backref('assigned_users', lazy='dynamic'))
     logs = db.relationship('Logging', back_populates='user',
                            foreign_keys='Logging.user_id')  # Add foreign key constraint
 

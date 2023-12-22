@@ -142,9 +142,10 @@ def admin():
 
         if role and role.name == "Administator":
             return render_template('admin.html')
-        
-        else:
-            return render_template('aktuelles.html')
+    
+    else:
+        # redirect to '/aktuelles'
+        return redirect(url_for('main.aktuelles'))
 
 @main_bp.route('/ihk_logo')
 def ihk_logo() -> str:

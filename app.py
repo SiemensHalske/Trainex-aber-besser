@@ -136,8 +136,8 @@ def before_request():
     """
     try:
         user_cookie = verify_jwt_in_request(locations=['cookies'])
-        user_id = get_jwt_identity()
-        role = get_jwt_identity()['role']
+        user_id = user_cookie['user_id']
+        role = user_cookie['role']
     except:
         user_id = -1
         role = 'anonymous'
@@ -148,6 +148,9 @@ def before_request():
     print(f"Path: {request.path}")
     print(f"Headers: {request.headers}")
     print(f"Data: {request.get_data(as_text=True)}")
+    print("\n"*3)
+    print(f"User ID: {user_id}")
+    print(f"Role: {role}")
     print("=============================================================")
     # You can add more information to log as needed
 

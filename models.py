@@ -101,10 +101,6 @@ class UserRole(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
 
-    user = db.relationship('User', back_populates='user_roles', overlaps="roles")
-    role = db.relationship('Role', back_populates='role_users', overlaps="users")
-
-
 class Lecturer(db.Model):
     """
     Represents a lecturer in the system.

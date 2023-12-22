@@ -36,7 +36,7 @@ class User(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     is_active = db.Column(db.Boolean, default=True)
     is_admin = db.Column(db.Boolean, default=False)
-    roles = db.relationship('Role', secondary='user_role', backref=db.backref('assigned_users', lazy='dynamic'))
+    roles = db.relationship('Role', secondary='user_role', back_populates='users')
     logs = db.relationship('Logging', back_populates='user',
                            foreign_keys='Logging.user_id')  # Add foreign key constraint
 
@@ -81,8 +81,7 @@ class Role(db.Model):
     __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True, nullable=False)
-    users = db.relationship(
-        'User', secondary='user_role', back_populates='roles', overlaps="user_roles")
+    users = db.relationship('User', secondary='user_role', back_populates='roles')
 
 
 class UserRole(db.Model):

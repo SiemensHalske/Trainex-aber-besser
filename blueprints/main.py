@@ -130,7 +130,6 @@ def logout() -> str:
 @main_bp.route('/admin', methods=['GET', 'POST'])
 @jwt_required_optional()
 def admin():
-    exit()
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 
@@ -142,8 +141,10 @@ def admin():
         role = Role.query.get(user_role_id)
 
         if role and role.name == "Administator":
-            
             return render_template('admin.html')
+        
+        else:
+            return render_template('aktuelles.html')
 
 @main_bp.route('/ihk_logo')
 def ihk_logo() -> str:

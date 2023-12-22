@@ -99,12 +99,11 @@ class UserRole(db.Model):
         role (Role): The role associated with the user role.
     """
     __tablename__ = 'user_role'
-    user_id = db.Column(db.Integer, db.ForeignKey(
-        'users.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
 
     user = db.relationship('User', backref='user_roles', overlaps="roles")
-    role = db.relationship('Role', backref='role_users')
+    role = db.relationship('Role', backref='role_users', overlaps="assigned_users,roles,users")
 
 
 class Lecturer(db.Model):

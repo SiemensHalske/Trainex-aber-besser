@@ -3,6 +3,21 @@
 <head>
     <title>Admin Dashboard</title>
     <link rel="stylesheet" type="text/css" href="banner.css">
+    <style>
+        /* Define the grid layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+            grid-gap: 20px; /* Gap between grid items */
+        }
+
+        /* Style the grid items */
+        .grid-item {
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,30 +34,50 @@
         </ul>
     </nav>
     
-    <main>
-        <section>
+    <main class="grid-container">
+        <section class="grid-item">
             <h2>Dashboard Overview</h2>
             <!-- Add your dashboard content here -->
         </section>
         
-        <section>
+        <section class="grid-item">
             <h2>User Management</h2>
             <!-- Add your user management content here -->
         </section>
         
-        <section>
+        <section class="grid-item">
             <h2>Product Management</h2>
             <!-- Add your product management content here -->
         </section>
         
-        <section>
+        <section class="grid-item">
             <h2>Order Management</h2>
             <!-- Add your order management content here -->
         </section>
         
-        <section>
+        <section class="grid-item">
             <h2>Settings</h2>
             <!-- Add your settings content here -->
+        </section>
+        
+        <section class="grid-item">
+            <h2>CPU Meter 1</h2>
+            <!-- Add your CPU meter 1 content here -->
+        </section>
+        
+        <section class="grid-item">
+            <h2>CPU Meter 2</h2>
+            <!-- Add your CPU meter 2 content here -->
+        </section>
+        
+        <section class="grid-item">
+            <h2>CPU Meter 3</h2>
+            <!-- Add your CPU meter 3 content here -->
+        </section>
+        
+        <section class="grid-item">
+            <h2>CPU Meter 4</h2>
+            <!-- Add your CPU meter 4 content here -->
         </section>
     </main>
     

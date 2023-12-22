@@ -18,6 +18,17 @@
             text-align: center;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        setInterval(function(){
+            $.get("/cpu_usage", function(data){
+                // Update the CPU data in your HTML
+                $("#cpu_meter_1").text("CPU usage: " + data.cpu);
+            });
+        }, 1000); // Update the CPU data every second
+    });
+    </script>
 </head>
 <body>
     <header>
@@ -62,7 +73,7 @@
         
         <section class="grid-item">
             <h2>CPU Meter 1</h2>
-            <!-- Add your CPU meter 1 content here -->
+            <p id="cpu_meter_1">Loading...</p> <!-- Placeholder for CPU data -->
         </section>
         
         <section class="grid-item">

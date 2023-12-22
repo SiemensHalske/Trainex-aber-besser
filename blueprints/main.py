@@ -7,6 +7,7 @@ from jinja2 import TemplateNotFound
 from flask import session
 from functools import wraps
 from flask import request
+import psutil
 from models import *
 from extensions import db
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
@@ -451,3 +452,12 @@ def log_error(user_id = 0, error_level: str = 'INFO', error_message: str = '') -
     error_log.message = error_message
     db.session.add(error_log)
     db.session.commit()
+    
+    
+# =============================================================
+# Functionality routes
+# =============================================================
+
+@main_bp.route('/cpu_usage')
+def cpu_usage():
+    return jsonify(cpu=psutil.cpu_percent())

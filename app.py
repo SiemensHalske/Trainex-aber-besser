@@ -11,6 +11,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from flask_jwt_extended import JWTManager
 from waitress import serve
+from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity
 
 log_path = '.\\logs\\app.log'
 
@@ -133,6 +134,9 @@ def before_request():
     """
     Log information about incoming requests for debugging purposes.
     """
+    user_cookie = verify_jwt_in_request(locations=['cookies'])
+    user_id = get_jwt_identity()
+    role = get_jwt_identity()['role']
     print("=============================================================")
     print("Incoming Request:")
     print(f"Remote address: {request.remote_addr}")

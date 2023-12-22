@@ -89,8 +89,9 @@ def login() -> str:
                 log_login_attempt(user.id, True)
                 role = db.session.query(Role).join(UserRole).filter(
                     UserRole.user_id == user.id).first()
+                role_id = 1 if role is None else role.id
                 access_token = create_access_token(identity=user.id, additional_claims={
-                                                   'role': role.id, 'username': user.username})
+                                                   'role': role_id, 'username': user.username})
                 # Stelle sicher, dass 'main_bp.login_success' existiert
                 response = make_response(
                     redirect(url_for('main.login_success')))

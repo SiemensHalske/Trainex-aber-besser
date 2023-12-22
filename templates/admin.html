@@ -19,14 +19,23 @@
         }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/toorshia/justgage@1.3.0/raphael-2.1.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/toorshia/justgage@1.3.0/justgage.js"></script>
     <script>
+    var g = new JustGage({
+        id: "cpu_meter_1",
+        value: 0,
+        min: 0,
+        max: 100,
+        title: "CPU Usage"
+    });
+
     $(document).ready(function(){
         setInterval(function(){
             $.get("/cpu_usage", function(data){
-                // Update the CPU data in your HTML
-                $("#cpu_meter_1").text("CPU usage: " + data.cpu);
+                g.refresh(data.cpu);
             });
-        }, 1000); // Update the CPU data every second
+        }, 1000);
     });
     </script>
 </head>
@@ -73,7 +82,7 @@
         
         <section class="grid-item">
             <h2>CPU Meter 1</h2>
-            <p id="cpu_meter_1">Loading...</p> <!-- Placeholder for CPU data -->
+            <div id="cpu_meter_1" class="gauge"></div> <!-- Placeholder for CPU data -->
         </section>
         
         <section class="grid-item">

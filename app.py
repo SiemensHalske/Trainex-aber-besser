@@ -134,9 +134,13 @@ def before_request():
     """
     Log information about incoming requests for debugging purposes.
     """
-    user_cookie = verify_jwt_in_request(locations=['cookies'])
-    user_id = get_jwt_identity()
-    role = get_jwt_identity()['role']
+    try:
+        user_cookie = verify_jwt_in_request(locations=['cookies'])
+        user_id = get_jwt_identity()
+        role = get_jwt_identity()['role']
+    except:
+        user_id = -1
+        role = 'anonymous'
     print("=============================================================")
     print("Incoming Request:")
     print(f"Remote address: {request.remote_addr}")

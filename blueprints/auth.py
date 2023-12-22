@@ -106,8 +106,8 @@ def login() -> str:
 @auth_bp.route('/logout')
 @jwt_required_optional()
 def logout() -> str:
-    print("Logout")
-    print(f"JWT: {get_jwt_identity()}")
+    print("Logout")  # Debug print
+    print(f"JWT: {get_jwt_identity()} with role {get_jwt_identity()['role']}")  # Debug print
     response = make_response(redirect(url_for('auth.login')))
     unset_jwt_cookies(response, 'access_token_cookie')
     logout_user()  # Flask-Login's logout_user Funktion aufrufen, falls verwendet

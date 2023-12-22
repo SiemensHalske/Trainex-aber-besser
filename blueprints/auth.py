@@ -38,10 +38,10 @@ def jwt_required_optional(fallback_endpoint='auth.login'):
 def set_audit_log(user_id: int = -1, action: str = "Unknown action") -> None:
     """
         Sets an audit log entry for the given user_id and action
-        
+
         :param user_id: The user_id of the user who performed the action
         :param action: The action that was performed
-        
+
         :return: None
     """
     username = User.query.filter_by(id=user_id).first().username
@@ -62,7 +62,7 @@ def set_audit_log(user_id: int = -1, action: str = "Unknown action") -> None:
 def login() -> str:
     """
     Login route for the application. Checks if the user exists and if the password is correct.
-    
+
     :return: The login template or the login_success template if the login was successful, otherwise the user is redirected to the login template
     """
     timestamp = datetime.utcnow()
@@ -87,8 +87,10 @@ def login() -> str:
 
             if user.check_password(form.password.data):
                 log_login_attempt(user.id, True)
-                role = db.session.query(Role).join(UserRole).filter(UserRole.user_id == user.id).first()
-                access_token = create_access_token(identity=user.id, additional_claims={'role': role.id, 'username': user.username})
+                role = db.session.query(Role).join(UserRole).filter(
+                    UserRole.user_id == user.id).first()
+                access_token = create_access_token(identity=user.id, additional_claims={
+                                                   'role': role.id, 'username': user.username})
                 # Stelle sicher, dass 'main_bp.login_success' existiert
                 response = make_response(
                     redirect(url_for('main.login_success')))
@@ -108,7 +110,8 @@ def logout() -> str:
     response = make_response(redirect(url_for('auth.login')))
     unset_jwt_cookies(response, 'access_token_cookie')
     logout_user()  # Flask-Login's logout_user Funktion aufrufen, falls verwendet
-    response.set_cookie('access_token_cookie', '', expires=0)  # Setzt den Cookie manuell auf ein abgelaufenes Datum
+    # Setzt den Cookie manuell auf ein abgelaufenes Datum
+    response.set_cookie('access_token_cookie', '', expires=0)
     return response
 
 
@@ -146,29 +149,31 @@ def generate_auth_token(user_id: int = -1) -> str:
 def log_login_attempt(u_id: int = -1, success: bool = False) -> None:
     """
         Logs the login attempt for the given user_id and success
-        
+
         :param u_id: The user_id of the user who performed the action
         :param success: Whether the login attempt was successful or not
-        
+
         :return: None
     """
     if u_id == -1:
         return None
     values = {'u_id': u_id, 'attempt_time': datetime.now(), 'success': success}
-    sql_query = text("INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (:u_id, :attempt_time, :success)")
+    sql_query = text(
+        "INSERT INTO login_attempts (u_id, attempt_time, success) VALUES (:u_id, :attempt_time, :success)")
     db.session.execute(sql_query, values)
     db.session.commit()
 
-def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time, incremental_penalty, max_penalty_time) -> tuple:
+
+def check_login_attempts(u_id: int = -1, max_attempts_before_penalty: int = 3, initial_penalty_time: int = 60, incremental_penalty: int = 60, max_penalty_time: int = 3600) -> tuple:
     """
         Checks if the user is allowed to login or not
-        
+
         :param u_id: The user_id of the user who performed the action
         :param max_attempts_before_penalty: The maximum number of failed login attempts before the user gets penalized
         :param initial_penalty_time: The initial penalty time in seconds
         :param incremental_penalty: The incremental penalty time in seconds
         :param max_penalty_time: The maximum penalty time in seconds
-        
+
         :return: A tuple containing a boolean indicating whether the user is allowed to login and the time left until the user can login again
     """
     last_attempts = LoginAttempt.query.filter_by(u_id=u_id, success=False) \
@@ -199,6 +204,4 @@ def check_login_attempts(u_id, max_attempts_before_penalty, initial_penalty_time
         if time_since_last_attempt < current_penalty_time:
             return False, current_penalty_time - time_since_last_attempt
 
-
     return True, None
-

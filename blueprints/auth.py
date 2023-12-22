@@ -105,6 +105,7 @@ def login() -> str:
     return render_template('login.html', form=form)
 
 
+@jwt_required()
 def log_before_logout(response: object) -> None:
     """
         Logs the logout attempt for the current user and prints the role of the user from

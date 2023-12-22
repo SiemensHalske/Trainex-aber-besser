@@ -103,8 +103,7 @@ class UserRole(db.Model):
         'users.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
 
-    user = db.relationship('User', backref='user_roles',
-                           overlaps="roles,users")
+    user = db.relationship('User', backref='user_roles', overlaps="roles")
     role = db.relationship('Role', backref='role_users')
 
 

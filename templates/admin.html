@@ -1,146 +1,155 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="banner.css">
+    <link rel="stylesheet" type="text/css" href="banner.css" />
     <style>
-        /* Define the grid layout */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
-            grid-gap: 20px; /* Gap between grid items */
-        }
+      /* Define the grid layout */
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+        grid-gap: 20px; /* Gap between grid items */
+      }
 
-        /* Style the grid items */
-        .grid-item {
-            background-color: #f2f2f2;
-            padding: 20px;
-            text-align: center;
-        }
+      /* Style the grid items */
+      .grid-item {
+        background-color: #f2f2f2;
+        padding: 20px;
+        text-align: center;
+      }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/toorshia/justgage@1.3.0/raphael-2.1.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/toorshia/justgage@1.3.0/justgage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
     <script>
-    $(document).ready(function(){
+      $(document).ready(function () {
         var g = new JustGage({
-            id: "cpu_meter_1",
-            value: 0,
-            min: 0,
-            max: 100,
-            title: "CPU Usage"
+          id: "cpu_meter_1",
+          value: 0,
+          min: 0,
+          max: 100,
+          title: "CPU Usage",
         });
 
-        setInterval(function(){
-            $.get("/cpu_usage", function(data){
-                g.refresh(data.cpu);
-            });
+        setInterval(function () {
+          $.get("/cpu_usage", function (data) {
+            g.refresh(data.cpu);
+          });
         }, 1000);
-    });
+      });
 
-    $(document).ready(function(){
-        var bar = new ProgressBar.Line('#memory_bar', {
-            strokeWidth: 4,
-            easing: 'easeInOut',
-            duration: 1400,
-            color: '#FFEA82',
-            trailColor: '#eee',
-            trailWidth: 1,
-            svgStyle: {width: '100%', height: '100%'},
-            text: {
+      $(document).ready(function () {
+        var bar = new ProgressBar.Line("#memory_bar", {
+          strokeWidth: 4,
+          easing: "easeInOut",
+          duration: 1400,
+          color: "#FFEA82",
+          trailColor: "#eee",
+          trailWidth: 1,
+          svgStyle: { width: "100%", height: "100%" },
+          text: {
             style: {
-                color: '#999',
-                position: 'absolute',
-                right: '0',
-                top: '30px',
-                padding: 0,
-                margin: 0,
-                transform: null
+              color: "#999",
+              position: "absolute",
+              right: "0",
+              top: "30px",
+              padding: 0,
+              margin: 0,
+              transform: null,
             },
-            autoStyleContainer: false
-            },
-            from: {color: '#FFEA82'},
-            to: {color: '#ED6A5A'},
-            step: (state, bar) => {
-                $.get("/memory_usage", function(data){
-                    bar.setText(Math.round(bar.value() * 100) + ' % (' + Math.round(data.used_memory) + ' MB)');
-                });
-            }
+            autoStyleContainer: false,
+          },
+          from: { color: "#FFEA82" },
+          to: { color: "#ED6A5A" },
+          step: (state, bar) => {
+            $.get("/memory_usage", function (data) {
+              bar.setText(
+                Math.round(bar.value() * 100) +
+                  " % (" +
+                  Math.round(data.used_memory) +
+                  " MB)"
+              );
+            });
+          },
         });
 
-        setInterval(function(){
-            $.get("/memory_usage", function(data){
-                bar.animate(data.memory / 100);  // Number from 0.0 to 1.0
-            });
+        setInterval(function () {
+          $.get("/memory_usage", function (data) {
+            try {
+              bar.animate(data.memory_percent / 100); // Number from 0.0 to 1.0
+            } catch (error) {
+              console.error("Error updating progress bar:", error);
+            }
+          });
         }, 1000);
-    });
+      });
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>Welcome to the Admin Dashboard</h1>
+      <h1>Welcome to the Admin Dashboard</h1>
     </header>
-    
+
     <nav>
-        <ul>
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Users</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Orders</a></li>
-            <li><a href="#">Settings</a></li>
-        </ul>
+      <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Users</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Orders</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
     </nav>
-    
+
     <main class="grid-container">
-        <section class="grid-item">
-            <h2>Dashboard Overview</h2>
-            <!-- Add your dashboard content here -->
-        </section>
-        
-        <section class="grid-item">
-            <h2>User Management</h2>
-            <!-- Add your user management content here -->
-        </section>
-        
-        <section class="grid-item">
-            <h2>Product Management</h2>
-            <!-- Add your product management content here -->
-        </section>
-        
-        <section class="grid-item">
-            <h2>Order Management</h2>
-            <!-- Add your order management content here -->
-        </section>
-        
-        <section class="grid-item">
-            <h2>Settings</h2>
-            <!-- Add your settings content here -->
-        </section>
-        
-        <section class="grid-item">
-            <h2>CPU Meter</h2>
-            <div id="cpu_meter_1" class="gauge"></div>
-        </section>
-        
-        <section class="grid-item">
-            <h2>Memory Meter</h2>
-            <div id="memory_bar" class="bar"></div>
-        </section>
-        
-        <section class="grid-item">
-            <h2>CPU Meter 3</h2>
-            <!-- Add your CPU meter 3 content here -->
-        </section>
-        
-        <section class="grid-item">
-            <h2>CPU Meter 4</h2>
-            <!-- Add your CPU meter 4 content here -->
-        </section>
+      <section class="grid-item">
+        <h2>Dashboard Overview</h2>
+        <!-- Add your dashboard content here -->
+      </section>
+
+      <section class="grid-item">
+        <h2>User Management</h2>
+        <!-- Add your user management content here -->
+      </section>
+
+      <section class="grid-item">
+        <h2>Product Management</h2>
+        <!-- Add your product management content here -->
+      </section>
+
+      <section class="grid-item">
+        <h2>Order Management</h2>
+        <!-- Add your order management content here -->
+      </section>
+
+      <section class="grid-item">
+        <h2>Settings</h2>
+        <!-- Add your settings content here -->
+      </section>
+
+      <section class="grid-item">
+        <h2>CPU Meter</h2>
+        <div id="cpu_meter_1" class="gauge"></div>
+      </section>
+
+      <section class="grid-item">
+        <h2>Memory Meter</h2>
+        <div id="memory_bar" class="bar"></div>
+      </section>
+
+      <section class="grid-item">
+        <h2>CPU Meter 3</h2>
+        <!-- Add your CPU meter 3 content here -->
+      </section>
+
+      <section class="grid-item">
+        <h2>CPU Meter 4</h2>
+        <!-- Add your CPU meter 4 content here -->
+      </section>
     </main>
-    
+
     <footer>
-        <p>&copy; 2023 Hendrik Siemens. All rights reserved.</p>
+      <p>&copy; 2023 Hendrik Siemens. All rights reserved.</p>
     </footer>
-</body>
+  </body>
 </html>

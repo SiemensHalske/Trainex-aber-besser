@@ -464,4 +464,6 @@ def cpu_usage():
 
 @main_bp.route('/memory_usage')
 def memory_usage():
-    return jsonify(memory=psutil.virtual_memory().percent)
+    memory = psutil.virtual_memory()
+    used_memory = memory.used / 1024 / 1024  # Convert to MB
+    return jsonify(memory_percent=memory.percent, used_memory=used_memory)

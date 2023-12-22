@@ -104,7 +104,6 @@ def login() -> str:
 
 
 @auth_bp.route('/logout')
-@jwt_required_optional()
 def logout() -> str:
     print("Logout")  # Debug print
     print(f"JWT: {get_jwt_identity()} with role {get_jwt_identity()['role']}")  # Debug print

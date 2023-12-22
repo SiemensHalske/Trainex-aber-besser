@@ -36,8 +36,7 @@ class User(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     is_active = db.Column(db.Boolean, default=True)
     is_admin = db.Column(db.Boolean, default=False)
-    roles = db.relationship(
-        'Role', secondary='user_role', back_populates='users', overlaps="user_roles")
+    roles = db.relationship('Role', secondary='user_role')
     logs = db.relationship('Logging', back_populates='user',
                            foreign_keys='Logging.user_id')  # Add foreign key constraint
 

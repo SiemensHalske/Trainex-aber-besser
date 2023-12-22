@@ -141,6 +141,7 @@ def admin():
         role = Role.query.get(user_role_id)
 
         if role and role.name == "Administator":
+            exit()
             return render_template('admin.html')
 
 @main_bp.route('/ihk_logo')

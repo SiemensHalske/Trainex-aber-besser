@@ -105,8 +105,27 @@ def login() -> str:
     return render_template('login.html', form=form)
 
 
+def log_before_logout(response: object) -> None:
+    """
+        Logs the logout attempt for the current user and prints the role of the user from
+        the JWT token
+
+        :param response: The response object
+
+        :return: None
+    """
+    user_id = get_jwt_identity()
+    role = get_jwt_identity()['role']
+    username = get_jwt_identity()['username']
+    auth_logger.info(
+        f"Logout attempt for user {username} with role {role} and id {user_id}")
+    return response
+
+
+
 @auth_bp.route('/logout')
 def logout() -> str:
+    
     response = make_response(redirect(url_for('auth.login')))
     unset_jwt_cookies(response, 'access_token_cookie')
     logout_user()  # Flask-Login's logout_user Funktion aufrufen, falls verwendet
@@ -166,7 +185,8 @@ def log_login_attempt(u_id: int = -1, success: bool = False) -> None:
 
 def check_login_attempts(u_id: int = -1, max_attempts_before_penalty: int = 3, initial_penalty_time: int = 60, incremental_penalty: int = 60, max_penalty_time: int = 3600) -> tuple:
     """
-        Checks if the user is allowed to login or not
+        Checks if the user is allowed to login or not. If the user is not allowed to login, the time left until the user can login again is returned.
+        If the user instead is allowed to login, None is returned as the second value of the tuple.
 
         :param u_id: The user_id of the user who performed the action
         :param max_attempts_before_penalty: The maximum number of failed login attempts before the user gets penalized

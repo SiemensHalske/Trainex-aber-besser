@@ -41,12 +41,12 @@ auth_logger = logging.getLogger("auth_logger")
 main_bp = Blueprint('main', __name__)
 
 
-def get_session_id():
+def get_session_id() -> str:
     # Get the user id from the session
     return session.get('user_id', None)
 
 
-def token_required(f):
+def token_required(f: object) -> object:
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'auth_token' not in session:
@@ -58,50 +58,50 @@ def token_required(f):
 
 
 @main_bp.route('/', methods=['GET', 'POST'])
-def index():
+def index() -> str:
     # Redirect to url 'auth.login'
     return redirect(url_for('auth.login'))
 
 
 @main_bp.route('/login_page', methods=['GET', 'POST'])
-def login():
+def login() -> str:
     return render_template('login.html')
 
 
 @main_bp.route('/login_success', methods=['GET', 'POST'])
 @jwt_required_optional()
-def login_success():
+def login_success() -> str:
     return render_template('index.html')
 
 
 @main_bp.route('/get_banner', methods=['GET'])
-def get_banner():
+def get_banner() -> str:
     return render_template('banner.html')
 
 # in your main.py or wherever you have your route definitions
 
 
 @main_bp.route('/banner', methods=['GET', 'POST'], endpoint='banner')
-def banner():
+def banner() -> str:
     return render_template('banner.html')
 
 
 @main_bp.route('/aktuelles')
 @jwt_required_optional()
-def aktuelles():
+def aktuelles() -> str:
     return render_template('aktuelles.html')
 
 
 @main_bp.route('/privates')
 @jwt_required_optional()
-def privates():
+def privates() -> str:
     # Your view logic here
     return render_template('privates.html')
 
 
 @main_bp.route('/cafe')
 @jwt_required_optional()
-def cafe():
+def cafe() -> str:
     # Your view logic here
     return render_template('cafe.html')
 
@@ -115,40 +115,40 @@ def learning():
 
 @main_bp.route('/settings')
 @jwt_required_optional()
-def settings():
+def settings() -> str:
     # Your view logic here
     return render_template('settings.html')
 
 
 @main_bp.route('/logout_deprecated')
 @jwt_required_optional()
-def logout():
+def logout() -> str:
     # Your view logic here
     session.pop('auth_token', None)
     return render_template('logout.html')
 
 
 @main_bp.route('/ihk_logo')
-def ihk_logo():
+def ihk_logo() -> str:
     # return the picture
     return render_template('logo.gif')
 
 
 @main_bp.route('/ihk_logo2')
-def ihk_logo2():
+def ihk_logo2() -> str:
     # return the picture
     return render_template('logo2.jpg')
 
 
 @main_bp.route('/ihk', methods=['GET', 'POST'])
-def ihk():
+def ihk() -> str:
     """Redirect the user to the IHK Nordwest website."""
 
     return redirect('https://www.ihk-nordwestfalen.de/')
 
 
 @main_bp.route('/logging', methods=['POST'])
-def logging_endpoint():
+def logging_endpoint() -> str:
     """
     Handle logging requests.
 
@@ -195,7 +195,7 @@ def logging_endpoint():
 
 
 @main_bp.route('/get_user_info', methods=['GET'])
-def get_user_info():
+def get_user_info() -> str:
     """
     Retrieves user information based on the provided user ID or email address.
 
@@ -230,7 +230,7 @@ def get_user_info():
 
 
 @main_bp.route('/get_user_id', methods=['GET'])
-def get_user_id():
+def get_user_id() -> str:
     """
     Retrieves the user ID based on the provided username.
 
@@ -253,7 +253,7 @@ def get_user_id():
 
 
 @main_bp.route('/get_user_name', methods=['GET'])
-def get_user_name():
+def get_user_name() -> str:
     """
     Get the username of a user based on their user ID.
 
@@ -276,7 +276,7 @@ def get_user_name():
 
 
 @main_bp.route('/get_user_role', methods=['GET'])
-def get_user_role():
+def get_user_role() -> str:
     """
     Get the role of a user based on their user ID or email address.
 
@@ -309,7 +309,7 @@ def get_user_role():
 
 
 @main_bp.route('/calendar_events/', methods=['GET'])
-def get_calendar_events():
+def get_calendar_events() -> str:
     """
     Retrieves calendar events for a given user.
     

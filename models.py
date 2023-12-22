@@ -37,7 +37,7 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     is_admin = db.Column(db.Boolean, default=False)
     roles = db.relationship(
-        'Role', secondary='user_role', backref=db.backref('assigned_users', overlaps="users"))
+        'Role', secondary='user_role', back_populates='users', overlaps="user_roles")
     logs = db.relationship('Logging', back_populates='user',
                            foreign_keys='Logging.user_id')  # Add foreign key constraint
 
@@ -83,7 +83,7 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, unique=True, nullable=False)
     users = db.relationship(
-        'User', secondary='user_role', back_populates='roles')
+        'User', secondary='user_role', back_populates='roles', overlaps="user_roles")
 
 
 class UserRole(db.Model):
@@ -102,8 +102,8 @@ class UserRole(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), primary_key=True)
 
-    user = db.relationship('User', backref='user_roles', overlaps="roles")
-    role = db.relationship('Role', backref='role_users', overlaps="assigned_users,roles,users")
+    user = db.relationship('User', back_populates='user_roles', overlaps="roles")
+    role = db.relationship('Role', back_populates='role_users', overlaps="users")
 
 
 class Lecturer(db.Model):

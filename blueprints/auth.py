@@ -119,9 +119,9 @@ def log_before_logout(response: object) -> None:
     username = get_jwt_identity()['username']
     auth_logger.info(
         f"Logout attempt for user {username} with role {role} and id {user_id}")
-    print('_'*20)
+    print('_'*20 + '\n\n\n')
     print(f"Logout attempt for user {username} with role {role} and id {user_id}")
-    print('_'*20)
+    print('_'*20 + '\n\n\n')
     return response
 
 

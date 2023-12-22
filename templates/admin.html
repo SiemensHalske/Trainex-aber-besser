@@ -64,6 +64,7 @@
           to: { color: "#ED6A5A" },
           step: (state, bar) => {
             $.get("/memory_usage", function (data) {
+              console.log("Updating text with data:", data);
               bar.setText(
                 Math.round(bar.value() * 100) +
                   " % (" +

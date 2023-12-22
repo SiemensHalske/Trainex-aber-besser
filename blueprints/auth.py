@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, make_response, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user
 from forms.login_form import LoginForm
-from models import User, Logging, LoginAttempt
+from models import User, Logging, LoginAttempt, Role, UserRole
 from extensions import db
 from flask import session
 from functools import wraps
@@ -87,7 +87,8 @@ def login() -> str:
 
             if user.check_password(form.password.data):
                 log_login_attempt(user.id, True)
-                access_token = create_access_token(identity=user.id)
+                role = db.session.query(Role).join(UserRole).filter(UserRole.user_id == user.id).first()
+                access_token = create_access_token(identity=user.id, additional_claims={'role': role.id, 'username': user.username})
                 # Stelle sicher, dass 'main_bp.login_success' existiert
                 response = make_response(
                     redirect(url_for('main.login_success')))
@@ -103,6 +104,7 @@ def login() -> str:
 
 
 @auth_bp.route('/logout')
+@jwt_required_optional()
 def logout() -> str:
     response = make_response(redirect(url_for('auth.login')))
     unset_jwt_cookies(response, 'access_token_cookie')

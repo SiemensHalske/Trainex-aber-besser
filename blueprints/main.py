@@ -461,3 +461,7 @@ def log_error(user_id = 0, error_level: str = 'INFO', error_message: str = '') -
 @main_bp.route('/cpu_usage')
 def cpu_usage():
     return jsonify(cpu=psutil.cpu_percent())
+
+@main_bp.route('/memory_usage')
+def memory_usage():
+    return jsonify(memory=psutil.virtual_memory().percent)

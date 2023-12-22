@@ -25,7 +25,7 @@ def jwt_required_optional(fallback_endpoint='auth.login'):
         @wraps(f)
         def decorated_function(*args, **kwargs):
             try:
-                verify_jwt_in_request()
+                verify_jwt_in_request(locations=['cookies'])
                 return f(*args, **kwargs)
             except Exception as e:
                 return redirect(url_for(fallback_endpoint))
@@ -108,13 +108,14 @@ def login() -> str:
 @jwt_required_optional()
 def log_before_logout(response: object) -> None:
     """
-        Logs the logout attempt for the current user and prints the role of the user from
-        the JWT token
+    Logs the logout attempt for the current user and prints the role of the user from
+    the JWT token
 
-        :param response: The response object
+    :param response: The response object
 
-        :return: None
+    :return: None
     """
+    cookie = verify_jwt_in_request(locations=['cookies'])
     user_id = get_jwt_identity()
     role = get_jwt_identity()['role']
     username = get_jwt_identity()['username']

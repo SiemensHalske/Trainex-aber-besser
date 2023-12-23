@@ -39,41 +39,33 @@
         }, 1000);
       });
 
-      $(document).ready(function () {
-        var bar = new ProgressBar.Line("#memory_bar", {
-          strokeWidth: 4,
-          easing: "easeInOut",
-          duration: 1400,
-          color: "#FFEA82",
-          trailColor: "#eee",
-          trailWidth: 1,
-          svgStyle: { width: "100%", height: "100%" },
+      var bar = new ProgressBar.Line("#memory_bar", {
+          // Other options...
           text: {
-            style: {
-              color: "#999",
-              position: "absolute",
-              right: "0",
-              top: "30px",
-              padding: 0,
-              margin: 0,
-              transform: null,
-            },
-            autoStyleContainer: false,
+              autoStyleContainer: false,
+              style: {
+                  color: '#999',
+                  position: 'absolute',
+                  right: '0',
+                  top: '30px',
+                  padding: 0,
+                  margin: 0,
+                  transform: null,
+              },
+              value: true,  // Add this line
           },
-          from: { color: "#FFEA82" },
-          to: { color: "#ED6A5A" },
           step: (state, bar) => {
-            $.get("/memory_usage", function (data) {
-              console.log("Updating text with data:", data);
-              bar.setText(
-                Math.round(bar.value() * 100) +
-                  " % (" +
-                  Math.round(data.used_memory) +
-                  " MB)"
-              );
-            });
+              $.get("/memory_usage", function (data) {
+                  console.log("Updating text with data:", data);
+                  bar.setText(
+                      Math.round(bar.value() * 100) +
+                      " % (" +
+                      Math.round(data.used_memory) +
+                      " MB)"
+                  );
+              });
           },
-        });
+      });
 
         setInterval(function () {
           $.get("/memory_usage", function (data) {
@@ -84,7 +76,8 @@
             }
           });
         }, 1000);
-      });
+      // Remove the closing parentheses and curly braces
+      // });
     </script>
   </head>
   <body>

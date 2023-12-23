@@ -85,6 +85,53 @@
           });
         }, 1000);
       });
+      var cpuBar = new ProgressBar.Line("#cpu_temperature_bar", {
+          // Other options...
+          step: (state, bar) => {
+              $.get("/cpu_temperature", function (data) {
+                  console.log("Updating CPU temperature text with data:", data);
+                  $('#cpu_temperature_bar_text').text(
+                      Math.round(bar.value() * 100) +
+                      " % (" +
+                      Math.round(data.temperature) +
+                      " °C)"
+                  );
+              });
+          },
+      });
+
+      var ramBar = new ProgressBar.Line("#ram_temperature_bar", {
+          // Other options...
+          step: (state, bar) => {
+              $.get("/ram_temperature", function (data) {
+                  console.log("Updating RAM temperature text with data:", data);
+                  $('#ram_temperature_bar_text').text(
+                      Math.round(bar.value() * 100) +
+                      " % (" +
+                      Math.round(data.temperature) +
+                      " °C)"
+                  );
+              });
+          },
+      });
+
+      setInterval(function(){
+          $.get("/cpu_temperature", function(data){
+              try {
+                  cpuBar.animate(data.temperature / 100);  // Number from 0.0 to 1.0
+              } catch (error) {
+                  console.error('Error updating CPU temperature progress bar:', error);
+              }
+          });
+
+          $.get("/ram_temperature", function(data){
+              try {
+                  ramBar.animate(data.temperature / 100);  // Number from 0.0 to 1.0
+              } catch (error) {
+                  console.error('Error updating RAM temperature progress bar:', error);
+              }
+          });
+      }, 1000);
     </script>
   </head>
   <body>
@@ -116,9 +163,18 @@
       </section>
 
       <section class="grid-item">
-        <h2>Dashboard Overview</h2>
-        <!-- Add your dashboard content here -->
-      </section>
+        <h2>System Temperatures</h2>
+        <div>
+            <h3>CPU Temperature</h3>
+            <div id="cpu_temperature_bar"></div>
+            <div id="cpu_temperature_bar_text" style="position: absolute; top: 30px; right: 0; color: #999;"></div>
+        </div>
+        <div>
+            <h3>RAM Temperature</h3>
+            <div id="ram_temperature_bar"></div>
+            <div id="ram_temperature_bar_text" style="position: absolute; top: 30px; right: 0; color: #999;"></div>
+        </div>
+    </section>
 
       <section class="grid-item">
         <h2>User Management</h2>

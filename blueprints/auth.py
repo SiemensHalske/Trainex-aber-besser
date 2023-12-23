@@ -34,6 +34,22 @@ def jwt_required_optional(fallback_endpoint='auth.login'):
 
     return decorator
 
+def jwt_required_system_functions(fallback_endpoint='main.system_info_not_allowed'):
+    """Ein Dekorator, der prüft, ob ein gültiges JWT-Cookie vorhanden ist. 
+    Leitet zu einer alternativen Seite um, wenn das Cookie fehlt."""
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            try:
+                verify_jwt_in_request(locations=['cookies'])
+                return f(*args, **kwargs)
+            except Exception as e:
+                return redirect(url_for(fallback_endpoint))
+
+        return decorated_function
+
+    return decorator
+
 
 def set_audit_log(user_id: int = -1, action: str = "Unknown action") -> None:
     """

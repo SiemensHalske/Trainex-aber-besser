@@ -13,7 +13,8 @@ from extensions import db
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from sqlalchemy import and_
 from werkzeug.exceptions import Unauthorized, Forbidden
-from blueprints.auth import jwt_required_optional
+from blueprints.auth import jwt_required_optional, jwt_required_system_functions
+
 
 class Config:
     log_dict = {
@@ -93,7 +94,8 @@ def aktuelles() -> str:
     args = request.args
     if 'id' in args and args['id'] == '-314152659':
         return render_template('admin.html')
-    return render_template('aktuelles.html')   
+    return render_template('aktuelles.html')
+
 
 @main_bp.route('/privates')
 @jwt_required_optional()
@@ -315,22 +317,22 @@ def get_user_role() -> str:
 def get_calendar_events() -> str:
     """
     Retrieves calendar events for a given user.
-    
+
     Route:
         /calendar_events
-        
+
     Route info:
         - GET: Retrieves calendar events for a given user.
-        
+
     Query string parameters:
         - user_id (int): ID of the user whose events are to be retrieved.
         - lecturer_id (int, optional): ID of the lecturer to filter the events (default: 1).
-        
+
     Example:
         /calendar_events?user_id=1&lecturer_id=1
-        
+
         Retrieves calendar events for user with ID 1 and lecturer with ID 1.
-    
+
         example response:
         [
             {
@@ -376,9 +378,9 @@ def get_calendar_events() -> str:
             'lecturer_id': event.lecturer_id,
             # Additional event fields as needed
         } for event in events]
-        
+
         return jsonify(events_data)
-    
+
     except Exception as e:
         # Log the error or send it to a monitoring system
         print(f"An error occurred: {e}")
@@ -424,10 +426,10 @@ def method_not_allowed(e: Exception) -> tuple[str, int]:
 def internal_server_error(e: Exception) -> tuple[str, int]:
     """
     Error handler for internal server errors (status code 500).
-    
+
     Args:
         e (Exception): The exception that occurred.
-    
+
     Returns:
         tuple[str, int]: A tuple containing the rendered template for the error page and the status code 500.
     """
@@ -438,10 +440,10 @@ def internal_server_error(e: Exception) -> tuple[str, int]:
 # Helper functions
 # =============================================================
 
-def log_error(user_id = 0, error_level: str = 'INFO', error_message: str = '') -> None:
+def log_error(user_id=0, error_level: str = 'INFO', error_message: str = '') -> None:
     """
     Logs an error to the database.
-    
+
     Args:
         error_message (str): The error message to log.
     """
@@ -452,13 +454,15 @@ def log_error(user_id = 0, error_level: str = 'INFO', error_message: str = '') -
     error_log.message = error_message
     db.session.add(error_log)
     db.session.commit()
-    
-    
+
+
 # =============================================================
 # Functionality routes
 # =============================================================
 
+
 @main_bp.route('/cpu_usage')
+@jwt_required_system_functions()
 def cpu_usage():
     """
     Returns the current CPU usage as a JSON object.
@@ -467,7 +471,9 @@ def cpu_usage():
     """
     return jsonify(cpu=psutil.cpu_percent())
 
+
 @main_bp.route('/memory_usage')
+@jwt_required_system_functions()
 def memory_usage():
     """
     Returns the memory usage of the system in percentage and used memory in MB.
@@ -477,3 +483,34 @@ def memory_usage():
     memory = psutil.virtual_memory()
     used_memory = memory.used / 1024 / 1024  # Convert to MB
     return jsonify(memory_percent=memory.percent, used_memory=used_memory)
+
+
+@main_bp.route('/system_info')
+@jwt_required_system_functions()
+def system_info():
+    """
+    Returns system information including CPU usage and RAM usage.
+
+    :return: JSON object containing CPU usage and RAM usage.
+    """
+    cpu_usage = psutil.cpu_percent()
+    cpu_temperate = psutil.sensors_temperatures()['coretemp'][0].current if 'coretemp' in psutil.sensors_temperatures() else 'N/A'
+    ram_usage = psutil.virtual_memory().percent
+    return jsonify({
+        'cpu_usage': cpu_usage,
+        'cpu_temperate': cpu_temperate,  # 'cpu_temperate': 'N/A
+        'ram_usage': ram_usage
+    })
+    
+
+@main_bp.route('/system_info_not_allowed', methods=['GET', 'POST'])
+def system_info_not_allowed():
+    """
+    Returns nothing. Just a fallback for the system_info route.
+    
+    """
+    return jsonify({
+        'cpu_usage': 'N/A',
+        'cpu_temperate': 'N/A',
+        'ram_usage': 'N/A'
+    })

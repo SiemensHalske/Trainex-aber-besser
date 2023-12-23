@@ -30,8 +30,10 @@ Der Changelog bietet eine detaillierte Übersicht über alle Änderungen und Upd
 
 ## Mitwirkende
 
-- **Hendrik**: Hauptentwickler und Verantwortlicher für das Backend.
-- **SiemensHalske**: Beitragende zur Frontend-Entwicklung.
+- **Florian** und **Hendrik**
+
+Der Esel nennt sich immer zuletzt brachte man mir mal bei.
+Die Reihenfolge der Namen sagt aber nichts über den Anteil eines jeden einzelnen an dem Projekt aus.
 
 ## Lizenz
 

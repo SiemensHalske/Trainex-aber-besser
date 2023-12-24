@@ -35,15 +35,39 @@
         // Initialize progress bars for memory and temperatures
         var memoryBar = new ProgressBar.Line("#memory_bar", {
           strokeWidth: 4,
-          color: '#FFEA82'
+          color: "#FFEA82",
+          text: {
+            value: "0 % (0 MB)",
+            style: {
+              color: "#fff",
+              position: "absolute",
+              right: "0",
+              top: "30px",
+              padding: 0,
+              margin: 0,
+              transform: {
+                prefix: true,
+                value: "translateX(-100%)",
+              },
+            },
+            autoStyleContainer: false,
+          },
+          step: (state, bar) => {
+            bar.setText(
+              Math.round(bar.value() * 100) +
+                "% (" +
+                (bar.value() * 4096).toFixed(2) +
+                " MB)"
+            );
+          },
         });
         var cpuTempBar = new ProgressBar.Line("#cpu_temperature_bar", {
           strokeWidth: 4,
-          color: '#FFEA82'
+          color: "#FFEA82",
         });
         var ramTempBar = new ProgressBar.Line("#ram_temperature_bar", {
           strokeWidth: 4,
-          color: '#FFEA82'
+          color: "#FFEA82",
         });
 
         function updateSystemInfo() {
@@ -56,11 +80,15 @@
             // Update memory bar and text
             memoryBar.animate(data.ram_usage_percent / 100); // Normalize percentage
             $("#memory_usage_text").text(
-              Math.round(data.ram_usage_percent) + 
-              "% (" + 
-              (data.ram_usage_bytes / 1048576).toFixed(2) + 
-              " MB)"
+              Math.round(data.ram_usage_percent) +
+                "% (" +
+                (data.ram_usage_bytes / 1048576).toFixed(2) +
+                " MB)"
             );
+
+            var normalizedMemoryUsage =
+              data.ram_usage_bytes / (1024 * 1024 * 1024); // GB
+            memoryBar.animate(normalizedMemoryUsage);
 
             // Update CPU temperature bar and text
             var normalizedCPUTemp = data.cpu_temperature / 120; // Assuming max CPU temp is 120

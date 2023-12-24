@@ -35,7 +35,7 @@
         // Create memory bar
         var bar = new ProgressBar.Line("#memory_bar", {
           // Other options...
-            step: (state, bar) => {
+          step: (state, bar) => {
             $("#memory_bar_text").text(
               Math.round(bar.value() * 100) +
                 " % (" +
@@ -73,18 +73,19 @@
 
         setInterval(function () {
           $.get("/system_info", function (data) {
-            console.log(data); // Füge dies hinzu, um die zurückgegebenen Daten zu prüfen
-            // Update CPU meter
+            console.log(data); // Zum Debuggen
+
+            // Aktualisiere CPU-Meter
             g.refresh(data.cpu_usage);
 
-            // Update memory bar
-            bar.animate(data.ram_usage / 100); // Number from 0.0 to 1.0
+            // Aktualisiere Arbeitsspeicherleiste
+            bar.animate(data.ram_usage_percent / 100); // Zahl von 0.0 bis 1.0
 
-            // Update CPU temperature bar
-            cpuTempBar.animate(data.cpu_temperature / 120); // Number from 0.0 to 1.0, assuming scale is 0 to 120
+            // Update CPU Temperaturleiste
+            cpuTempBar.animate(data.cpu_temperature / 120); // Zahl von 0.0 bis 1.0, Annahme der Skala ist von 0 bis 120
 
-            // Update RAM temperature bar
-            ramTempBar.animate(data.ram_temperature / 120); // Number from 0.0 to 1.0, assuming scale is 0 to 120
+            // Update RAM Temperaturleiste
+            ramTempBar.animate(data.ram_temperature / 120); // Zahl von 0.0 bis 1.0, Annahme der Skala ist von 0 bis 120
           });
         }, 1000);
       });
@@ -129,7 +130,7 @@
         <div>
           <h3>RAM Temperature</h3>
           <div id="ram_temperature_bar"></div>
-          <div id="ram_temperature_bar_text" style="color: #999;"></div>
+          <div id="ram_temperature_bar_text" style="color: #999"></div>
           <!-- The RAM temperature text will be inserted by ProgressBar.js -->
         </div>
       </section>

@@ -31,72 +31,64 @@
           max: 100,
           title: "CPU Usage",
         });
-
-        // Initialize progress bars for memory and temperatures 
+    
+        // Initialize progress bars for memory and temperatures
         var memoryBar = new ProgressBar.Line("#memory_bar", {
           strokeWidth: 4,
           color: "#FFEA82",
           text: {
-            value: "0 % (0 MB)",
             style: {
-              color: "#fff",
+              color: "#999",
               position: "absolute",
               right: "0",
               top: "30px",
-              padding: 0,
-              margin: 0,
-              transform: {
-                prefix: true,
-                value: "translateX(-100%)",
-              },
+              padding: "0",
+              margin: "0",
+              transform: null
             },
-            autoStyleContainer: false,
+            autoStyleContainer: false
           },
+          from: {color: '#FFEA82'},
+          to: {color: '#ED6A5A'},
           step: (state, bar) => {
             bar.setText(
               Math.round(bar.value() * 100) +
-                "% (" +
-                Math.round(bar.value() * 4096) +
-                " MB)"
+              "% (" +
+              (bar.value() * 4096).toFixed(2) +
+              " MB)"
             );
-          },
+            bar.path.setAttribute('stroke', state.color);
+          }
         });
+    
         var cpuTempBar = new ProgressBar.Line("#cpu_temperature_bar", {
           strokeWidth: 4,
           color: "#FFEA82",
         });
+    
         var ramTempBar = new ProgressBar.Line("#ram_temperature_bar", {
           strokeWidth: 4,
           color: "#FFEA82",
         });
-
+    
         function updateSystemInfo() {
           $.get("/system_info", function (data) {
             console.log(data); // Log data for debugging
-
+    
             // Update CPU meter
             cpuMeter.refresh(data.cpu_usage);
-
+    
             // Update memory bar and text
-            memoryBar.animate(data.ram_usage_percent / 100); // Normalize percentage
-            $("#memory_usage_text").text(
-              Math.round(data.ram_usage_percent) +
-                "% (" +
-                (data.ram_usage_bytes / 1048576).toFixed(2) +
-                " MB)"
-            );
-
-            var normalizedMemoryUsage =
-              data.ram_usage_bytes / (1024 * 1024 * 1024); // GB
-            memoryBar.animate(normalizedMemoryUsage);
-
+            var normalizedMemoryUsage = data.ram_usage_bytes / (1024 * 1024 * 1024); // Convert to GB
+            memoryBar.animate(normalizedMemoryUsage); // Normalize percentage
+    
             // Update CPU temperature bar and text
             var normalizedCPUTemp = data.cpu_temperature / 120; // Assuming max CPU temp is 120
             cpuTempBar.animate(normalizedCPUTemp);
             $("#cpu_temperature_text").text(
               Math.round(normalizedCPUTemp * 120) + " °C"
             );
-
+    
             // Update RAM temperature bar and text
             var normalizedRAMTemp = data.ram_temperature / 120; // Assuming max RAM temp is 120
             ramTempBar.animate(normalizedRAMTemp);
@@ -105,7 +97,7 @@
             );
           });
         }
-
+    
         // Fetch system info every second
         setInterval(updateSystemInfo, 1000);
       });

@@ -476,11 +476,13 @@ def system_info():
     else:
         cpu_temperature = None  # oder eine andere Art von Fallback-Wert, falls nicht verfügbar
 
-    ram_usage = psutil.virtual_memory().percent
+    ram_usage_percent = psutil.virtual_memory().percent
+    ram_usage_bytes = psutil.virtual_memory().used
     return jsonify({
         'cpu_usage': cpu_usage,
         'cpu_temperature': cpu_temperature,  # Korrigiert von 'cpu_temperate' zu 'cpu_temperature'
-        'ram_usage': ram_usage
+        'ram_usage_percent': ram_usage_percent,
+        'ram_usage_bytes': ram_usage_bytes
     })
     
 
@@ -493,5 +495,6 @@ def system_info_not_allowed():
     return jsonify({
         'cpu_usage': 'N/A',
         'cpu_temperate': 'N/A',
-        'ram_usage': 'N/A'
+        'ram_usage_percent': 'N/A',
+        'ram_usage_bytes': 'N/A'
     })

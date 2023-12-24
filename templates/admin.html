@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="banner.css" />
+    <link rel="stylesheet" type="text/css" href="/static/banner.css" />
     <style>
       /* Define the grid layout */
       .grid-container {
@@ -39,7 +39,7 @@
             $("#memory_bar_text").text(
               Math.round(bar.value() * 100) +
                 " % (" +
-                Math.round(bar.value() * 100) +
+                Math.round(data.ram_usage_bytes / 1024 / 1024) +
                 " MB)"
             );
           },

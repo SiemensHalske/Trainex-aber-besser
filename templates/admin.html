@@ -25,69 +25,61 @@
     <script>
       $(document).ready(function () {
         // Create CPU meter
-        var g = new JustGage({
+        var cpuMeter = new JustGage({
           id: "cpu_meter_1",
           min: 0,
           max: 100,
           title: "CPU Usage",
         });
 
-        // Create memory bar
-        var bar = new ProgressBar.Line("#memory_bar", {
-          // Other options...
-          step: (state, bar) => {
-            $("#memory_bar_text").text(
-              Math.round(bar.value() * 100) +
-                " % (" +
-                Math.round(bar.value() * 4096) +
-                " MB)"
-            );
-          },
+        // Initialize progress bars for memory and temperatures
+        var memoryBar = new ProgressBar.Line("#memory_bar", {
+          strokeWidth: 4,
+          color: '#FFEA82'
         });
-
-        // Initialize CPU temperature bar
         var cpuTempBar = new ProgressBar.Line("#cpu_temperature_bar", {
-          // Other options...
-          step: (state, bar) => {
-            $("#cpu_temperature_bar_text").text(
-              Math.round(bar.value() * 100) +
-                " % (" +
-                Math.round(bar.value() * 100) +
-                " °C)"
-            );
-          },
+          strokeWidth: 4,
+          color: '#FFEA82'
         });
-
-        // Initialize RAM temperature bar
         var ramTempBar = new ProgressBar.Line("#ram_temperature_bar", {
-          // Other options...
-          step: (state, bar) => {
-            $("#ram_temperature_bar_text").text(
-              Math.round(bar.value() * 100) +
-                " % (" +
-                Math.round(bar.value() * 100) +
-                " °C)"
-            );
-          },
+          strokeWidth: 4,
+          color: '#FFEA82'
         });
 
-        setInterval(function () {
+        function updateSystemInfo() {
           $.get("/system_info", function (data) {
-            console.log(data); // Zum Debuggen
+            console.log(data); // Log data for debugging
 
-            // Aktualisiere CPU-Meter
-            g.refresh(data.cpu_usage);
+            // Update CPU meter
+            cpuMeter.refresh(data.cpu_usage);
 
-            // Aktualisiere Arbeitsspeicherleiste
-            bar.animate(data.ram_usage_percent / 100); // Zahl von 0.0 bis 1.0
+            // Update memory bar and text
+            memoryBar.animate(data.ram_usage_percent / 100); // Normalize percentage
+            $("#memory_usage_text").text(
+              Math.round(data.ram_usage_percent) + 
+              "% (" + 
+              (data.ram_usage_bytes / 1073741824).toFixed(2) + 
+              " GB)"
+            );
 
-            // Update CPU Temperaturleiste
-            cpuTempBar.animate(data.cpu_temperature / 120); // Zahl von 0.0 bis 1.0, Annahme der Skala ist von 0 bis 120
+            // Update CPU temperature bar and text
+            var normalizedCPUTemp = data.cpu_temperature / 120; // Assuming max CPU temp is 120
+            cpuTempBar.animate(normalizedCPUTemp);
+            $("#cpu_temperature_text").text(
+              Math.round(normalizedCPUTemp * 120) + " °C"
+            );
 
-            // Update RAM Temperaturleiste
-            ramTempBar.animate(data.ram_temperature / 120); // Zahl von 0.0 bis 1.0, Annahme der Skala ist von 0 bis 120
+            // Update RAM temperature bar and text
+            var normalizedRAMTemp = data.ram_temperature / 120; // Assuming max RAM temp is 120
+            ramTempBar.animate(normalizedRAMTemp);
+            $("#ram_temperature_text").text(
+              Math.round(normalizedRAMTemp * 120) + " °C"
+            );
           });
-        }, 1000);
+        }
+
+        // Fetch system info every second
+        setInterval(updateSystemInfo, 1000);
       });
     </script>
   </head>

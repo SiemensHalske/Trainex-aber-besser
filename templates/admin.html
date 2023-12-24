@@ -49,11 +49,11 @@
         var cpuBar = new ProgressBar.Line("#cpu_temperature_bar", {
           // Other options...
           step: (state, bar) => {
-            $('#cpu_temperature_bar_text').text(
+            $("#cpu_temperature_bar_text").text(
               Math.round(bar.value() * 100) +
-              " % (" +
-              Math.round(bar.value() * 100) +
-              " °C)"
+                " % (" +
+                Math.round(bar.value() * 100) +
+                " °C)"
             );
           },
         });
@@ -62,17 +62,18 @@
         var ramTempBar = new ProgressBar.Line("#ram_temperature_bar", {
           // Other options...
           step: (state, bar) => {
-            $('#ram_temperature_bar_text').text(
+            $("#ram_temperature_bar_text").text(
               Math.round(bar.value() * 100) +
-              " % (" +
-              Math.round(bar.value() * 100) +
-              " °C)"
+                " % (" +
+                Math.round(bar.value() * 100) +
+                " °C)"
             );
           },
         });
 
         setInterval(function () {
           $.get("/system_info", function (data) {
+            console.log(data); // Füge dies hinzu, um die zurückgegebenen Daten zu prüfen
             // Update CPU meter
             g.refresh(data.cpu_usage);
 
@@ -122,11 +123,13 @@
         <div>
           <h3>CPU Temperature</h3>
           <div id="cpu_temperature_bar"></div>
+          <div id="cpu_temperature_bar_text" style="color: #999"></div>
           <!-- The CPU temperature text will be inserted by ProgressBar.js -->
         </div>
         <div>
           <h3>RAM Temperature</h3>
           <div id="ram_temperature_bar"></div>
+          <div id="ram_temperature_bar_text" style="color: #999;"></div>
           <!-- The RAM temperature text will be inserted by ProgressBar.js -->
         </div>
       </section>

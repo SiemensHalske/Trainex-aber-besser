@@ -35,11 +35,11 @@
         // Create memory bar
         var bar = new ProgressBar.Line("#memory_bar", {
           // Other options...
-          step: (state, bar, attachment) => {
+          step: (state, bar) => {
             $("#memory_bar_text").text(
               Math.round(bar.value() * 100) +
                 " % (" +
-                Math.round(attachment.ram_usage_bytes / 1024 / 1024) +
+                4096 * bar.value() +
                 " MB)"
             );
           },
@@ -78,7 +78,7 @@
             g.refresh(data.cpu_usage);
 
             // Update memory bar
-            bar.animate(data.ram_usage / 100, { ram_usage_bytes: data.ram_usage_bytes });
+            bar.animate(data.ram_usage / 100); // Number from 0.0 to 1.0
 
             // Update CPU temperature bar
             cpuTempBar.animate(data.cpu_temperature / 120); // Number from 0.0 to 1.0, assuming scale is 0 to 120

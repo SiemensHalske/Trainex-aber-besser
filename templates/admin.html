@@ -50,13 +50,14 @@
           },
           from: {color: '#FFEA82'},
           to: {color: '#ED6A5A'},
-          step: (state, bar) => {
+          step: (state, bar, data) => {
             bar.setText(
-              Math.round(bar.value() * 100) +
-              "% (" +
-              (bar.value() * 4096).toFixed(2) +
+              Math.round(bar.value() * 100) + 
+              "% (" + 
+              (data.ram_usage_bytes / 1048576).toFixed(2) + 
               " MB)"
             );
+            // Nur hinzufügen, wenn die Farbe basierend auf dem Zustand geändert werden soll
             bar.path.setAttribute('stroke', state.color);
           }
         });

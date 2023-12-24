@@ -461,20 +461,25 @@ def log_error(user_id=0, error_level: str = 'INFO', error_message: str = '') -> 
 # =============================================================
 
 
-@main_bp.route('/system_info')
+@main_bp.route('/system_info', methods=['GET'])
 @jwt_required_system_functions()
 def system_info():
     """
-    Returns system information including CPU usage and RAM usage.
+    Returns system information including CPU usage, CPU temperature, and RAM usage.
 
-    :return: JSON object containing CPU usage and RAM usage.
+    :return: JSON object containing CPU usage, CPU temperature, and RAM usage.
     """
     cpu_usage = psutil.cpu_percent()
-    cpu_temperate = psutil.sensors_temperatures()['coretemp'][0].current if 'coretemp' in psutil.sensors_temperatures() else 'N/A'
+    cpu_temperatures = psutil.sensors_temperatures()
+    if 'coretemp' in cpu_temperatures:
+        cpu_temperature = cpu_temperatures['coretemp'][0].current
+    else:
+        cpu_temperature = None  # oder eine andere Art von Fallback-Wert, falls nicht verfügbar
+
     ram_usage = psutil.virtual_memory().percent
     return jsonify({
         'cpu_usage': cpu_usage,
-        'cpu_temperate': cpu_temperate,  # 'cpu_temperate': 'N/A
+        'cpu_temperature': cpu_temperature,  # Korrigiert von 'cpu_temperate' zu 'cpu_temperature'
         'ram_usage': ram_usage
     })
     

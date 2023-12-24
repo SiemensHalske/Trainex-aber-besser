@@ -58,8 +58,8 @@
             $("#memory_usage_text").text(
               Math.round(data.ram_usage_percent) + 
               "% (" + 
-              (data.ram_usage_bytes / 1073741824).toFixed(2) + 
-              " GB)"
+              (data.ram_usage_bytes / 1048576).toFixed(2) + 
+              " MB)"
             );
 
             // Update CPU temperature bar and text

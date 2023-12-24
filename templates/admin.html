@@ -35,11 +35,11 @@
         // Create memory bar
         var bar = new ProgressBar.Line("#memory_bar", {
           // Other options...
-          step: (state, bar) => {
+            step: (state, bar) => {
             $("#memory_bar_text").text(
               Math.round(bar.value() * 100) +
                 " % (" +
-                4096 * bar.value() +
+                Math.round(bar.value() * 4096) +
                 " MB)"
             );
           },

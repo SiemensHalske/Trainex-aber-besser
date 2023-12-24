@@ -24,114 +24,68 @@
     <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
     <script>
       $(document).ready(function () {
-        var g = new JustGage({
-          id: "cpu_meter_1",
-          value: 0,
-          min: 0,
-          max: 100,
-          title: "CPU Usage",
-        });
-
         setInterval(function () {
-          $.get("/cpu_usage", function (data) {
-            g.refresh(data.cpu);
-          });
-        }, 1000);
-      });
-
-      $(document).ready(function () {
-        var bar = new ProgressBar.Line("#memory_bar", {
-          strokeWidth: 4,
-          easing: "easeInOut",
-          duration: 1400,
-          color: "#FFEA82",
-          trailColor: "#eee",
-          trailWidth: 1,
-          svgStyle: { width: "100%", height: "100%" },
-          text: {
-            style: {
-              color: "#999",
-              position: "absolute",
-              right: "0",
-              top: "30px",
-              padding: 0,
-              margin: 0,
-              transform: null,
-            },
-            autoStyleContainer: false,
-          },
-          from: { color: "#FFEA82" },
-          to: { color: "#ED6A5A" },
-          step: (state, bar) => {
-            $.get("/memory_usage", function (data) {
-              console.log("Updating text with data:", data);
-              $("#memory_bar_text").text(
-                Math.round(bar.value() * 100) +
-                  " % (" +
-                  Math.round(data.used_memory) +
-                  " MB)"
-              );
+          $.get("/system_info", function (data) {
+            // Update CPU meter
+            var g = new JustGage({
+              id: "cpu_meter_1",
+              value: data.cpu_usage,
+              min: 0,
+              max: 100,
+              title: "CPU Usage",
             });
-          },
-        });
-
-        setInterval(function () {
-          $.get("/memory_usage", function (data) {
-            try {
-              bar.animate(data.memory_percent / 100); // Number from 0.0 to 1.0
-            } catch (error) {
-              console.error("Error updating progress bar:", error);
-            }
+            g.refresh(data.cpu_usage);
+    
+            // Update memory bar
+            var bar = new ProgressBar.Line("#memory_bar", {
+              strokeWidth: 4,
+              easing: "easeInOut",
+              duration: 1400,
+              color: "#FFEA82",
+              trailColor: "#eee",
+              trailWidth: 1,
+              svgStyle: { width: "100%", height: "100%" },
+              text: {
+                style: {
+                  color: "#999",
+                  position: "absolute",
+                  right: "0",
+                  top: "30px",
+                  padding: 0,
+                  margin: 0,
+                  transform: null,
+                },
+                autoStyleContainer: false,
+              },
+              from: { color: "#FFEA82" },
+              to: { color: "#ED6A5A" },
+              step: (state, bar) => {
+                $("#memory_bar_text").text(
+                  Math.round(bar.value() * 100) +
+                    " % (" +
+                    Math.round(data.ram_usage) +
+                    " MB)"
+                );
+              },
+            });
+            bar.animate(data.ram_usage / 100); // Number from 0.0 to 1.0
+    
+            // Update CPU temperature bar
+            var cpuBar = new ProgressBar.Line("#cpu_temperature_bar", {
+              // Other options...
+              step: (state, bar) => {
+                $('#cpu_temperature_bar_text').text(
+                  Math.round(bar.value() * 100) +
+                  " % (" +
+                  Math.round(data.cpu_temperate) +
+                  " °C)"
+                );
+              },
+            });
+            cpuBar.animate(data.cpu_temperate / 100);  // Number from 0.0 to 1.0
           });
         }, 1000);
       });
-      var cpuBar = new ProgressBar.Line("#cpu_temperature_bar", {
-          // Other options...
-          step: (state, bar) => {
-              $.get("/cpu_temperature", function (data) {
-                  console.log("Updating CPU temperature text with data:", data);
-                  $('#cpu_temperature_bar_text').text(
-                      Math.round(bar.value() * 100) +
-                      " % (" +
-                      Math.round(data.temperature) +
-                      " °C)"
-                  );
-              });
-          },
-      });
-
-      var ramBar = new ProgressBar.Line("#ram_temperature_bar", {
-          // Other options...
-          step: (state, bar) => {
-              $.get("/ram_temperature", function (data) {
-                  console.log("Updating RAM temperature text with data:", data);
-                  $('#ram_temperature_bar_text').text(
-                      Math.round(bar.value() * 100) +
-                      " % (" +
-                      Math.round(data.temperature) +
-                      " °C)"
-                  );
-              });
-          },
-      });
-
-      setInterval(function(){
-          $.get("/cpu_temperature", function(data){
-              try {
-                  cpuBar.animate(data.temperature / 100);  // Number from 0.0 to 1.0
-              } catch (error) {
-                  console.error('Error updating CPU temperature progress bar:', error);
-              }
-          });
-
-          $.get("/ram_temperature", function(data){
-              try {
-                  ramBar.animate(data.temperature / 100);  // Number from 0.0 to 1.0
-              } catch (error) {
-                  console.error('Error updating RAM temperature progress bar:', error);
-              }
-          });
-      }, 1000);
     </script>
   </head>
   <body>

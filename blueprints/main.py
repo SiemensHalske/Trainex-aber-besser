@@ -461,30 +461,6 @@ def log_error(user_id=0, error_level: str = 'INFO', error_message: str = '') -> 
 # =============================================================
 
 
-@main_bp.route('/cpu_usage')
-@jwt_required_system_functions()
-def cpu_usage():
-    """
-    Returns the current CPU usage as a JSON object.
-
-    :return: JSON object with the CPU usage percentage.
-    """
-    return jsonify(cpu=psutil.cpu_percent())
-
-
-@main_bp.route('/memory_usage')
-@jwt_required_system_functions()
-def memory_usage():
-    """
-    Returns the memory usage of the system in percentage and used memory in MB.
-
-    :return: JSON response with memory_percent and used_memory.
-    """
-    memory = psutil.virtual_memory()
-    used_memory = memory.used / 1024 / 1024  # Convert to MB
-    return jsonify(memory_percent=memory.percent, used_memory=used_memory)
-
-
 @main_bp.route('/system_info')
 @jwt_required_system_functions()
 def system_info():

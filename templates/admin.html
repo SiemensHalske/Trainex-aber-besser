@@ -35,7 +35,7 @@
         // Create memory bar
         var bar = new ProgressBar.Line("#memory_bar", {
           // Other options...
-          step: (state, bar) => {
+          step: (state, bar, attachment) => {
             $("#memory_bar_text").text(
               Math.round(bar.value() * 100) +
                 " % (" +

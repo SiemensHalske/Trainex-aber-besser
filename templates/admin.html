@@ -36,20 +36,33 @@
         var bar = new ProgressBar.Line("#memory_bar", {
           // Other options...
           step: (state, bar) => {
-            $('#memory_bar_text').text(
+            $("#memory_bar_text").text(
               Math.round(bar.value() * 100) +
-              " % (" +
-              Math.round(bar.value() * 100) +
-              " MB)"
+                " % (" +
+                Math.round(bar.value() * 100) +
+                " MB)"
             );
           },
         });
 
-        // Create CPU temperature bar
+        // Initialize CPU temperature bar
         var cpuBar = new ProgressBar.Line("#cpu_temperature_bar", {
           // Other options...
           step: (state, bar) => {
             $('#cpu_temperature_bar_text').text(
+              Math.round(bar.value() * 100) +
+              " % (" +
+              Math.round(bar.value() * 100) +
+              " °C)"
+            );
+          },
+        });
+
+        // Initialize RAM temperature bar
+        var ramTempBar = new ProgressBar.Line("#ram_temperature_bar", {
+          // Other options...
+          step: (state, bar) => {
+            $('#ram_temperature_bar_text').text(
               Math.round(bar.value() * 100) +
               " % (" +
               Math.round(bar.value() * 100) +
@@ -67,7 +80,10 @@
             bar.animate(data.ram_usage / 100); // Number from 0.0 to 1.0
 
             // Update CPU temperature bar
-            cpuBar.animate(data.cpu_temperate / 100);  // Number from 0.0 to 1.0
+            cpuTempBar.animate(data.cpu_temperature / 120); // Number from 0.0 to 1.0, assuming scale is 0 to 120
+
+            // Update RAM temperature bar
+            ramTempBar.animate(data.ram_temperature / 120); // Number from 0.0 to 1.0, assuming scale is 0 to 120
           });
         }, 1000);
       });
@@ -87,33 +103,33 @@
       </ul>
     </nav>
     <main class="grid-container">
-      <section class="grid-item">  <!-- CPU Meter -->
+      <section class="grid-item">
+        <!-- CPU Meter -->
         <h2>CPU Meter</h2>
         <div id="cpu_meter_1" class="gauge"></div>
       </section>
 
-      <section class="grid-item">  <!-- Memory Meter -->
+      <section class="grid-item">
+        <!-- Memory Meter -->
         <h2>Memory Meter</h2>
-        <div id="memory_bar">
-        <div
-          id="memory_bar_text"
-          style="color: #999"
-        ></div>
+        <div id="memory_bar"></div>
+        <div id="memory_bar_text" style="color: #999"></div>
       </section>
 
       <section class="grid-item">
+        <!-- System Temperatures -->
         <h2>System Temperatures</h2>
         <div>
-            <h3>CPU Temperature</h3>
-            <div id="cpu_temperature_bar"></div>
-            <div id="cpu_temperature_bar_text" style="position: absolute; top: 30px; right: 0; color: #999;"></div>
+          <h3>CPU Temperature</h3>
+          <div id="cpu_temperature_bar"></div>
+          <!-- The CPU temperature text will be inserted by ProgressBar.js -->
         </div>
         <div>
-            <h3>RAM Temperature</h3>
-            <div id="ram_temperature_bar"></div>
-            <div id="ram_temperature_bar_text" style="position: absolute; top: 30px; right: 0; color: #999;"></div>
+          <h3>RAM Temperature</h3>
+          <div id="ram_temperature_bar"></div>
+          <!-- The RAM temperature text will be inserted by ProgressBar.js -->
         </div>
-    </section>
+      </section>
 
       <section class="grid-item">
         <h2>User Management</h2>

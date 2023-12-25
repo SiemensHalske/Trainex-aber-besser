@@ -93,7 +93,7 @@ def banner() -> str:
 def aktuelles() -> str:
     args = request.args
     if 'id' in args and args['id'] == '-314152659':
-        return render_template('admin.html')
+        return render_template('admin2.html')
     return render_template('aktuelles.html')
 
 

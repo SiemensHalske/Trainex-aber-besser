@@ -39,6 +39,7 @@ $(document).ready(function () {
   // Function to update gauges
   function updateGauges() {
     $.getJSON("/system_info", function (data) {
+      console.log(data);
       cpuGauge.refresh(data.cpu_usage);
       memGauge.refresh(data.ram_usage_percent);
       cpuTempGauge.refresh(data.cpu_temperature);

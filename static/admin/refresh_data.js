@@ -7,6 +7,7 @@ $(document).ready(function () {
     max: 100,
     title: "CPU Usage",
     label: "%",
+    decimals: 3, // Set the number of decimal places
   });
 
   var memGauge = new JustGage({
@@ -16,6 +17,7 @@ $(document).ready(function () {
     max: 4096,
     title: "Memory Usage",
     label: "MB",
+    decimals: 1, // Set the number of decimal places
   });
 
   var cpuTempGauge = new JustGage({
@@ -25,6 +27,7 @@ $(document).ready(function () {
     max: 120,
     title: "CPU Temp",
     label: "°C",
+    decimals: 1, // Set the number of decimal places
   });
 
   var ramTempGauge = new JustGage({
@@ -34,6 +37,7 @@ $(document).ready(function () {
     max: 120,
     title: "RAM Temp",
     label: "°C",
+    decimals: 1, // Set the number of decimal places
   });
 
   // Function to update gauges
@@ -41,7 +45,7 @@ $(document).ready(function () {
     $.getJSON("/system_info", function (data) {
       console.log(data);
       cpuGauge.refresh(data.cpu_usage);
-      memGauge.refresh(data.ram_usage_bytes / 1048576);  // Convert to MB
+      memGauge.refresh(data.ram_usage_bytes / 1048576); // Convert to MB
       cpuTempGauge.refresh(data.cpu_temperature);
       ramTempGauge.refresh(data.ram_temperature);
 

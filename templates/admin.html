@@ -14,7 +14,6 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Pfad zu deiner CSS-Datei anpassen -->
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -48,28 +47,22 @@
       </div>
     </nav>
 
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-md-4">
-          <!-- CPU Meter -->
-          <div id="cpu_meter_container" class="gauge-container">
-            <!-- Hier wird das CPU-Meter eingebunden -->
-          </div>
-        </div>
-        <div class="col-md-4">
-          <!-- Memory Meter -->
-          <div id="memory_bar_container" class="progress-container">
-            <!-- Hier wird die Memory Bar eingebunden -->
-          </div>
-        </div>
-        <div class="col-md-4">
-          <!-- System Temperatures -->
-          <div id="system_temperatures_container" class="temperature-container">
-            <!-- Hier werden die Temperaturanzeigen eingebunden -->
-          </div>
-        </div>
-      </div>
-      <!-- Weitere Reihen und Spalten nach Bedarf -->
+    <!-- CPU Meter -->
+    <div id="cpu_meter_container" class="gauge-container">
+      <h2>CPU Meter</h2>
+      <!-- Hier wird das CPU-Meter eingebunden -->
+    </div>
+
+    <!-- Memory Meter -->
+    <div id="memory_bar_container" class="progress-container">
+      <h2>Memory Meter</h2>
+      <!-- Hier wird die Memory Bar eingebunden -->
+    </div>
+
+    <!-- System Temperatures -->
+    <div id="system_temperatures_container" class="temperature-container">
+      <h2>System Temperatures</h2>
+      <!-- Hier werden die Temperaturanzeigen eingebunden -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

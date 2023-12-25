@@ -470,11 +470,8 @@ def system_info():
     :return: JSON object containing CPU usage, CPU temperature, and RAM usage.
     """
     cpu_usage = psutil.cpu_percent()
-    cpu_temperatures = psutil.sensors_temperatures()
-    if 'coretemp' in cpu_temperatures:
-        cpu_temperature = cpu_temperatures['coretemp'][0].current
-    else:
-        cpu_temperature = None  # oder eine andere Art von Fallback-Wert, falls nicht verfügbar
+    temperatures = psutil.sensors_temperatures()
+    cpu_temperature = temperatures['cpu_thermal'][0][1]
 
     ram_usage_percent = psutil.virtual_memory().percent
     ram_usage_bytes = psutil.virtual_memory().used

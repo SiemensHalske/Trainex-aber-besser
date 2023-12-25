@@ -18,7 +18,7 @@ $(document).ready(function () {
     width: 200,
     height: 200,
     textRenderer: function (value) {
-      var absoluteValue = (value * 4096) / 100; // totalRam should be the total RAM in MB
+      var absoluteValue = (4096 * 1024 * value) / 100;
       return value + "% (" + absoluteValue.toFixed(2) + " MB)";
     },
   });
@@ -49,7 +49,8 @@ $(document).ready(function () {
       type: "GET",
       success: function (data) {
         cpuGauge.refresh(data.cpu_usage);
-        ramGauge.refresh(data.ram_usage_bytes / 1024 / 1024);
+        //  # totalRam should be the total RAM in MB
+        ramGauge.refresh(data.ram_usage_bytes / (4096 * 1024));
         cpuTempGauge.refresh(data.cpu_temp);
         ramTempGauge.refresh(data.ram_temp);
       },

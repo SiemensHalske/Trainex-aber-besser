@@ -17,9 +17,10 @@ $(document).ready(function () {
     title: "RAM Usage",
     width: 200,
     height: 200,
-    textRenderer: function (value) {
-      var absoluteValue = (4096 * 1024 * value) / 100;
-      return value + "% (" + absoluteValue.toFixed(2) + " MB)";
+    textRenderer: function (value) {  // value is the value in MB
+      var maxRam = 4096;  // # in MB
+      var percentage_used = value / maxRam * 100;
+      return percentage_used.toFixed(2) + "%" + " (" + value + "MB)";
     },
   });
 
@@ -50,7 +51,7 @@ $(document).ready(function () {
       success: function (data) {
         cpuGauge.refresh(data.cpu_usage);
         //  # totalRam should be the total RAM in MB
-        ramGauge.refresh(data.ram_usage_bytes / (4096 * 1024));
+        ramGauge.refresh(data.ram_usage_bytes / 1024 / 1024);
         cpuTempGauge.refresh(data.cpu_temp);
         ramTempGauge.refresh(data.ram_temp);
       },

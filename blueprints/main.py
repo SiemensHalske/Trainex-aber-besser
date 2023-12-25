@@ -460,34 +460,42 @@ def log_error(user_id=0, error_level: str = 'INFO', error_message: str = '') -> 
 # Functionality routes
 # =============================================================
 
+def get_ram_temperature():
+    with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
+        temperature = float(f.read()) / 1000
+    return temperature
+
 
 @main_bp.route('/system_info', methods=['GET'])
 @jwt_required_system_functions()
 def system_info():
     """
-    Returns system information including CPU usage, CPU temperature, and RAM usage.
+    Returns system information including CPU usage, CPU temperature, RAM usage, and RAM temperature.
 
-    :return: JSON object containing CPU usage, CPU temperature, and RAM usage.
+    :return: JSON object containing CPU usage, CPU temperature, RAM usage, and RAM temperature.
     """
     cpu_usage = psutil.cpu_percent()
     temperatures = psutil.sensors_temperatures()
     cpu_temperature = temperatures['cpu_thermal'][0][1]
+    ram_temperature = get_ram_temperature()
 
     ram_usage_percent = psutil.virtual_memory().percent
     ram_usage_bytes = psutil.virtual_memory().used
     return jsonify({
         'cpu_usage': cpu_usage,
-        'cpu_temperature': cpu_temperature,  # Korrigiert von 'cpu_temperate' zu 'cpu_temperature'
+        # Korrigiert von 'cpu_temperate' zu 'cpu_temperature'
+        'cpu_temperature': cpu_temperature,
         'ram_usage_percent': ram_usage_percent,
-        'ram_usage_bytes': ram_usage_bytes
+        'ram_usage_bytes': ram_usage_bytes,
+        'ram_temperature': ram_temperature
     })
-    
+
 
 @main_bp.route('/system_info_not_allowed', methods=['GET', 'POST'])
 def system_info_not_allowed():
     """
     Returns nothing. Just a fallback for the system_info route.
-    
+
     """
     return jsonify({
         'cpu_usage': 'N/A',

@@ -1,7 +1,7 @@
 $(document).ready(function () {
   // Define the gauges
   var cpuGauge = new JustGage({
-    id: "cpu_gauge",
+    id: "cpuGauge",
     value: 0,
     min: 0,
     max: 100,
@@ -10,7 +10,7 @@ $(document).ready(function () {
   });
 
   var memGauge = new JustGage({
-    id: "memory_gauge",
+    id: "memoryGauge",
     value: 0,
     min: 0,
     max: 4096,
@@ -19,7 +19,7 @@ $(document).ready(function () {
   });
 
   var cpuTempGauge = new JustGage({
-    id: "cpu_temp_gauge",
+    id: "cpuTempGauge",
     value: 0,
     min: 0,
     max: 120,
@@ -28,7 +28,7 @@ $(document).ready(function () {
   });
 
   var ramTempGauge = new JustGage({
-    id: "ram_temp_gauge",
+    id: "ramTempGauge",
     value: 0,
     min: 0,
     max: 120,

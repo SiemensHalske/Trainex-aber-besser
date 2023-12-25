@@ -1,183 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="/static/banner.css" />
-    <style>
-      /* Define the grid layout */
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
-        grid-gap: 20px; /* Gap between grid items */
-      }
 
-      /* Style the grid items */
-      .grid-item {
-        background-color: #f2f2f2;
-        padding: 20px;
-        text-align: center;
-      }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/toorshia/justgage@1.3.0/raphael-2.1.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/toorshia/justgage@1.3.0/justgage.js"></script>
+    <script src="https://cdn.jsdelivr.net/raphael/2.1.4/raphael-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/justgage/1.2.2/justgage.min.js"></script>
+
+    <!-- ProgressBar.js -->
     <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Pfad zu deiner CSS-Datei anpassen -->
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Admin Dashboard</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >Dashboard <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Products</a>
+          </li>
+          <!-- Weitere Menüpunkte hier einfügen -->
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-4">
+          <!-- CPU Meter -->
+          <div id="cpu_meter_container" class="gauge-container">
+            <!-- Hier wird das CPU-Meter eingebunden -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <!-- Memory Meter -->
+          <div id="memory_bar_container" class="progress-container">
+            <!-- Hier wird die Memory Bar eingebunden -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <!-- System Temperatures -->
+          <div id="system_temperatures_container" class="temperature-container">
+            <!-- Hier werden die Temperaturanzeigen eingebunden -->
+          </div>
+        </div>
+      </div>
+      <!-- Weitere Reihen und Spalten nach Bedarf -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       $(document).ready(function () {
-        // Create CPU meter
+        // Initialize JustGage for CPU Meter
         var cpuMeter = new JustGage({
-          id: "cpu_meter_1",
+          id: "cpu_meter_container",
+          value: 0,
           min: 0,
           max: 100,
           title: "CPU Usage",
         });
-    
-        // Initialize progress bars for memory and temperatures
-        var memoryBar = new ProgressBar.Line("#memory_bar", {
+
+        // Initialize ProgressBar.js for Memory Meter
+        var memoryBar = new ProgressBar.Line("#memory_bar_container", {
           strokeWidth: 4,
           color: "#FFEA82",
-          text: {
-            value: "0 % (0 MB)",
-            style: {
-              position: "absolute",
-              left: "50%",
-              top: "30px",
-              padding: 0,
-              margin: 0,
-              transform: "translateX(-50%)",
-              color: "#fff",
-            },
-            autoStyleContainer: false
-          },
-          step: (state, bar) => {
-            bar.setText(
-              (bar.value() * 100).toFixed(0) +
-                "% (" +
-                (bar.value() * 4096 / 1048576).toFixed(2) +
-                " MB)"
-            );
-          },
+          trailColor: "#eee",
+          trailWidth: 1,
+          svgStyle: { width: "100%", height: "100%" },
         });
-    
+
+        // Initialize ProgressBar.js for CPU Temperature
         var cpuTempBar = new ProgressBar.Line("#cpu_temperature_bar", {
           strokeWidth: 4,
           color: "#FFEA82",
+          trailColor: "#eee",
+          trailWidth: 1,
+          svgStyle: { width: "100%", height: "100%" },
         });
-    
+
+        // Initialize ProgressBar.js for RAM Temperature
         var ramTempBar = new ProgressBar.Line("#ram_temperature_bar", {
           strokeWidth: 4,
           color: "#FFEA82",
+          trailColor: "#eee",
+          trailWidth: 1,
+          svgStyle: { width: "100%", height: "100%" },
         });
-    
-        function updateSystemInfo() {
+
+        // Fetch system info every second
+        setInterval(function () {
           $.get("/system_info", function (data) {
-            console.log(data); // Log data for debugging
-    
             // Update CPU meter
             cpuMeter.refresh(data.cpu_usage);
-    
-            // Update memory bar and text
-            var normalizedMemoryUsage = data.ram_usage_bytes / (1024 * 1024 * 1024); // Convert to GB
-            memoryBar.animate(normalizedMemoryUsage); // Normalize percentage
-    
-            // Update CPU temperature bar and text
-            var normalizedCPUTemp = data.cpu_temperature / 120; // Assuming max CPU temp is 120
-            cpuTempBar.animate(normalizedCPUTemp);
-            $("#cpu_temperature_text").text(
-              Math.round(normalizedCPUTemp * 120) + " °C"
-            );
-    
-            // Update RAM temperature bar and text
-            var normalizedRAMTemp = data.ram_temperature / 120; // Assuming max RAM temp is 120
-            ramTempBar.animate(normalizedRAMTemp);
-            $("#ram_temperature_text").text(
-              Math.round(normalizedRAMTemp * 120) + " °C"
-            );
+
+            // Update memory bar
+            memoryBar.animate(data.ram_usage_percent / 100); // Normalize percentage
+
+            // Update CPU temperature bar
+            cpuTempBar.animate(data.cpu_temperature / 120); // Normalize temperature assuming max is 120°C
+
+            // Update RAM temperature bar
+            ramTempBar.animate(data.ram_temperature / 120); // Normalize temperature assuming max is 120°C
           });
-        }
-    
-        // Fetch system info every second
-        setInterval(updateSystemInfo, 1000);
+        }, 1000);
       });
     </script>
-  </head>
-  <body>
-    <header>
-      <h1>Welcome to the Admin Dashboard</h1>
-    </header>
-    <nav>
-      <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Users</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Orders</a></li>
-        <li><a href="#">Settings</a></li>
-      </ul>
-    </nav>
-    <main class="grid-container">
-      <section class="grid-item">
-        <!-- CPU Meter -->
-        <h2>CPU Meter</h2>
-        <div id="cpu_meter_1" class="gauge"></div>
-      </section>
-
-      <section class="grid-item">
-        <!-- Memory Meter -->
-        <h2>Memory Meter</h2>
-        <div id="memory_bar"></div>
-        <div id="memory_bar_text" style="color: #999"></div>
-      </section>
-
-      <section class="grid-item">
-        <!-- System Temperatures -->
-        <h2>System Temperatures</h2>
-        <div>
-          <h3>CPU Temperature</h3>
-          <div id="cpu_temperature_bar"></div>
-          <div id="cpu_temperature_bar_text" style="color: #999"></div>
-          <!-- The CPU temperature text will be inserted by ProgressBar.js -->
-        </div>
-        <div>
-          <h3>RAM Temperature</h3>
-          <div id="ram_temperature_bar"></div>
-          <div id="ram_temperature_bar_text" style="color: #999"></div>
-          <!-- The RAM temperature text will be inserted by ProgressBar.js -->
-        </div>
-      </section>
-
-      <section class="grid-item">
-        <h2>User Management</h2>
-        <!-- Add your user management content here -->
-      </section>
-
-      <section class="grid-item">
-        <h2>Product Management</h2>
-        <!-- Add your product management content here -->
-      </section>
-
-      <section class="grid-item">
-        <h2>Order Management</h2>
-        <!-- Add your order management content here -->
-      </section>
-
-      <section class="grid-item">
-        <h2>Settings</h2>
-        <!-- Add your settings content here -->
-      </section>
-
-      <section class="grid-item">
-        <h2>CPU Meter 3</h2>
-        <!-- Add your CPU meter 3 content here -->
-      </section>
-
-      <section class="grid-item">
-        <h2>CPU Meter 4</h2>
-        <!-- Add your CPU meter 4 content here -->
-      </section>
-    </main>
 
     <footer>
-      <p>&copy; 2023 Hendrik Siemens. All rights reserved.</p>
+      <p>&copy; 2023 SoftForge. All rights reserved.</p>
     </footer>
   </body>
 </html>

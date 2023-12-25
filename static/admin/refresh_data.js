@@ -13,7 +13,7 @@ $(document).ready(function () {
     id: "ram-usage",
     value: 0,
     min: 0,
-    max: 100,
+    max: 4096,
     title: "RAM Usage",
     width: 200,
     height: 200,

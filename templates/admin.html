@@ -37,29 +37,26 @@
           strokeWidth: 4,
           color: "#FFEA82",
           text: {
+            value: "0 % (0 MB)",
             style: {
-              color: "#999",
               position: "absolute",
-              right: "0",
+              left: "50%",
               top: "30px",
-              padding: "0",
-              margin: "0",
-              transform: null
+              padding: 0,
+              margin: 0,
+              transform: "translateX(-50%)",
+              color: "#fff",
             },
             autoStyleContainer: false
           },
-          from: {color: '#FFEA82'},
-          to: {color: '#ED6A5A'},
-          step: (state, bar, data) => {
+          step: (state, bar) => {
             bar.setText(
-              Math.round(bar.value() * 100) + 
-              "% (" + 
-              (data.ram_usage_bytes / 1048576).toFixed(2) + 
-              " MB)"
+              (bar.value() * 100).toFixed(0) +
+                "% (" +
+                (bar.value() * 4096 / 1048576).toFixed(2) +
+                " MB)"
             );
-            // Nur hinzufügen, wenn die Farbe basierend auf dem Zustand geändert werden soll
-            bar.path.setAttribute('stroke', state.color);
-          }
+          },
         });
     
         var cpuTempBar = new ProgressBar.Line("#cpu_temperature_bar", {

@@ -37,25 +37,22 @@
           strokeWidth: 4,
           color: "#FFEA82",
           text: {
-            value: "0 % (0 MB)",
             style: {
+              color: "#fff",
               position: "absolute",
               left: "50%",
-              top: "30px",
+              top: "50%",
               padding: 0,
               margin: 0,
-              transform: "translateX(-50%)",
-              color: "#fff",
+              transform: "translate(-50%, -50%)"
             },
             autoStyleContainer: false
           },
-          step: (state, bar) => {
-            bar.setText(
-              (bar.value() * 100).toFixed(0) +
-                "% (" +
-                (bar.value() * 4096 / 1048576).toFixed(2) +
-                " MB)"
-            );
+          step: (state, bar, attachment) => {
+            var value = (bar.value() * 100).toFixed(0);
+            var maxMemory = 4096; // Max memory in MB
+            var text = `${value}% (${Math.round(bar.value() * maxMemory)} MB)`;
+            attachment.setText(text);
           },
         });
     

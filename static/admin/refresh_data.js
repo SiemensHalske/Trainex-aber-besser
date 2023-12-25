@@ -20,7 +20,7 @@ $(document).ready(function () {
     textRenderer: function (value) {  // value is the value in MB
       var maxRam = 4096;  // # in MB
       var percentage_used = value / maxRam * 100;
-      return percentage_used.toFixed(2) + "%" + " (" + value + "MB)";
+      return percentage_used.toFixed(2) + "%\n" + " (" + value + "MB)";
     },
   });
 

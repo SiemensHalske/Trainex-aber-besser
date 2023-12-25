@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
+    <script src="/static/admin/refresh_data.js"></script>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="grid-item" id="cpu-usage">
+        <h2>CPU Usage</h2>
+        <div class="gauge"></div>
+      </div>
+      <div class="grid-item" id="ram-usage">
+        <h2>RAM Usage</h2>
+        <div class="bar"></div>
+      </div>
+      <div class="grid-item" id="cpu-temp">
+        <h2>CPU Temperature</h2>
+        <div class="gauge"></div>
+      </div>
+      <div class="grid-item" id="ram-temp">
+        <h2>RAM Temperature</h2>
+        <div class="gauge"></div>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2023 SoftForge. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

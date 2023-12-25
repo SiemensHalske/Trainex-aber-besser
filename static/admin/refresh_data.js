@@ -1,43 +1,56 @@
-var cpuUsageGauge = new JustGage({
-    id: "cpuUsageGauge",
+$(document).ready(function () {
+  // Define the gauges
+  var cpuGauge = new JustGage({
+    id: "cpu_gauge",
     value: 0,
     min: 0,
     max: 100,
-    title: "CPU Usage"
-});
+    title: "CPU Usage",
+    label: "%",
+  });
 
-var cpuTempGauge = new JustGage({
-    id: "cpuTempGauge",
+  var memGauge = new JustGage({
+    id: "memory_gauge",
     value: 0,
     min: 0,
-    max: 100,
-    title: "CPU Temperature"
-});
+    max: 4096,
+    title: "Memory Usage",
+    label: "MB",
+  });
 
-var ramUsageGauge = new JustGage({
-    id: "ramUsageGauge",
+  var cpuTempGauge = new JustGage({
+    id: "cpu_temp_gauge",
     value: 0,
     min: 0,
-    max: 100,
-    title: "RAM Usage %"
-});
+    max: 120,
+    title: "CPU Temp",
+    label: "°C",
+  });
 
-var ramUsageBar = document.getElementById('ramUsageBar');
+  var ramTempGauge = new JustGage({
+    id: "ram_temp_gauge",
+    value: 0,
+    min: 0,
+    max: 120,
+    title: "RAM Temp",
+    label: "°C",
+  });
 
-function updateSystemInfo() {
-    $.ajax({
-        url: '/system_info',
-        method: 'GET',
-        success: function(data) {
-            cpuUsageGauge.refresh(data.cpu_usage);
-            cpuTempGauge.refresh(data.cpu_temperature);
-            ramUsageGauge.refresh(data.ram_usage_percent);
+  // Function to update gauges
+  function updateGauges() {
+    $.getJSON("/system_info", function (data) {
+      cpuGauge.refresh(data.cpu_usage);
+      memGauge.refresh(data.ram_usage_percent);
+      cpuTempGauge.refresh(data.cpu_temperature);
+      ramTempGauge.refresh(data.ram_temperature);
 
-            var ramUsageMB = data.ram_usage_bytes / 1048576; // Convert bytes to MB
-            ramUsageBar.style.width = data.ram_usage_percent + '%';
-            ramUsageBar.innerText = ramUsageMB.toFixed(2) + ' MB'; // Display RAM usage in MB
-        }
+      // Update absolute memory usage text
+      $("#memory_usage_absolute").text(
+        (data.ram_usage_bytes / 1048576).toFixed(2) + " MB"
+      );
     });
-}
+  }
 
-setInterval(updateSystemInfo, 1000);
+  // Update gauges every second
+  setInterval(updateGauges, 1000);
+});

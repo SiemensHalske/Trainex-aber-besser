@@ -1,12 +1,16 @@
-body {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
+.gauge-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
 }
-
-.gauge, .bar {
-    width: 200px;
-    height: 200px;
+.gauge {
+  width: 200px; /* Adjust size as needed */
+  height: 160px; /* Adjust size as needed */
 }
+.gauge-value {
+  text-align: center;
+  font-size: 1.5em; /* Adjust font size as needed */
+}
+/* Add more CSS as needed for styling */

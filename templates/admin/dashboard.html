@@ -1,18 +1,45 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="/static/admin/dashboard.css">
-</head>
-<body>
-    <div id="cpuUsageGauge" class="gauge"></div>
-    <div id="cpuTempGauge" class="gauge"></div>
-    <div id="ramUsageGauge" class="gauge"></div>
-    <div id="ramUsageBar" class="bar"></div>
+    <link rel="stylesheet" href="/static/admin/dashboard.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="gauge-container">
+            <div id="cpuGauge" class="gauge"></div>
+            <div id="cpuUsage" class="gauge-value"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="gauge-container">
+            <div id="memoryGauge" class="gauge"></div>
+            <div id="memoryUsagePercent" class="gauge-value"></div>
+            <div id="memoryUsageBytes" class="gauge-value"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="gauge-container">
+            <div id="cpuTempGauge" class="gauge"></div>
+            <div id="cpuTemp" class="gauge-value"></div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="gauge-container">
+            <div id="ramTempGauge" class="gauge"></div>
+            <div id="ramTemp" class="gauge-value"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/static/admin/refresh_data.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -41,7 +41,7 @@ $(document).ready(function () {
     $.getJSON("/system_info", function (data) {
       console.log(data);
       cpuGauge.refresh(data.cpu_usage);
-      memGauge.refresh(data.ram_usage_bytes / 1048576);
+      memGauge.refresh(data.ram_usage_bytes);
       cpuTempGauge.refresh(data.cpu_temperature);
       ramTempGauge.refresh(data.ram_temperature);
 

@@ -7,32 +7,37 @@
     <link rel="stylesheet" href="/static/admin/dashboard.css" />
   </head>
   <body>
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-md-6 col-lg-4">
-          <div class="gauge-container">
-            <div id="cpuGauge" class="gauge"></div>
-            <div id="cpuUsage" class="gauge-value"></div>
-          </div>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#users">Users</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#orders">Orders</a></li>
+        <li><a href="#settings">Settings</a></li>
+      </ul>
+    </nav>
+
+    <div class="grid-container">
+      <!-- Große Gauges für CPU und RAM -->
+      <div class="gauge-large">
+        <div id="cpuGauge" class="gauge"></div>
+        <div id="cpuUsage" class="gauge-label">CPU Usage</div>
+      </div>
+      <div class="gauge-large">
+        <div id="memoryGauge" class="gauge"></div>
+        <div id="memoryUsagePercent" class="gauge-label">Memory Usage %</div>
+        <div id="memoryUsageBytes" class="gauge-label">Memory Usage MB</div>
+      </div>
+
+      <!-- Container für kleinere Gauges -->
+      <div class="gauge-small-container">
+        <div class="gauge-small">
+          <div id="cpuTempGauge" class="gauge"></div>
+          <div id="cpuTemp" class="gauge-label">CPU Temp</div>
         </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="gauge-container">
-            <div id="memoryGauge" class="gauge"></div>
-            <div id="memoryUsagePercent" class="gauge-value"></div>
-            <div id="memoryUsageBytes" class="gauge-value"></div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="gauge-container">
-            <div id="cpuTempGauge" class="gauge"></div>
-            <div id="cpuTemp" class="gauge-value"></div>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-          <div class="gauge-container">
-            <div id="ramTempGauge" class="gauge"></div>
-            <div id="ramTemp" class="gauge-value"></div>
-          </div>
+        <div class="gauge-small">
+          <div id="ramTempGauge" class="gauge"></div>
+          <div id="ramTemp" class="gauge-label">RAM Temp</div>
         </div>
       </div>
     </div>

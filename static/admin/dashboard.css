@@ -1,16 +1,62 @@
-.gauge-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 20px;
-}
+/* Apply a base style for the gauges */
 .gauge {
-  width: 200px; /* Adjust size as needed */
-  height: 160px; /* Adjust size as needed */
+  margin: 10px auto;
+  width: 80%; /* Adjust the width as needed */
 }
-.gauge-value {
+
+/* Styling for large gauges */
+.gauge-large {
   text-align: center;
-  font-size: 1.5em; /* Adjust font size as needed */
 }
-/* Add more CSS as needed for styling */
+
+/* Label styling for all gauges */
+.gauge-label {
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 1.2em;
+}
+
+/* Styling for the container holding the smaller temperature gauges */
+.gauge-small-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/* Styling for the smaller gauges */
+.gauge-small {
+  flex: 1; /* Allows the gauges to grow and take up equal space */
+  padding: 0 10px; /* Add some padding between the gauges */
+  text-align: center;
+}
+
+/* Navigation bar styling */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Grid container styling for responsiveness */
+@media (max-width: 768px) {
+  .gauge-small-container {
+    flex-direction: column;
+  }
+
+  .gauge {
+    width: 90%; /* Adjust the width for smaller devices */
+  }
+}

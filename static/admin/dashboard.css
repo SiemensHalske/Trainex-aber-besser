@@ -4,30 +4,33 @@
   width: 80%; /* Adjust the width as needed */
 }
 
-/* Styling for large gauges */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  grid-gap: 20px;
+  max-width: 1200px; /* Adjust the max width as needed */
+  margin: 0 auto; /* Center the grid horizontally */
+}
+
 .gauge-large {
-  text-align: center;
+  grid-column: span 2; /* Make the large gauges span two columns */
+  text-align: center; /* Center the gauge content */
 }
 
-/* Label styling for all gauges */
-.gauge-label {
-  display: block;
-  text-align: center;
-  margin-top: 5px;
-  font-size: 1.2em;
-}
-
-/* Styling for the container holding the smaller temperature gauges */
 .gauge-small-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between; /* Space out the small gauges */
 }
 
-/* Styling for the smaller gauges */
 .gauge-small {
-  flex: 1; /* Allows the gauges to grow and take up equal space */
-  padding: 0 10px; /* Add some padding between the gauges */
-  text-align: center;
+  flex: 1; /* Give the small gauges equal space */
+  text-align: center; /* Center the gauge content */
+}
+
+.gauge-label {
+  display: block; /* Ensure the label is on a new line */
+  margin-top: 10px; /* Space between the gauge and its label */
+  text-align: center; /* Center the label text */
 }
 
 /* Navigation bar styling */

@@ -1,15 +1,62 @@
-/* General styles */
-body {
-  font-family: Arial, sans-serif; /* Default font for the dashboard */
+/* Basis-Stil für alle Gauges */
+.gauge {
+  margin: 10px auto;
+  width: 100%; /* Passt die Breite der Gauges an den Container an */
 }
 
-/* Navigation bar styling */
+/* Grid-Layout für die Haupt- und Temperaturgauges */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Zwei Spalten für die Gauges */
+  grid-gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto; /* Zentriert das Grid und gibt oben/unten Abstand */
+}
+
+/* Container für die Hauptgauges */
+.main-gauges {
+  grid-column: 1 / 2; /* Nimmt die erste Spalte ein */
+  display: flex;
+  flex-direction: column; /* Stapelt die Gauges vertikal */
+  gap: 30px; /* Abstand zwischen den Gauges */
+}
+
+/* Container für die Temperaturgauges */
+.temp-gauges {
+  grid-column: 2 / 3; /* Nimmt die zweite Spalte ein */
+  display: flex;
+  flex-direction: column; /* Stapelt die Gauges vertikal */
+  gap: 20px; /* Kleinerer Abstand, da weniger wichtig */
+}
+
+/* Stil für die große Gauge */
+.gauge-large {
+  padding: 20px;
+  background-color: #f7f7f7; /* Hintergrundfarbe für den Gauge-Container */
+  border-radius: 10px; /* Abgerundete Ecken */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für Tiefe */
+}
+
+/* Stil für die kleinen Gauges */
+.gauge-small {
+  padding: 15px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Stil für die Wertetexte unter den Gauges */
+.gauge-value {
+  font-size: 18px; /* Größe des Textes */
+  text-align: center; /* Zentriert den Text */
+  margin-top: 10px; /* Abstand vom Gauge zum Text */
+}
+
+/* Navigation Bar Styling */
 .navbar {
   background-color: #333;
   overflow: hidden;
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
+  padding: 0 20px; /* Seitenabstand */
 }
 
 .navbar a {
@@ -19,6 +66,7 @@ body {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  transition: background-color 0.3s; /* Glatter Übergang bei Hover */
 }
 
 .navbar a:hover {
@@ -26,64 +74,18 @@ body {
   color: black;
 }
 
-/* Grid layout for gauges */
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
-  grid-gap: 20px;
-  max-width: 1200px; /* Maximum width of the grid */
-  margin: 0 auto; /* Center the grid in the viewport */
-  padding: 20px; /* Padding around the grid */
-}
-
-/* Large gauges styling */
-.gauge-large {
-  grid-column: 1 / -1; /* Span across all available columns */
-  text-align: center;
-}
-
-/* Small gauges container styling */
-.gauge-small-container {
-  display: flex;
-  justify-content: space-between; /* Distribute space between small gauges */
-}
-
-/* Small gauges styling */
-.gauge-small {
-  flex: 1;
-  margin: 10px; /* Margin around each small gauge */
-}
-
-/* Gauge base styles */
-.gauge {
-  margin: 10px auto;
-  width: 80%; /* Width of the gauge relative to its container */
-}
-
-/* Label styling for gauges */
-.gauge-label {
-  margin-top: 10px; /* Space between gauge and label */
-  text-align: center;
-  color: #fff; /* Text color for labels */
-}
-
-/* Responsive adjustments for smaller screens */
+/* Responsive Anpassungen für kleinere Bildschirme */
 @media (max-width: 768px) {
   .grid-container {
-    grid-template-columns: 1fr; /* Stack gauges in a single column */
+    grid-template-columns: 1fr; /* Eine Spalte für kleinere Bildschirme */
   }
 
-  .gauge-large,
-  .gauge-small {
-    width: 90%; /* Increase width for smaller screens */
+  .main-gauges,
+  .temp-gauges {
+    grid-column: 1; /* Beide nehmen die ganze Breite ein */
   }
 
-  .gauge-small-container {
-    flex-direction: column; /* Stack small gauges vertically */
-  }
-
-  .navbar a {
-    float: none;
-    display: block; /* Stack navbar links */
+  .gauge {
+    width: 90%; /* Anpassung der Gauge-Breite für kleinere Bildschirme */
   }
 }

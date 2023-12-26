@@ -17,26 +17,29 @@
       </ul>
     </nav>
 
-    <div class="grid-container">
-      <!-- Große Gauges für CPU und RAM -->
-      <div class="gauge-large">
-        <div id="cpuGauge" class="gauge"></div>
-        <div id="cpuUsage" class="gauge-label">CPU Usage</div>
-      </div>
-      <div class="gauge-large">
-        <div id="memoryGauge" class="gauge"></div>
-        <div id="memoryUsageBytes" class="gauge-label">Memory Usage MB</div>
+    <div class="container mt-5">
+      <!-- Hauptgauges Container -->
+      <div class="main-gauges-container">
+        <div class="gauge-container gauge-large">
+          <div id="cpuGauge" class="gauge"></div>
+          <div id="cpuUsage" class="gauge-value">CPU Usage</div>
+        </div>
+        <div class="gauge-container gauge-large">
+          <div id="memoryGauge" class="gauge"></div>
+          <div id="memoryUsagePercent" class="gauge-value">Memory Usage %</div>
+          <div id="memoryUsageBytes" class="gauge-value">Memory Usage MB</div>
+        </div>
       </div>
 
-      <!-- Container für kleinere Gauges -->
-      <div class="gauge-small-container">
-        <div class="gauge-small">
+      <!-- Temperaturgauges Container -->
+      <div class="temp-gauges-container">
+        <div class="gauge-container gauge-small">
           <div id="cpuTempGauge" class="gauge"></div>
-          <div id="cpuTemp" class="gauge-label">CPU Temp</div>
+          <div id="cpuTemp" class="gauge-value">CPU Temp</div>
         </div>
-        <div class="gauge-small">
+        <div class="gauge-container gauge-small">
           <div id="ramTempGauge" class="gauge"></div>
-          <div id="ramTemp" class="gauge-label">RAM Temp</div>
+          <div id="ramTemp" class="gauge-value">RAM Temp</div>
         </div>
       </div>
     </div>

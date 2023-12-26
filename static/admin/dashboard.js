@@ -16,3 +16,19 @@ $(document).ready(function () {
     $(".grid-container").hide();
   });
 });
+
+$(document).ready(function () {
+  $(".navbar li a").click(function (e) {
+    // Verhindert das Standardverhalten des Anker-Links
+    e.preventDefault();
+
+    // Entfernt 'active' von allen Links
+    $(".navbar li a").removeClass("active");
+
+    // Fügt 'active' zu dem geklickten Link hinzu
+    $(this).addClass("active");
+
+    // Hier könntest du zusätzlich Code einfügen, um deine Gauges anzuzeigen
+    // Beispiel: $("#id-des-gauge-container").show();
+  });
+});

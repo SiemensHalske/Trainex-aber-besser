@@ -46,26 +46,32 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
+  display: flex; /* Flex-Container für die Links */
+  justify-content: center; /* Zentriert die Links horizontal */
 }
 
 .navbar li {
-  float: left;
+  padding: 14px 16px; /* Abstand um die Links */
 }
 
 .navbar li a {
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
   text-decoration: none;
-  transition: background-color 0.3s; /* Smooth background transition */
+  transition: background-color 0.3s, color 0.3s; /* Smooth background and color transition */
 }
 
-/* Style for navbar links on hover and active */
-.navbar li a:hover,
-.navbar li a.active { /* This will ensure the active link remains highlighted */
+/* Style for navbar links on hover */
+.navbar li a:hover {
   background-color: #ddd;
   color: black;
+}
+
+/* Style for navbar links when active */
+.navbar li a.active {
+  background-color: #555; /* Dunklerer Hintergrund für aktive Links */
+  color: #fff;
 }
 
 /* Clear floats after the links */
@@ -77,8 +83,8 @@
 
 /* Responsive adjustments */
 @media screen and (max-width: 600px) {
-  .navbar li {
-    float: none;
+  .navbar ul {
+    flex-direction: column; /* Stapelt die Links auf kleinen Bildschirmen */
   }
 }
 

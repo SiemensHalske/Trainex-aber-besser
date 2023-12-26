@@ -1,13 +1,19 @@
-// Get the dashboard link element
-const dashboardLink = document.querySelector('a[href="#dashboard"]');
-
-// Get the main gauges container element
-const mainGaugesContainer = document.querySelector(".main-gauges");
-
-// Add click event listener to the dashboard link
-dashboardLink.addEventListener("click", function (event) {
-  event.preventDefault();
-
-  // Toggle the visibility of the main gauges container
-  mainGaugesContainer.classList.toggle("visible");
-});
+$(document).ready(function() {
+    // Verstecke zuerst die Gauges
+    $('.grid-container').hide();
+  
+    // Event-Listener, der auf Klick auf den Link '#dashboard' reagiert
+    $('a[href="#dashboard"]').click(function(e) {
+      // Verhindere das Standardverhalten des Links
+      e.preventDefault();
+  
+      // Zeige die Gauges an
+      $('.grid-container').show();
+    });
+  
+    // Optional: Wenn du möchtest, dass die Gauges verschwinden, wenn auf andere Links geklickt wird
+    $('a:not([href="#dashboard"])').click(function() {
+      $('.grid-container').hide();
+    });
+  });
+  

@@ -7,7 +7,7 @@
 /* Grid-Layout für die Haupt- und Temperaturgauges */
 .grid-container {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* Zwei Spalten, linke breiter als rechte */
+  grid-template-columns: 1fr 1fr; /* Zwei Spalten, linke breiter als rechte */
   grid-gap: 20px;
   max-width: 1200px;
   margin: 20px auto; /* Zentriert das Grid und gibt oben/unten Abstand */

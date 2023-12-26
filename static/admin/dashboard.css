@@ -7,49 +7,33 @@
 /* Grid-Layout für die Haupt- und Temperaturgauges */
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Zwei Spalten für die Gauges */
+  grid-template-columns: 2fr 1fr; /* Zwei Spalten, linke breiter als rechte */
   grid-gap: 20px;
   max-width: 1200px;
   margin: 20px auto; /* Zentriert das Grid und gibt oben/unten Abstand */
 }
 
-/* Container für die Hauptgauges */
+/* Stil für die Container der Hauptgauges */
 .main-gauges {
-  grid-column: 1 / 2; /* Nimmt die erste Spalte ein */
   display: flex;
   flex-direction: column; /* Stapelt die Gauges vertikal */
   gap: 30px; /* Abstand zwischen den Gauges */
 }
 
-/* Container für die Temperaturgauges */
+/* Stil für die Container der Temperaturgauges */
 .temp-gauges {
-  grid-column: 2 / 3; /* Nimmt die zweite Spalte ein */
   display: flex;
   flex-direction: column; /* Stapelt die Gauges vertikal */
   gap: 20px; /* Kleinerer Abstand, da weniger wichtig */
 }
 
-/* Stil für die große Gauge */
-.gauge-large {
+/* Farbliche Abgrenzung der Container */
+.gauge-container {
   padding: 20px;
   background-color: #f7f7f7; /* Hintergrundfarbe für den Gauge-Container */
   border-radius: 10px; /* Abgerundete Ecken */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für Tiefe */
-}
-
-/* Stil für die kleinen Gauges */
-.gauge-small {
-  padding: 15px;
-  background-color: #f7f7f7;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Stil für die Wertetexte unter den Gauges */
-.gauge-value {
-  font-size: 18px; /* Größe des Textes */
-  text-align: center; /* Zentriert den Text */
-  margin-top: 10px; /* Abstand vom Gauge zum Text */
+  text-align: center; /* Zentriert den Inhalt */
 }
 
 /* Navigation Bar Styling */

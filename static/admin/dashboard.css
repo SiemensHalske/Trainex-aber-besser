@@ -36,26 +36,56 @@
   text-align: center; /* Zentriert den Inhalt */
 }
 
-/* Navigation Bar Styling */
+/* Neues Styling für die Navigation Bar */
 .navbar {
-  background-color: #333;
+  background-color: #1a1a1a; /* Dunkler Hintergrund für die Navbar */
   overflow: hidden;
-  padding: 0 20px; /* Seitenabstand */
+  padding: 0; /* Entfernt den Seitenabstand */
+  border-bottom: 2px solid #444; /* Fügt eine Grenzlinie für visuelle Trennung hinzu */
 }
 
+/* Stil für die Navigationslinks */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Zentriert die Links */
+  padding-left: 0; /* Entfernt das Padding links */
+}
+
+/* Stil für die Navigationslink-Elemente */
+.nav-links li {
+  padding: 20px; /* Fügt Padding zu jedem Link hinzu */
+}
+
+/* Stil für die Navigationslinks (Anker) */
 .navbar a {
-  float: left;
   display: block;
   color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
+  padding: 10px 15px;
   text-decoration: none;
-  transition: background-color 0.3s; /* Glatter Übergang bei Hover */
+  transition: color 0.3s, background-color 0.3s; /* Glatter Übergang bei Hover */
+  border-radius: 5px; /* Abgerundete Ecken für die Links */
 }
 
+/* Hover-Zustand für Navigationslinks */
 .navbar a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #4CAF50; /* Grün, um mit den Gauges zu harmonieren */
+  color: white;
+}
+
+/* Stil für aktiven Navigationslink */
+.navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Responsive Anpassungen für kleinere Bildschirme */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column; /* Stapelt die Links auf kleinen Bildschirmen */
+  }
 }
 
 /* Responsive Anpassungen für kleinere Bildschirme */

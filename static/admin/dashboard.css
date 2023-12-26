@@ -36,55 +36,49 @@
   text-align: center; /* Zentriert den Inhalt */
 }
 
-/* Neues Styling für die Navigation Bar */
+/* Navigation Bar Styling */
 .navbar {
-  background-color: #1a1a1a; /* Dunkler Hintergrund für die Navbar */
+  background-color: #333;
   overflow: hidden;
-  padding: 0; /* Entfernt den Seitenabstand */
-  border-bottom: 2px solid #444; /* Fügt eine Grenzlinie für visuelle Trennung hinzu */
 }
 
-/* Stil für die Navigationslinks */
-.nav-links {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Zentriert die Links */
-  padding-left: 0; /* Entfernt das Padding links */
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
-/* Stil für die Navigationslink-Elemente */
-.nav-links li {
-  padding: 20px; /* Fügt Padding zu jedem Link hinzu */
+.navbar li {
+  float: left;
 }
 
-/* Stil für die Navigationslinks (Anker) */
-.navbar a {
+.navbar li a {
   display: block;
-  color: #f2f2f2;
+  color: white;
   text-align: center;
-  padding: 10px 15px;
+  padding: 14px 16px;
   text-decoration: none;
-  transition: color 0.3s, background-color 0.3s; /* Glatter Übergang bei Hover */
-  border-radius: 5px; /* Abgerundete Ecken für die Links */
+  transition: background-color 0.3s; /* Smooth background transition */
 }
 
-/* Hover-Zustand für Navigationslinks */
-.navbar a:hover {
-  background-color: #4CAF50; /* Grün, um mit den Gauges zu harmonieren */
-  color: white;
+/* Style for navbar links on hover and active */
+.navbar li a:hover,
+.navbar li a.active { /* This will ensure the active link remains highlighted */
+  background-color: #ddd;
+  color: black;
 }
 
-/* Stil für aktiven Navigationslink */
-.navbar a.active {
-  background-color: #4CAF50;
-  color: white;
+/* Clear floats after the links */
+.navbar:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-/* Responsive Anpassungen für kleinere Bildschirme */
-@media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column; /* Stapelt die Links auf kleinen Bildschirmen */
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .navbar li {
+    float: none;
   }
 }
 

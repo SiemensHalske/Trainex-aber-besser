@@ -153,3 +153,44 @@ Navigation bar styling
   margin: 10px 0;
   border-radius: 5px;
 }
+
+/* Zweispalten-Layout für die Benutzerverwaltung */
+.management-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.edit-section, .display-section {
+  flex: 1;
+  padding: 20px;
+  margin: 0 10px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Stil für Formular-Elemente */
+.edit-section input, .edit-section button {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.edit-section button {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.edit-section button:hover {
+  background-color: #45a049;
+}
+
+/* Stil für die Anzeige der aktuellen Benutzerdaten */
+.display-section p {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #e7e7e7;
+  border-radius: 5px;
+}

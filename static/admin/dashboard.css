@@ -50,14 +50,11 @@
   justify-content: center; /* Zentriert die Links horizontal */
 }
 
-.navbar li {
-  padding: 20px 30px; /* Abstand um die Links */
-}
-
 .navbar li a {
   display: block;
   color: white;
   text-align: center;
+  padding: 20px 30px; /* Erhöhte Polsterung für größeren hervorgehobenen Bereich */
   text-decoration: none;
   transition: background-color 0.3s, color 0.3s; /* Smooth background and color transition */
 }
@@ -74,19 +71,17 @@
   color: #fff;
 }
 
-/* Clear floats after the links */
-.navbar:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 /* Responsive adjustments */
 @media screen and (max-width: 600px) {
   .navbar ul {
     flex-direction: column; /* Stapelt die Links auf kleinen Bildschirmen */
   }
+  
+  .navbar li a {
+    padding: 10px 15px; /* Angepasste Polsterung für kleine Bildschirme */
+  }
 }
+
 
 /* Responsive Anpassungen für kleinere Bildschirme */
 @media (max-width: 768px) {

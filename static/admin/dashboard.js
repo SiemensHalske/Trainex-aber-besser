@@ -16,13 +16,3 @@ $(document).ready(function () {
     $(".grid-container").hide();
   });
 });
-
-$(document).ready(function () {
-  $(".navbar li a").click(function () {
-    // Remove the class 'active' if it exists on any link
-    $(".navbar li a").removeClass("active");
-
-    // Add the class 'active' to the clicked link
-    $(this).addClass("active");
-  });
-});

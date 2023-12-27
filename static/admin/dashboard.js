@@ -35,16 +35,16 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   // Verstecke zuerst den User Management-Bereich
-  $("#user-management").hide();
+  $("#usermanagement").hide();
 
   // Event-Listener, der auf Klick auf den Link 'User Management' reagiert
-  $('a[href="#user-management"]').click(function (e) {
+  $('a[href="#usermanagement"]').click(function (e) {
     e.preventDefault();
-    $("#user-management").show();
+    $("#usermanagement").show();
   });
 
   // Optional: Wenn du möchtest, dass der User Management-Bereich verschwindet, wenn auf andere Links geklickt wird
-  $('a:not([href="#user-management"])').click(function () {
-    $("#user-management").hide();
+  $('a:not([href="#usermanagement"])').click(function () {
+    $("#usermanagement").hide();
   });
 });

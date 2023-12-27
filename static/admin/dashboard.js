@@ -1,11 +1,11 @@
 $(document).ready(function () {
   // Verstecke zuerst beide Bereiche
-  $("#dashboard, #usermanagement").hide();
+  $(".grid-container, #usermanagement").hide();
 
   // Event-Listener für '#dashboard'
   $('a[href="#dashboard"]').click(function (e) {
     e.preventDefault();
-    $("#dashboard").show();
+    $(".grid-container").show();
     $("#usermanagement").hide();
   });
 
@@ -13,7 +13,7 @@ $(document).ready(function () {
   $('a[href="#usermanagement"]').click(function (e) {
     e.preventDefault();
     $("#usermanagement").show();
-    $("#dashboard").hide();
+    $(".grid-container").hide();
   });
 
   // Entfernen von 'active' und Hinzufügen zu dem geklickten Link
@@ -25,6 +25,6 @@ $(document).ready(function () {
 
   // Optional: Verstecke beide Bereiche, wenn auf andere Links geklickt wird
   $('a:not([href="#dashboard"], [href="#usermanagement"])').click(function () {
-    $("#dashboard, #usermanagement").hide();
+    $(".grid-container, #usermanagement").hide();
   });
 });

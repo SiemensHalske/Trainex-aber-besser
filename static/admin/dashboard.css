@@ -141,11 +141,6 @@
   border-radius: 3px;
 }
 
-#search-by-email:checked + label:before,
-#search-by-username:checked + label:before {
-  background: #4CAF50;
-}
-
 #search-by-email + label:after,
 #search-by-username + label:after {
   content: "";

@@ -120,9 +120,12 @@
   margin-right: 10px;
 }
 
-/* Add margin to the right of the last checkbox for spacing */
-#search-by-username + label {
-  margin-right: 20px; /* Adjust the space as necessary */
+#search-by-email,
+#search-by-username {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: none;
 }
 
 /* Ensure the label has a relative position */
@@ -167,6 +170,7 @@
 }
 
 #search-btn {
+  margin-left: 20px; /* Add space between checkboxes and button */
   padding: 10px 20px;
   border-radius: 5px;
   border: none;
@@ -208,7 +212,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
   text-align: center; /* Centers the content */
 }
-
 
 .edit-section,
 .display-section {

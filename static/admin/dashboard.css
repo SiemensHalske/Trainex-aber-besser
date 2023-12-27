@@ -36,11 +36,7 @@
   text-align: center; /* Centers the content */
 }
 
-/* 
-******************************************************************************************
-Navigation bar styling 
-******************************************************************************************
-*/
+/* Navigation bar styling */
 .navbar {
   background-color: #333;
   overflow: hidden;

@@ -1,50 +1,30 @@
 $(document).ready(function () {
-  // Verstecke zuerst die Gauges
-  $(".grid-container").hide();
+  // Verstecke zuerst beide Bereiche
+  $(".grid-container, #usermanagement").hide();
 
-  // Event-Listener, der auf Klick auf den Link '#dashboard' reagiert
+  // Event-Listener für '#dashboard'
   $('a[href="#dashboard"]').click(function (e) {
-    // Verhindere das Standardverhalten des Links
     e.preventDefault();
-
-    // Zeige die Gauges an
     $(".grid-container").show();
+    $("#usermanagement").hide();
   });
 
-  // Optional: Wenn du möchtest, dass die Gauges verschwinden, wenn auf andere Links geklickt wird
-  $('a:not([href="#dashboard"])').click(function () {
-    $(".grid-container").hide();
-  });
-});
-
-$(document).ready(function () {
-  $(".navbar li a").click(function (e) {
-    // Verhindert das Standardverhalten des Anker-Links
-    e.preventDefault();
-
-    // Entfernt 'active' von allen Links
-    $(".navbar li a").removeClass("active");
-
-    // Fügt 'active' zu dem geklickten Link hinzu
-    $(this).addClass("active");
-
-    // Hier könntest du zusätzlich Code einfügen, um deine Gauges anzuzeigen
-    // Beispiel: $("#id-des-gauge-container").show();
-  });
-});
-
-$(document).ready(function () {
-  // Verstecke zuerst den User Management-Bereich
-  $("#usermanagement").hide();
-
-  // Event-Listener, der auf Klick auf den Link 'User Management' reagiert
+  // Event-Listener für '#usermanagement'
   $('a[href="#usermanagement"]').click(function (e) {
     e.preventDefault();
     $("#usermanagement").show();
+    $(".grid-container").hide();
   });
 
-  // Optional: Wenn du möchtest, dass der User Management-Bereich verschwindet, wenn auf andere Links geklickt wird
-  $('a:not([href="#usermanagement"])').click(function () {
-    $("#usermanagement").hide();
+  // Entfernen von 'active' und Hinzufügen zu dem geklickten Link
+  $(".navbar li a").click(function (e) {
+    e.preventDefault();
+    $(".navbar li a").removeClass("active");
+    $(this).addClass("active");
+  });
+
+  // Optional: Verstecke beide Bereiche, wenn auf andere Links geklickt wird
+  $('a:not([href="#dashboard"], [href="#usermanagement"])').click(function () {
+    $(".grid-container, #usermanagement").hide();
   });
 });

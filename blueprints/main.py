@@ -312,7 +312,7 @@ def get_user_role() -> str:
 # User specific endpoints
 # =============================================================
 
-@main_bp.route('/get_user_data', methods=['GET'])
+@main_bp.route('/get_user_data', methods=['GET', 'PUT', 'POST', 'DELETE'])
 def get_user_data() -> str:
     """
     Retrieves user information based on the provided user ID or email address.

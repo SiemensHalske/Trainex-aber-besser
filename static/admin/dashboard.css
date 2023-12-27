@@ -163,7 +163,7 @@
   content: "\2713";
   position: absolute;
   left: 4.5px; /* Align to the left side of the label */
-  top: 1px; /* Align to the top of the label */
+  top: -1px; /* Align to the top of the label */
 }
 
 #search-btn {

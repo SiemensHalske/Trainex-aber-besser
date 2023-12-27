@@ -120,6 +120,13 @@
   margin-right: 10px;
 }
 
+/* Ensure the label has a relative position */
+#search-by-email + label,
+#search-by-username + label {
+  position: relative;
+  padding-left: 25px; /* Adjust as necessary */
+}
+
 /* Style for specific checkboxes */
 #search-by-email + label:before,
 #search-by-username + label:before {
@@ -150,9 +157,13 @@
   transition: all 0.2s;
 }
 
-#search-by-email:checked + label:after,
-#search-by-username:checked + label:after {
+/* Position the check mark after the label text */
+#search-by-email:checked + label::after,
+#search-by-username:checked + label::after {
   content: "\\2713";
+  position: absolute;
+  left: 0; /* Align to the left side of the label */
+  top: 0; /* Align to the top of the label */
 }
 
 #search-btn {

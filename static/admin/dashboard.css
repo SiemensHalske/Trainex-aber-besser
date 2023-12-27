@@ -116,8 +116,43 @@
 #user-search {
   padding: 10px;
   border-radius: 5px;
-  border: 10px solid #ddd;
+  border: 1px solid #ddd;
   margin-right: 10px;
+}
+
+/* Style for specific checkboxes */
+#search-by-email + label:before,
+#search-by-username + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 3px;
+}
+
+#search-by-email:checked + label:before,
+#search-by-username:checked + label:before {
+  background: #4CAF50;
+}
+
+#search-by-email + label:after,
+#search-by-username + label:after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: 18px;
+  color: #fff;
+  transition: all 0.2s;
+}
+
+#search-by-email:checked + label:after,
+#search-by-username:checked + label:after {
+  content: "\\2713";
 }
 
 #search-btn {

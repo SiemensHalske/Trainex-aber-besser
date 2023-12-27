@@ -120,6 +120,11 @@
   margin-right: 10px;
 }
 
+/* Add margin to the right of the last checkbox for spacing */
+#search-by-username + label {
+  margin-right: 20px; /* Adjust the space as necessary */
+}
+
 /* Ensure the label has a relative position */
 #search-by-email + label,
 #search-by-username + label {
@@ -137,7 +142,7 @@
   width: 18px;
   height: 18px;
   border: 1px solid #ccc;
-  background: #fff;
+  background: none;
   border-radius: 3px;
 }
 

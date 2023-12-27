@@ -162,8 +162,8 @@
 #search-by-username:checked + label::after {
   content: "\2713";
   position: absolute;
-  left: 5px; /* Align to the left side of the label */
-  top: 0; /* Align to the top of the label */
+  left: 4.5px; /* Align to the left side of the label */
+  top: 1px; /* Align to the top of the label */
 }
 
 #search-btn {

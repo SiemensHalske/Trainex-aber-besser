@@ -32,3 +32,19 @@ $(document).ready(function () {
     // Beispiel: $("#id-des-gauge-container").show();
   });
 });
+
+$(document).ready(function () {
+  // Verstecke zuerst den User Management-Bereich
+  $("#user-management").hide();
+
+  // Event-Listener, der auf Klick auf den Link 'User Management' reagiert
+  $('a[href="#user-management"]').click(function (e) {
+    e.preventDefault();
+    $("#user-management").show();
+  });
+
+  // Optional: Wenn du möchtest, dass der User Management-Bereich verschwindet, wenn auf andere Links geklickt wird
+  $('a:not([href="#user-management"])').click(function () {
+    $("#user-management").hide();
+  });
+});

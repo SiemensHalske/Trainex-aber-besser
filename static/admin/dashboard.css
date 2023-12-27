@@ -80,12 +80,11 @@ Navigation bar styling
   .navbar ul {
     flex-direction: column; /* Stacks the links on small screens */
   }
-  
+
   .navbar li a {
     padding: 10px 15px; /* Adjusted padding for small screens */
   }
 }
-
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
@@ -129,7 +128,7 @@ Navigation bar styling
   padding: 10px 20px;
   border-radius: 5px;
   border: none;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -160,7 +159,8 @@ Navigation bar styling
   margin-top: 20px;
 }
 
-.edit-section, .display-section {
+.edit-section,
+.display-section {
   flex: 1;
   padding: 20px;
   margin: 0 10px;
@@ -170,7 +170,8 @@ Navigation bar styling
 }
 
 /* Stil für Formular-Elemente */
-.edit-section input, .edit-section button {
+.edit-section input,
+.edit-section button {
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 5px;
@@ -178,7 +179,7 @@ Navigation bar styling
 }
 
 .edit-section button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   cursor: pointer;
 }
@@ -192,5 +193,32 @@ Navigation bar styling
   margin-bottom: 10px;
   padding: 10px;
   background-color: #e7e7e7;
+  border-radius: 5px;
+}
+
+/* Container für die Benutzersuche */
+.user-search-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Container für die Anzeige der aktuellen Benutzerdaten */
+.display-section {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-left: 10px;
+}
+
+.display-section p {
+  background-color: #e7e7e7;
+  padding: 10px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }

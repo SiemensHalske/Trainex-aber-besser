@@ -155,6 +155,15 @@
   margin-top: 20px;
 }
 
+.management-container_master {
+  padding: 20px;
+  background-color: #f7f7f7; /* Background color for the gauge container */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  text-align: center; /* Centers the content */
+}
+
+
 .edit-section,
 .display-section {
   flex: 1;

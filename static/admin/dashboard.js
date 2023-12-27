@@ -1,18 +1,18 @@
 $(document).ready(function () {
   // Verstecke zuerst beide Bereiche
-  $(".grid-container, #usermanagement").hide();
+  $(".grid-container, .management-container_master").hide();
 
   // Event-Listener für '#dashboard'
   $('a[href="#dashboard"]').click(function (e) {
     e.preventDefault();
     $(".grid-container").show();
-    $("#usermanagement").hide();
+    $(".management-container_master").hide();
   });
 
   // Event-Listener für '#usermanagement'
   $('a[href="#usermanagement"]').click(function (e) {
     e.preventDefault();
-    $("#usermanagement").show();
+    $(".management-container_master").show();
     $(".grid-container").hide();
   });
 
@@ -25,6 +25,6 @@ $(document).ready(function () {
 
   // Optional: Verstecke beide Bereiche, wenn auf andere Links geklickt wird
   $('a:not([href="#dashboard"], [href="#usermanagement"])').click(function () {
-    $(".grid-container, #usermanagement").hide();
+    $(".grid-container, .management-container_master").hide();
   });
 });

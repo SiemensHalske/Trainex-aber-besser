@@ -241,6 +241,16 @@
   width: 100%;
 }
 
+/* Style checkboxes to appear on the same line with their labels */
+.edit-section input[type="checkbox"] + label {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.edit-section input[type="checkbox"] {
+  margin-right: 5px;
+}
+
 /* Stil für Formular-Elemente */
 .edit-section input,
 .edit-section button {

@@ -219,10 +219,12 @@
   width: auto; /* Setzt die Breite auf auto, damit die Elemente nicht den gesamten Container einnehmen */
 }
 
-.checkbox-container input[type="checkbox"],
-.checkbox-container label {
-  margin-right: 1px; /* Fügt Abstand nach rechts hinzu */
-  text-align: left;
+.edit-section .checkbox-container input[type="checkbox"] {
+  margin-right: 5px; /* Verringere oder erhöhe diesen Wert, um den gewünschten Abstand einzustellen */
+}
+
+.edit-section .checkbox-container label {
+  margin-right: 0; /* Setze den rechten Abstand des Labels auf 0 */
 }
 
 .edit-section input[type="checkbox"] + label {

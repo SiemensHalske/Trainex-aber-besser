@@ -214,12 +214,13 @@
 .checkbox-container {
   display: flex;
   align-items: center; /* Zentriert die Elemente vertikal */
+  justify-content: flex-start; /* Positioniert die Elemente am Anfang des Containers */
   margin-bottom: 10px; /* Fügt Abstand nach unten hinzu */
 }
 
 .checkbox-container input[type="checkbox"],
 .checkbox-container label {
-  margin-right: 2px; /* Fügt Abstand nach rechts hinzu */
+  margin-right: 5px; /* Fügt Abstand nach rechts hinzu */
   text-align: right;
 }
 

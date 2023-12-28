@@ -231,6 +231,11 @@
   width: 100%;
 }
 
+.edit-section {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Stil für Formular-Elemente */
 .edit-section input,
 .edit-section button {

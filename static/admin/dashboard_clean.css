@@ -211,6 +211,17 @@
   width: 100%; /* oder eine spezifische Breite, falls benötigt */
 }
 
+.checkbox-container {
+  display: flex;
+  align-items: center; /* Zentriert die Elemente vertikal */
+  margin-bottom: 10px; /* Fügt Abstand nach unten hinzu */
+}
+
+.checkbox-container input[type="checkbox"],
+.checkbox-container label {
+  margin-right: 5px; /* Fügt Abstand nach rechts hinzu */
+}
+
 .edit-section input[type="checkbox"] + label {
   display: inline-block;
   margin-left: 5px;

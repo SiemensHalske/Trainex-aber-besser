@@ -108,6 +108,31 @@
   margin-bottom: 10px;
 }
 
+.edit-section input,
+.edit-section label,
+.edit-section button,
+.edit-section .checkbox-container {
+  width: 100%; /* Setzt die Breite jedes Kind-Elements auf 100% */
+  margin-bottom: 10px; /* Fügt Abstand zwischen den Elementen hinzu */
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: space-between; /* Positioniert Checkbox und Label an den Enden des Containers */
+  align-items: center; /* Zentriert die Elemente vertikal */
+}
+
+/* Falls du Formularfelder in einer Zeile haben möchtest (z.B. ID, Username, Password in einer Zeile) */
+.form-row {
+  display: flex;
+  justify-content: space-between; /* Verteilt die Elemente gleichmäßig */
+  gap: 10px; /* Fügt einen Abstand zwischen den Formularelementen hinzu */
+}
+
+.form-row input {
+  flex-grow: 1; /* Erlaubt jedem Eingabefeld, den verfügbaren Platz auszufüllen */
+}
+
 #user-search {
   padding: 10px;
   border-radius: 5px;
@@ -175,7 +200,15 @@
 }
 
 .edit-section {
-  flex-direction: column;
+  display: flex;
+  flex-direction: column; /* Stellt sicher, dass die Elemente vertikal gestapelt werden */
+  align-items: stretch; /* Streckt die Elemente auf volle Containerbreite */
+  padding: 20px;
+  margin: 0 10px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%; /* oder eine spezifische Breite, falls benötigt */
 }
 
 .edit-section input[type="checkbox"] + label {

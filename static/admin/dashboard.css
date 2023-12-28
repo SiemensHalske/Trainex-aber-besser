@@ -253,11 +253,13 @@
 
 /* Stil für Formular-Elemente */
 .edit-section input,
+.edit-section label,
 .edit-section button {
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
+  width: 100%;
 }
 
 .edit-section button {

@@ -220,6 +220,7 @@
 .checkbox-container input[type="checkbox"],
 .checkbox-container label {
   margin-right: 2px; /* Fügt Abstand nach rechts hinzu */
+  text-align: right;
 }
 
 .edit-section input[type="checkbox"] + label {

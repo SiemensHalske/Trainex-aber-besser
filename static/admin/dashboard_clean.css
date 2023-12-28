@@ -1,0 +1,200 @@
+/* Grundlegender Stil */
+.gauge {
+  margin: 10px auto;
+  width: 100%;
+}
+
+.grid-container,
+.user-search-container,
+.management-container_master,
+.display-section,
+.edit-section {
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.main-gauges,
+.temp-gauges {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Navigation */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 20px 30px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar li a:hover,
+.navbar li a.active {
+  background-color: #ddd;
+  color: black;
+}
+
+.navbar li a.active {
+  background-color: #555;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+  .navbar ul {
+    flex-direction: column;
+  }
+
+  .navbar li a {
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+
+  .main-gauges,
+  .temp-gauges,
+  .gauge {
+    grid-column: 1;
+    width: 90%;
+  }
+}
+
+/* Benutzerverwaltung */
+#user-management,
+#user-details,
+.user-info {
+  background-color: #1a1a1d;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+#user-management h2,
+.display-section p,
+.edit-section input,
+.edit-section label,
+.edit-section button {
+  margin-bottom: 10px;
+}
+
+#user-search {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-right: 20px;
+}
+
+#search-btn {
+  margin-left: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#search-btn:hover {
+  background-color: #45a049;
+}
+
+/* Checkbox-Stil */
+#search-by-email,
+#search-by-username {
+  display: none;
+}
+
+#search-by-email + label,
+#search-by-username + label {
+  position: relative;
+  padding-left: 25px;
+}
+
+#search-by-email + label:before,
+#search-by-username + label:before,
+#search-by-email + label:after,
+#search-by-username + label:after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#search-by-email:checked + label::after,
+#search-by-username:checked + label::after {
+  content: "\2713";
+  left: 4.5px;
+  top: -1.5px;
+}
+
+.management-container {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.display-section,
+.edit-section {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.edit-section {
+  flex-direction: column;
+}
+
+.edit-section input[type="checkbox"] + label {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.edit-section input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.user-search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.display-section p {
+  background-color: #e7e7e7;
+  padding: 10px;
+  border-radius: 5px;
+}

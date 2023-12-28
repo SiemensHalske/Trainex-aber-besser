@@ -53,6 +53,6 @@ if __name__ == "__main__":
         elif command == 'stop':
             stop_server()
         else:
-            print(f"Unbekannter Befehl: {command}")
+            print(f"Unknow command: {command}")
     else:
-        print("Bitte gib einen Befehl an: 'start' oder 'stop'")
+        print("Please specify a valid command: 'start' or 'stop'")

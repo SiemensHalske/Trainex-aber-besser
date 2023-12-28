@@ -220,7 +220,6 @@
   max-width: none; /* Remove any max-width if set */
 }
 
-.edit-section,
 .display-section {
   flex: 1;
   padding: 20px;
@@ -234,6 +233,12 @@
 .edit-section {
   display: flex;
   flex-direction: column;
+  padding: 20px;
+  margin: 0 10px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 /* Stil für Formular-Elemente */

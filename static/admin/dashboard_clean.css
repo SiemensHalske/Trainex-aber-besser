@@ -224,6 +224,10 @@
   text-align: left;
 }
 
+.edit-section .checkbox-container input[type="checkbox"] {
+  margin-right: 5px; /* Verringere oder erhöhe diesen Wert, um den gewünschten Abstand einzustellen */
+}
+
 .edit-section input[type="checkbox"] + label {
   display: inline-block;
   margin-left: 5px;

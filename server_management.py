@@ -53,7 +53,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description='Server Management Tool',
                                      formatter_class=argparse.RawTextHelpFormatter)
 
-    parser.add_argument('-s', '--start', nargs='?', const='server',
+    parser.add_argument('-s', '--start', nargs='?', const='server', metavar='SERVICE',
                         default=None, help=('Starts a specified service.\n'
                                             'Usage:\n'
                                             '-s [service_name] or --start [service_name]\n'

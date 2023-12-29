@@ -50,11 +50,23 @@ class ServerManagement:
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Server Management Tool')
-    parser.add_argument('--start', nargs='?', const='server', default=None,
-                        help='Start a specific service. Defaults to "server" if no service is specified.')
-    parser.add_argument('--stop', action='store_true',
-                        help='Stop the server')
+    parser = argparse.ArgumentParser(description='Server Management Tool',
+                                     formatter_class=argparse.RawTextHelpFormatter)
+
+    parser.add_argument('-s', '--start', nargs='?', const='server',
+                        default=None, help=('Starts a specified service.\n'
+                                            'Usage:\n'
+                                            '-s [service_name] or --start [service_name]\n'
+                                            'If no service name is provided, defaults to "server".\n'
+                                            'Example: --start server'))
+
+    parser.add_argument('-st', '--stop', nargs='?', const='server',
+                        default=None, help=('Stops a specified service.\n'
+                                            'Usage:\n'
+                                            '-st [service_name] or --stop [service_name]\n'
+                                            'If no service name is provided, defaults to "server".\n'
+                                            'Example: --stop server'))
+
     return parser.parse_args()
 
 
@@ -62,10 +74,8 @@ if __name__ == "__main__":
     args = parse_arguments()
 
     if args.start == 'server':
-        print("Starting server...")
-        # Fügen Sie hier die Logik zum Starten des Servers ein
-    elif args.stop:
-        print("Stopping server...")
-        # Fügen Sie hier die Logik zum Stoppen des Servers ein
+        ServerManagement.start_server()
+    elif args.stop == 'server':
+        ServerManagement.stop_server()
     else:
-        print("No valid command provided.")
+        print(parse_arguments().format_help())

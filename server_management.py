@@ -12,12 +12,33 @@ import sys
 import signal
 import subprocess
 import time
+import pickle
 
 PYTHON_PATH = '/usr/bin/python3'
 BASE_PATH = '/home/hendrik/Trainex-aber-besser'
 APP_PATH = f'{BASE_PATH}/app.py'
+OBJECT_PATH = f'{BASE_PATH}/server_management/obj/server.obj'
 PID_FILE = f'{BASE_PATH}/server_management/pid/server.pid'
 ERROR_LOG = f'{BASE_PATH}/server_management/error.log'
+
+
+def save_obj(obj: object) -> bool:
+    """
+    Saves an object to a file.
+
+    Args:
+        obj (object): The object to save.
+
+    Returns:
+        bool: True if the object was saved successfully, False otherwise.
+    """
+    try:
+        with open(OBJECT_PATH, 'wb') as f:
+            pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+        return True
+    except Exception as e:
+        print(f"Error saving object: {str(e)}")
+        return False
 
 
 class ServerManagement:

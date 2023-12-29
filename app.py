@@ -210,7 +210,7 @@ def initialize_logging():
 if __name__ == '__main__':
     # check if sys.argv[1] is set or not
     server_type = sys.argv[1] if len(sys.argv) > 1 else None
-    
+
     with app.app_context():
         # Erstellt die Tabellen, wenn sie noch nicht existieren.
         db.create_all()

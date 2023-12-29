@@ -49,6 +49,7 @@ class ServerManagement:
     - start_server: Starts the server process.
     - stop_server: Stops the server process.
     """
+
     def __init__(self) -> None:
         """
         Initializes the ServerManagement class.
@@ -56,7 +57,7 @@ class ServerManagement:
         if self.check_for_server():
             print("Server is already running.")
             sys.exit(1)
-    
+
     def check_for_server(self) -> bool:
         """
         Checks if the server is running.
@@ -90,9 +91,10 @@ class ServerManagement:
 
         try:
             server_process = subprocess.Popen(
-                [PYTHON_PATH, APP_PATH], stderr=subprocess.PIPE)
+                [PYTHON_PATH, APP_PATH + f' {server_type}'], stderr=subprocess.PIPE)
             with open(PID_FILE, 'w') as f:
-                f.write(str(server_process.pid))
+                f.write("pid="+str(server_process.pid) + "\n")
+                f.write("server_type="+server_type)
         except Exception as e:
             with open(ERROR_LOG, 'a') as f:
                 f.write(f"Error starting server: {str(e)}\n")
@@ -101,17 +103,19 @@ class ServerManagement:
     def stop_server(self) -> None:
         """
         Stops the server if it is running.
-        
+
         This function checks if the server is running by checking the existence of a PID file.
         If the server is running, it stops the server process and deletes the PID file.
-        
+
         Raises:
             Exception: If there is an error stopping the server.
-        
+
         """
         if os.path.isfile(PID_FILE):
             with open(PID_FILE, 'r') as f:
-                pid = int(f.read())
+                file = f.read()
+
+            pid = int(file.split('\n')[0].split('=')[1])
 
             try:
                 os.kill(pid, signal.SIGINT)
@@ -124,6 +128,26 @@ class ServerManagement:
 
             if os.path.exists('/proc/' + str(pid)):
                 os.kill(pid, signal.SIGKILL)
+
+    def restart_server(self):
+        """
+        Restarts the server if it is running.
+
+        This function checks if the server is running by checking the existence of a PID file.
+        If the server is running, it stops the server process and deletes the PID file.
+        Then it starts the server process and writes the process ID to the PID file.
+
+        Raises:
+            Exception: If there is an error restarting the server.
+
+        """
+        if self.check_for_server():
+            with open(PID_FILE, 'r') as f:
+                file = f.read()
+
+        server_type = file.split('\n')[1].split('=')[1]
+        self.stop_server()
+        self.start_server(server_type)
 
 
 def parse_arguments() -> argparse.Namespace:
@@ -150,6 +174,14 @@ def parse_arguments() -> argparse.Namespace:
                                             'If no service name is provided, defaults to "server".\n'
                                             'Example: --stop server'))
 
+    parser.add_argument('-r', '--restart', nargs='?', const='server', metavar='SERVICE',
+                        default=None, help=('Restarts a specified service.\n'
+                                            'Usage:\n'
+                                            '-r [service_name] or --restart [service_name]\n'
+                                            'If no service name is provided, defaults to "server".\n'
+                                            'Restarts the server with the last used server type.\n'
+                                            'Example: --restart server'))
+
     args, unknown = parser.parse_known_args()
     return args, unknown
 
@@ -157,11 +189,12 @@ def parse_arguments() -> argparse.Namespace:
 if __name__ == "__main__":
     args, unknown = parse_arguments()
 
-
     if args.start == 'server':
         server_type = input("Enter server type (dev or prod): ")
         ServerManagement.start_server(server_type)
     elif args.stop == 'server':
         ServerManagement.stop_server()
+    elif args.restart == 'server':
+        ServerManagement.restart_server()
     else:
         print(parse_arguments().format_help())

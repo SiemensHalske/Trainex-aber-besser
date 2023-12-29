@@ -50,9 +50,30 @@ class ServerManagement:
     - stop_server: Stops the server process.
     """
     def __init__(self) -> None:
-        pass
+        """
+        Initializes the ServerManagement class.
+        """
+        if self.check_for_server():
+            print("Server is already running.")
+            sys.exit(1)
+    
+    def check_for_server(self) -> bool:
+        """
+        Checks if the server is running.
 
-    def start_server() -> None:
+        Returns:
+            bool: True if the server is running, False otherwise.
+        """
+        if os.path.isfile(PID_FILE):
+            with open(PID_FILE, 'r') as f:
+                pid = int(f.read())
+
+            if os.path.exists('/proc/' + str(pid)):
+                return True
+
+        return False
+
+    def start_server(self, server_type: str) -> None:
         """
         Starts the server if it is not already running.
 
@@ -63,7 +84,7 @@ class ServerManagement:
             Exception: If there is an error starting the server.
 
         """
-        if os.path.isfile(PID_FILE):
+        if self.check_for_server():
             print("Server is already running.")
             return
 
@@ -77,7 +98,7 @@ class ServerManagement:
                 f.write(f"Error starting server: {str(e)}\n")
             raise
 
-    def stop_server() -> None:
+    def stop_server(self) -> None:
         """
         Stops the server if it is running.
         
@@ -129,14 +150,17 @@ def parse_arguments() -> argparse.Namespace:
                                             'If no service name is provided, defaults to "server".\n'
                                             'Example: --stop server'))
 
-    return parser.parse_args()
+    args, unknown = parser.parse_known_args()
+    return args, unknown
 
 
 if __name__ == "__main__":
-    args = parse_arguments()
+    args, unknown = parse_arguments()
+
 
     if args.start == 'server':
-        ServerManagement.start_server()
+        server_type = input("Enter server type (dev or prod): ")
+        ServerManagement.start_server(server_type)
     elif args.stop == 'server':
         ServerManagement.stop_server()
     else:

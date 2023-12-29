@@ -1,5 +1,6 @@
 import os
 import signal
+import sys
 from flask import Flask, request
 from extensions import db, login_manager
 from blueprints.auth import auth_bp
@@ -207,6 +208,9 @@ def initialize_logging():
 
 
 if __name__ == '__main__':
+    # check if sys.argv[1] is set or not
+    server_type = sys.argv[1] if len(sys.argv) > 1 else None
+    
     with app.app_context():
         # Erstellt die Tabellen, wenn sie noch nicht existieren.
         db.create_all()
@@ -220,8 +224,12 @@ if __name__ == '__main__':
     cert_path = None
     key_path = None
 
-    ssl_context = ('pfad/zum/zertifikat.crt', 'pfad/zum/private/key.key')
+    ssl_context = ('/home/hendrik/myserv.crt', '/home/hendrik/myserv.key')
 
-    # app.run(debug=True, host=host_ip, port=port)
-
-    serve(app, host=host_ip, port=port, url_scheme='https', threads=4)
+    if server_type == 'dev':
+        app.run(debug=True, host=host_ip, port=port)
+    elif server_type == 'prod':
+        serve(app, host=host_ip, port=port, url_scheme='https', threads=4)
+    else:
+        print("Invalid server type.")
+        sys.exit(1)

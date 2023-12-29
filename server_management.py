@@ -50,20 +50,22 @@ class ServerManagement:
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description='Server-Managment-Tool')
-    parser.add_argument('-s', '--start', nargs='?', const='server',
-                        default=None, help='Starts a service.')
-    parser.add_argument('--stop', dest='action', action='store_const',
-                        const='stop', help='Stops a service.')
-
+    parser = argparse.ArgumentParser(description='Server Management Tool')
+    parser.add_argument('--start', nargs='?', const='server', default=None,
+                        help='Start a specific service. Defaults to "server" if no service is specified.')
+    parser.add_argument('--stop', action='store_true',
+                        help='Stop the server')
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_arguments()
 
-    # start when '-s' has 'server' as its value
     if args.start == 'server':
-        ServerManagement.start_server()
-    elif args.action == 'stop':
-        ServerManagement.stop_server()
+        print("Starting server...")
+        # Fügen Sie hier die Logik zum Starten des Servers ein
+    elif args.stop:
+        print("Stopping server...")
+        # Fügen Sie hier die Logik zum Stoppen des Servers ein
+    else:
+        print("No valid command provided.")

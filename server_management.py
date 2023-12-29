@@ -1,3 +1,11 @@
+"""
+    This file contains the implementation of a ServerManagement class for managing the server process.
+    It provides methods for starting and stopping the server.
+
+    Author: Hendrik Siemens
+    Date: December 29, 2023
+"""
+
 import argparse
 import os
 import sys
@@ -13,10 +21,27 @@ ERROR_LOG = f'{BASE_PATH}/server_management/error.log'
 
 
 class ServerManagement:
-    def __init__(self):
+    """
+    Class for managing the server process.
+
+    Methods:
+    - start_server: Starts the server process.
+    - stop_server: Stops the server process.
+    """
+    def __init__(self) -> None:
         pass
 
-    def start_server():
+    def start_server() -> None:
+        """
+        Starts the server if it is not already running.
+
+        This function checks if the server is already running by checking the existence of a PID file.
+        If the server is not running, it starts the server process and writes the process ID to the PID file.
+
+        Raises:
+            Exception: If there is an error starting the server.
+
+        """
         if os.path.isfile(PID_FILE):
             print("Server is already running.")
             return
@@ -31,7 +56,17 @@ class ServerManagement:
                 f.write(f"Error starting server: {str(e)}\n")
             raise
 
-    def stop_server():
+    def stop_server() -> None:
+        """
+        Stops the server if it is running.
+        
+        This function checks if the server is running by checking the existence of a PID file.
+        If the server is running, it stops the server process and deletes the PID file.
+        
+        Raises:
+            Exception: If there is an error stopping the server.
+        
+        """
         if os.path.isfile(PID_FILE):
             with open(PID_FILE, 'r') as f:
                 pid = int(f.read())
@@ -49,7 +84,13 @@ class ServerManagement:
                 os.kill(pid, signal.SIGKILL)
 
 
-def parse_arguments():
+def parse_arguments() -> argparse.Namespace:
+    """
+    Parses the command line arguments for the Server Management Tool.
+
+    Returns:
+        argparse.Namespace: An object containing the parsed arguments.
+    """
     parser = argparse.ArgumentParser(description='Server Management Tool',
                                      formatter_class=argparse.RawTextHelpFormatter)
 
@@ -60,7 +101,7 @@ def parse_arguments():
                                             'If no service name is provided, defaults to "server".\n'
                                             'Example: --start server'))
 
-    parser.add_argument('-st', '--stop', nargs='?', const='server',
+    parser.add_argument('-st', '--stop', nargs='?', const='server', metavar='SERVICE',
                         default=None, help=('Stops a specified service.\n'
                                             'Usage:\n'
                                             '-st [service_name] or --stop [service_name]\n'

@@ -14,6 +14,7 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from sqlalchemy import and_
 from werkzeug.exceptions import Unauthorized, Forbidden
 from blueprints.auth import jwt_required_optional, jwt_required_system_functions
+from flask import Request
 
 
 class Config:
@@ -429,6 +430,126 @@ def get_calendar_events() -> str:
         log_error(user_id, error_level, error_message)
         return jsonify({"error": "An error occurred fetching events."}), 500
 
+# =============================================================
+# Archive handler / functions
+# =============================================================
+
+@main_bp.route('/set_docs', methods=['POST'])
+def set_docs() -> str:
+    """
+    Uploads documents to the archive.
+
+    Route:
+        /set_docs
+
+    Route info:
+        - POST: Uploads documents to the archive.
+
+    Query string parameters:
+        - user_id (int): ID of the user uploading the documents.
+
+    Example:
+        /set_docs?user_id=1
+
+        Uploads documents for user with ID 1.
+
+        example request body:
+        {
+            "documents": [
+                {
+                    "title": "Document 1",
+                    "file_name": "document_1.pdf",
+                    "file_path": "/static/documents/document_1.pdf",
+                    "course_id": 1,
+                    "teacher_id": 1,
+                    "year": 2021
+                }
+            ]
+        }
+        
+    Returns:
+        A JSON response containing the documents for the user.
+        
+    Raises:
+        400: If no documents are provided.
+        500: If an error occurs while uploading the documents.
+    """
+    
+    pass
+
+@main_bp.route('/get_docs', methods=['GET'])
+def get_docs() -> str:
+    """
+    Retrieves documets for a given parameter.
+
+    Route:
+        /get_user_docs
+
+    Route info:
+        - GET: Retrieves documents for a given parameter.
+
+    Query string parameters:
+        - user_id (int): ID of the user whose documents are to be retrieved (default: -1).
+        - semester (varchar, optional): Semester of the documents to be retrieved (default: 'ws2023').
+        - year (int, optional): Year of the documents to be retrieved (default: the current year).
+        - teacher (int, optional): ID of the teacher to filter the documents (default: -1).
+        - course (int, optional): ID of the course to filter the documents (default: -1).
+
+    Example:
+        /get_user_docs?user_id=1
+
+        Retrieves documents for user with ID 1.
+
+        example response:
+        [
+            {
+                "id": 1,
+                "title": "Document 1",
+                "file_name": "document_1.pdf",
+                "file_path": "/static/documents/document_1.pdf",
+                "course_id": 1,
+                "teacher_id": 1,
+                "year": 2021,
+                "semester": "ws2023"
+            }
+        ]
+        
+    Returns:
+        A JSON response containing the documents for the user.
+        
+    Raises:
+        400: If no search parameters are provided.
+        500: If an error occurs while fetching the documents.
+    """
+    args = parse_archive_search_parameters(request)
+    query_data=None
+    
+@main_bp.route('/set_docs', methods=['POST'])
+    
+# =============================================================
+# Archive helper functions
+# =============================================================
+
+def parse_archive_search_parameters(request: Request) -> dict:
+    """
+    Parses the search parameters from the request query string.
+
+    Returns:
+        dict: A dictionary containing the search parameters.
+    """
+    user_id = request.args.get('user_id', default=-1, type=int)
+    semester = request.args.get('semester', default='ws2023', type=str)
+    year = request.args.get('year', default=datetime.now().year, type=int)
+    teacher = request.args.get('teacher', default=-1, type=int)
+    course = request.args.get('course', default=-1, type=int)
+
+    return {
+        'user_id': user_id,
+        'semester': semester,
+        'year': year,
+        'teacher': teacher,
+        'course': course
+    }
 
 # =============================================================
 # Error handlers

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+
+    <script src="https://cdn.jsdelivr.net/raphael/2.1.4/raphael-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/justgage/1.2.2/justgage.min.js"></script>
+
+    <!-- ProgressBar.js -->
+    <script src="https://cdn.jsdelivr.net/npm/progressbar.js"></script>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Admin Dashboard</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >Dashboard <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Products</a>
+          </li>
+          <!-- Weitere Menüpunkte hier einfügen -->
+        </ul>
+      </div>
+    </nav>
+
+    <!-- CPU Meter -->
+    <div id="cpu_meter_container" class="gauge-container">
+      <h2>CPU Meter</h2>
+      <!-- Hier wird das CPU-Meter eingebunden -->
+    </div>
+
+    <!-- Memory Meter -->
+    <div id="memory_bar_container" class="progress-container">
+      <h2>Memory Meter</h2>
+      <!-- Hier wird die Memory Bar eingebunden -->
+    </div>
+
+    <!-- System Temperatures -->
+    <div id="system_temperatures_container" class="temperature-container">
+      <h2>System Temperatures</h2>
+      <!-- Hier werden die Temperaturanzeigen eingebunden -->
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Initialize JustGage for CPU Meter
+        var cpuMeter = new JustGage({
+          id: "cpu_meter_container",
+          value: 0,
+          min: 0,
+          max: 100,
+          title: "CPU Usage",
+        });
+
+        // Initialize ProgressBar.js for Memory Meter
+        var memoryBar = new ProgressBar.Line("#memory_bar_container", {
+          strokeWidth: 4,
+          color: "#FFEA82",
+          trailColor: "#eee",
+          trailWidth: 1,
+          svgStyle: { width: "100%", height: "100%" },
+        });
+
+        // Initialize ProgressBar.js for CPU Temperature
+        var cpuTempBar = new ProgressBar.Line("#cpu_temperature_bar", {
+          strokeWidth: 4,
+          color: "#FFEA82",
+          trailColor: "#eee",
+          trailWidth: 1,
+          svgStyle: { width: "100%", height: "100%" },
+        });
+
+        // Initialize ProgressBar.js for RAM Temperature
+        var ramTempBar = new ProgressBar.Line("#ram_temperature_bar", {
+          strokeWidth: 4,
+          color: "#FFEA82",
+          trailColor: "#eee",
+          trailWidth: 1,
+          svgStyle: { width: "100%", height: "100%" },
+        });
+
+        // Fetch system info every second
+        setInterval(function () {
+          $.get("/system_info", function (data) {
+            // Update CPU meter
+            cpuMeter.refresh(data.cpu_usage);
+
+            // Update memory bar
+            memoryBar.animate(data.ram_usage_percent / 100); // Normalize percentage
+
+            // Update CPU temperature bar
+            cpuTempBar.animate(data.cpu_temperature / 120); // Normalize temperature assuming max is 120°C
+
+            // Update RAM temperature bar
+            ramTempBar.animate(data.ram_temperature / 120); // Normalize temperature assuming max is 120°C
+          });
+        }, 1000);
+      });
+    </script>
+
+    <footer>
+      <p>&copy; 2023 SoftForge. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/admin/dashboard_clean.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#usermanagement">User Management</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#orders">Orders</a></li>
+        <li><a href="#settings">Settings</a></li>
+      </ul>
+    </nav>
+
+    <!-- Dashboard -->
+
+    <div class="grid-container" id="dashboard">
+      <div class="main-gauges">
+        <div class="gauge-container">
+          <div id="cpuGauge" class="gauge"></div>
+          <div id="cpuUsage" class="gauge-label">CPU Usage</div>
+        </div>
+        <div class="gauge-container">
+          <div id="memoryGauge" class="gauge"></div>
+          <div id="memoryUsageBytes" class="gauge-label">Memory Usage MB</div>
+        </div>
+      </div>
+
+      <div class="temp-gauges">
+        <div class="gauge-container">
+          <div id="cpuTempGauge" class="gauge"></div>
+          <div id="cpuTemp" class="gauge-label">CPU Temp</div>
+        </div>
+        <div class="gauge-container">
+          <div id="ramTempGauge" class="gauge"></div>
+          <div id="ramTemp" class="gauge-label">RAM Temp</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Management -->
+    <div class="management-container_master" style="display: none">
+      <h2>User Management</h2>
+      <div class="user-search-container">
+        <input type="text" id="user-search" placeholder="Search..." />
+        <div>
+          <input type="checkbox" id="search-by-email" checked />
+          <label for="search-by-email">Email</label>
+        </div>
+        <div>
+          <input type="checkbox" id="search-by-username" checked />
+          <label for="search-by-username">Username</label>
+        </div>
+        <button id="search-btn">Search</button>
+      </div>
+
+      <div class="management-container">
+        <div class="management-container">
+          <div class="edit-section">
+            <h3>Edit User</h3>
+            <!-- Formular für Bearbeitung -->
+            <form id="user-edit-form">
+              <input type="text" id="edit-id" placeholder="ID" />
+              <input type="text" id="edit-username" placeholder="Username" />
+              <input
+                type="password"
+                id="edit-password"
+                placeholder="Password"
+              />
+              <input type="email" id="edit-email" placeholder="Email" />
+              <input type="text" id="edit-firstname" placeholder="Firstname" />
+              <input type="text" id="edit-lastname" placeholder="Lastname" />
+              <div class="checkbox-container">
+                <label for="edit-isactive">Is Active</label>
+                <input type="checkbox" id="edit-isactive" />
+              </div>
+              <div class="checkbox-container">
+                <label for="edit-isadmin">Is Admin</label>
+                <input type="checkbox" id="edit-isadmin" />
+              </div>
+              <!-- Weitere Felder nach Bedarf -->
+              <!--
+              <button type="submit">Save Changes</button>
+              -->
+            </form>
+          </div>
+
+          <div class="display-section">
+            <h3>Current User Data</h3>
+            <div id="current-user-data">
+              <p id="display-id">ID:</p>
+              <p id="display-username">Username:</p>
+              <p id="display-pwhash">Password Hash:</p>
+              <p id="display-email">Email:</p>
+              <p id="display-firstname">Firstname:</p>
+              <p id="display-lastname">Lastname:</p>
+              <p id="display_isactive">Is Active:</p>
+              <p id="display-isadmin">Is Admin:</p>
+              <!-- Weitere Felder zur Anzeige der Benutzerdaten -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/justgage/1.2.9/justgage.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/admin/refresh_data.js"></script>
+    <script src="/static/admin/dashboard.js"></script>
+  </body>
+</html>

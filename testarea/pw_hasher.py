@@ -1,55 +1,112 @@
-import sqlite3
+import sys
+import psycopg2
+from psycopg2 import sql
 from werkzeug.security import generate_password_hash
 
-# Function to add a user and assign a role in the database
-def add_user_and_role(database_path, username, password, email, role_name, is_active=True, is_admin=False):
-    # Hash the password
-    password_hash = generate_password_hash(password)
-    
-    # Establish a database connection
-    conn = sqlite3.connect(database_path)
-    cur = conn.cursor()
+def create_connection():
+    """
+    Creates a connection to the PostgreSQL database.
 
-    # Insert the new role if it does not exist
-    cur.execute("SELECT id FROM role WHERE name = ?", (role_name,))
-    role = cur.fetchone()
-    if role is None:
-        cur.execute("INSERT INTO role (name) VALUES (?)", (role_name,))
-        role_id = cur.lastrowid
-    else:
-        role_id = role[0]
+    Returns:
+        conn (psycopg2.extensions.connection): The database connection object.
+    """
+    try:
+        conn = psycopg2.connect(
+            dbname="educampus",
+            user="postgres",
+            password="zoRRo123",
+            host="localhost",
+        )
+        print("Connection established successfully.")
+        return conn
+    except psycopg2.Error as e:
+        print(f"Error connecting to the database: {e}")
+        return None
 
-    # Insert a new user
-    cur.execute("""
-        INSERT INTO user (username, password_hash, email, is_active, is_admin) 
-        VALUES (?, ?, ?, ?, ?)
-    """, (username, password_hash, email, is_active, is_admin))
-    user_id = cur.lastrowid
+def add_user(conn, username, email, password, first_name, last_name, is_active, is_admin):
+    """
+    Adds a user to the database.
 
-    # Assign the role to the user
-    cur.execute("INSERT INTO user_role (user_id, role_id) VALUES (?, ?)", (user_id, role_id))
+    Args:
+        conn (psycopg2.extensions.connection): The database connection object.
+        username (str): The username of the user.
+        email (str): The email address of the user.
+        password (str): The password of the user.
+        first_name (str): The first name of the user.
+        last_name (str): The last name of the user.
+        is_active (bool): Indicates if the user is active.
+        is_admin (bool): Indicates if the user is an admin.
+    """
+    try:
+        if not all([username, email, password, first_name, last_name]):
+            raise ValueError("Missing required fields")
 
-    # Commit the insertion
-    conn.commit()
-    print(f"User {username} with role {role_name} has been added to the database with email {email}.")
+        with conn.cursor() as cursor:
+            password_hash = generate_password_hash(password)
+            insert_query = sql.SQL("""
+                INSERT INTO users (username, password_hash, email, first_name, last_name, is_active, is_admin)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """)
 
-    # Close the connection
-    conn.close()
+            cursor.execute(insert_query, (username, password_hash, email, first_name, last_name, is_active, is_admin))
+            conn.commit()
+            print("User added successfully.")
+    except ValueError as ve:
+        print(f"Invalid input: {ve}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-# Replace with the path to your database file
-database_path = 'C:\\Users\\Hendrik\\Documents\\Github\\Trainex aber besser\\database\\users.db'
+def add_users_from_file(conn, file_path):
+    """
+    Adds users from a file to the database.
 
-# Input username, password, email, and role
-username = input("Enter the username: ")
-password = input("Enter the password: ")
-email = input("Enter the email: ")
-role_name = input("Enter the role name: ")
-is_active_input = input("Is the user active? (y/n): ")
-is_admin_input = input("Is the user an admin? (y/n): ")
+    Args:
+        conn (psycopg2.extensions.connection): The database connection object.
+        file_path (str): The path to the file containing user data.
+    """
+    print(f"Adding users from file: {file_path}")
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                try:
+                    username, email, password, first_name, last_name, is_active_str, is_admin_str = line.strip().split(',')
+                    is_active = is_active_str.strip().lower() in ('true', 't', '1')
+                    is_admin = is_admin_str.strip().lower() in ('true', 't', '1')
+                    add_user(conn, username, email, password, first_name, last_name, is_active, is_admin)
+                    print(f"Added user {username}")
+                except ValueError:
+                    print(f"Invalid data format in line: {line}")
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-# Convert is_active and is_admin to boolean
-is_active = True if is_active_input.lower() == 'y' else False
-is_admin = True if is_admin_input.lower() == 'y' else False
+def main():
+    """
+    The main function of the script.
+    """
+    conn = None
+    try:
+        conn = create_connection()
+        if '-b' in sys.argv:
+            bulk_file_path = sys.argv[sys.argv.index('-b') + 1]
+            add_users_from_file(conn, bulk_file_path)
+        else:
+            username = input("Enter username: ")
+            email = input("Enter email: ")
+            password = input("Enter password: ")
+            first_name = input("Enter first name: ")
+            last_name = input("Enter last name: ")
+            is_active = str(input("Is user active? (True/False): ").lower() in ('true', '1', 't'))
+            is_admin = str(input("Is user admin? (True/False): ").lower() in ('true', '1', 't'))
 
-# Call the function with the user input
-add_user_and_role(database_path, username, password, email, role_name, is_active, is_admin)
+            add_user(conn, username, email, password, first_name, last_name, is_active, is_admin)
+            print("User added successfully.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        if conn:
+            conn.close()
+
+if __name__ == "__main__":
+    main()

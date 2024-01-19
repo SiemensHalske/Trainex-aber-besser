@@ -1,0 +1,1083 @@
+commit cab750efa8ae6abb2fb24c287bafb01454c6370f
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 12:04:24 2023 +0100
+
+    Comment out app.run and add serve function call
+
+ app.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit bfd342aea8bfeda36a7dd93d7bc917009f50a9f1
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 12:00:42 2023 +0100
+
+    Refactor add_user function signature to include password parameter
+
+ testarea/pw_hasher.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 36ab868e072ede0b63b246e41a9faffdb776e462
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 11:54:46 2023 +0100
+
+    Add print statement to indicate users being added from file
+
+ testarea/pw_hasher.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit c197d506547a06528cdf8c4ba6a61bc7151f470c
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 11:53:45 2023 +0100
+
+    Refactor add_users_from_file function in pw_hasher.py
+
+ testarea/pw_hasher.py | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+
+commit c1674a9791c71f9890a70a6e43e5ab7e9c1ae3c3
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 11:52:48 2023 +0100
+
+    Refactor add_users_from_file function to improve readability and add print statement for each added user
+
+ testarea/pw_hasher.py | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 91650df238e348ec56a353ec7120db8bd9ded41c
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 11:31:46 2023 +0100
+
+    Fix typo in user_list.txt
+
+ testarea/user_list.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ce294cdb3f6e8b0abbf2b7dd28183be39cc9d359
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 02:06:50 2023 +0100
+
+    Update user input handling in pw_hasher.py
+
+ testarea/pw_hasher.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit d331963f12128ffe6700e5554c14b1f742e75465
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 02:01:31 2023 +0100
+
+    Refactor add_user function and update user_list.txt
+    
+    This commit refactors the add_user function in pw_hasher.py to include a default password parameter. Additionally, the user_list.txt file has been updated to remove spaces between the comma-separated values.
+
+ testarea/pw_hasher.py  |  2 +-
+ testarea/user_list.txt | 14 +++++++-------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
+
+commit e3f7f068dcfdd2d31f6c4fb4074304568fd2ee60
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:58:17 2023 +0100
+
+    Remove user hendrik.siemens from user_list.txt
+
+ testarea/user_list.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 683da3914204e9dd8417a284c5bc67ce4881b5d6
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:57:03 2023 +0100
+
+    Add bulk user creation functionality
+
+ testarea/pw_hasher.py  | 31 ++++++++++++++++++++++---------
+ testarea/user_list.txt |  8 ++++++++
+ 2 files changed, 30 insertions(+), 9 deletions(-)
+
+commit 638bebce6d6bf03e523c7281d3b11634cbab3815
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:40:07 2023 +0100
+
+    Fix redirect URL in login function
+
+ blueprints/auth.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit d261f5aab99a0de49bc138fa98648b92819fbdd6
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:39:27 2023 +0100
+
+    Refactor log_login_attempt function to use named parameters and commit changes
+
+ blueprints/auth.py | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
+
+commit b63e7213be8ab82d6ae9c7e684e15fe1c67c0e2d
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:35:19 2023 +0100
+
+    Refactor login_attempts table insertion to use a list of values
+
+ blueprints/auth.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit fbf007f63a705f49bd4f9e90648cc88637c9e423
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:32:53 2023 +0100
+
+    Add SQLAlchemy text import for SQL query
+
+ blueprints/auth.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit d19ded36702831baa21b946474e34e1b68a5977b
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:31:36 2023 +0100
+
+    Update database execution method in log_login_attempt function
+
+ blueprints/auth.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 84e8621e3ec6c993d1c366e0efce491085e57c46
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:28:28 2023 +0100
+
+    Refactor model relationships and add foreign key constraints
+
+ models.py | 47 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 17 deletions(-)
+
+commit 0617a0eade974986aeba95701e5cd3550bfc24ce
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:28:09 2023 +0100
+
+    Refactor user relationship in LoginAttempt model
+
+ models.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit bff54f06a7bceafb8913e4e7fccbec22ff1bfd27
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:19:30 2023 +0100
+
+    Update database connection details
+
+ testarea/pw_hasher.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 1df960349ccba0a7f33ff6bb781c8315207081b3
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 01:15:41 2023 +0100
+
+    Refactor user creation and database connection in pw_hasher.py
+
+ testarea/pw_hasher.py | 111 ++++++++++++++++----------------------------------
+ 1 file changed, 35 insertions(+), 76 deletions(-)
+
+commit 9d420c492120a56e709e14d300ca1a1bd230b763
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:59:25 2023 +0100
+
+    Add event_type_id column to Event model
+
+ models.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit dd8a302726ec8f98010e796688468f19dd643d02
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:57:56 2023 +0100
+
+    Refactor Building model to Adress model
+
+ models.py | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
+
+commit 8e6c4dc06d1773ca55a1cd073bd4e33a785af918
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:55:52 2023 +0100
+
+    Refactor models.py: Update Building class and rename Adress to Address
+
+ models.py | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+commit 61b42d2bb609c361d3f01737974c992c6d90575f
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:46:50 2023 +0100
+
+    Add foreign key for address in Building model
+
+ models.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8084b2adb2db21b5e92d17a7b11d2363031742cc
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:42:07 2023 +0100
+
+    Fix foreign key reference in models.py
+
+ models.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 6b459bebf46ddc2e340d9c01e4f40e57a4b5749e
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:41:26 2023 +0100
+
+    Update foreign key references in Messages model
+
+ models.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 97b73e23da93fb48dc6477d496d150a132736f72
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:39:43 2023 +0100
+
+    Update foreign key reference in LoginAttempt model
+
+ models.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 9086b32ebcc98b454bae7030b94db5c0757a855b
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:37:01 2023 +0100
+
+    Update user_id foreign key in Logging model
+
+ models.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 279d3f8ce0b4a2fa706f567edf770cf2deb2977c
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:25:48 2023 +0100
+
+    Add nullable=False and ForeignKey constraint to user_id column
+
+ models.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 3a2e0341e88770d544b752fff348e5c31438c88a
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:19:54 2023 +0100
+
+    Update Copilot inline suggest setting and add foreign key constraint to user logs
+
+ models.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cc172a960ef43b2f1a99810faf442023c772025c
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:16:05 2023 +0100
+
+    Refactor user-role relationship in models.py
+
+ models.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 2eaf658c364766c04f359d43d19215873539613d
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 17 00:12:34 2023 +0100
+
+    Update foreign key reference in UserRole model
+
+ models.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit ef15349225c32c437820c4664b7db27447f56814
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 16 23:58:08 2023 +0100
+
+    Remove unused import statement
+
+ app.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit b4fac9d458a1644ecd9ccc9a23527433577c1e6b
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 16 23:29:51 2023 +0100
+
+    Update database connection info in pw_hasher.py
+
+ .gitignore            | 1 +
+ testarea/pw_hasher.py | 6 +++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit 48cdb3962d09dc22e3bc8b07042051e91c5c32bc
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 16 23:23:07 2023 +0100
+
+    Add PostgreSQL support and refactor user creation
+
+ app.py                |   9 +++-
+ testarea/pw_hasher.py | 131 ++++++++++++++++++++++++++++++--------------------
+ 2 files changed, 87 insertions(+), 53 deletions(-)
+
+commit eccf362861e2b1d1632461e87a1c1e7017bacfa0
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 16 22:56:21 2023 +0100
+
+    Refactor code to improve performance and readability
+
+ models.py | 906 +++++++++-----------------------------------------------------
+ 1 file changed, 120 insertions(+), 786 deletions(-)
+
+commit 9420efb24f40b4cbdf1b6b8153e3f330da5a2e7d
+Author: SiemensHalske <140380689+SiemensHalske@users.noreply.github.com>
+Date:   Fri Dec 15 23:20:03 2023 +0100
+
+    Update README.md
+    
+    updated the link to CHANGELOG.md
+
+ README.md | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 30add04cf8eab0ce4601eec6e5a4b1530f2269ee
+Author: SiemensHalske <140380689+SiemensHalske@users.noreply.github.com>
+Date:   Fri Dec 15 23:19:24 2023 +0100
+
+    Update README.md
+    
+    updated the link to changelog.md
+
+ README.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 7e8f51c808b33ca2f87fd63965646268bbf4e5dd
+Merge: ad11be4 b8dc54e
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 23:17:08 2023 +0100
+
+    Merge branch 'main' of https://github.com/SiemensHalske/Trainex-aber-besser
+
+commit ad11be4b4ed21cce30d4ba61fef2167f7a59feb2
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 23:17:05 2023 +0100
+
+    Refactor code to improve performance and readability
+
+ CHANGELOG.md | 96 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
+
+commit b8dc54e8661e42ce2ba7b415258853147b486a8a
+Author: SiemensHalske <140380689+SiemensHalske@users.noreply.github.com>
+Date:   Fri Dec 15 23:15:05 2023 +0100
+
+    Create README.md
+    
+    created a basic README.md
+
+ README.md | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+commit 93fd3e5482572f78a4d39c7183ab2d0a2086f19a
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 22:54:41 2023 +0100
+
+    Update .gitignore, login form, error templates, and requirements generator
+
+ .gitignore                         |   1 +
+ blueprints/main.py                 | 132 +++++++++++++++++++++++++++---
+ forms/login_form.py                |   1 +
+ templates/error/404.html           |  10 +--
+ templates/error/405.html           | 100 ++++++++++++-----------
+ templates/error/500.html           |  97 +++++++++++-----------
+ templates/login.html               | 162 ++++++++++++++++++++-----------------
+ testarea/pw_hasher.py              |  11 ++-
+ testarea/requirements_generator.py |   4 +-
+ 9 files changed, 333 insertions(+), 185 deletions(-)
+
+commit 031510f6e0e4b521e2f6d7b6ddbaae1f3dd09875
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 21:03:28 2023 +0100
+
+    Add route info for retrieving calendar events by user ID
+
+ blueprints/main.py | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+commit fec1020883bd5b3e0b56cabb9b9d95c4a9b9907d
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 19:11:08 2023 +0100
+
+    Fix check_login_attempts function
+
+ blueprints/auth.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 1cb364539bbfded6028d223be2e9dcf13b5788fa
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 19:10:02 2023 +0100
+
+    Add calendar endpoints and error handlers
+
+ blueprints/main.py | 81 +++++++++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 77 insertions(+), 4 deletions(-)
+
+commit e8c691936ddff6e0aee15acea64568efad7b47ce
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 16:53:21 2023 +0100
+
+    Update app.py and main.py
+
+ app.py                |  22 ++-
+ blueprints/auth.py    | 109 ++++++++---
+ blueprints/main.py    |  48 +++--
+ database/educampus.db | Bin 94208 -> 106496 bytes
+ models.py             | 509 +++++++++++++++++++++++++++-----------------------
+ 5 files changed, 402 insertions(+), 286 deletions(-)
+
+commit 2a6f919e071460a303ed561d66dc8d539e3cc666
+Merge: 60e00c7 d025c56
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 15 16:53:01 2023 +0100
+
+    Merge branch 'frontend' of https://github.com/SiemensHalske/Trainex-aber-besser
+
+commit d025c56831e05c338ba275705e77cde7a9587e5a
+Author: Florian Ostendorf <florian.ostendorf@d-velop.de>
+Date:   Fri Dec 15 11:01:23 2023 +0100
+
+    adding basic design for Aktuelles Page
+
+ static/banner.css        |   9 --
+ templates/aktuelles.html | 246 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 244 insertions(+), 11 deletions(-)
+
+commit 60e00c754e28d97bea9b20ffc1415da1d275fe07
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 23:08:09 2023 +0100
+
+    Add PrometheusMetrics for monitoring
+
+ app.py                 |  1 +
+ blueprints/main.py     |  1 +
+ static/index - Copy.js | 18 ++++++++++++++++++
+ 3 files changed, 20 insertions(+)
+
+commit 51b59946230eb8d666aa535f1bb433ba7f806a1f
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 19:25:02 2023 +0100
+
+    Refactor code to improve performance and readability
+
+ models.py | 490 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 478 insertions(+), 12 deletions(-)
+
+commit 02dc14bb7e2fac0bf193b9f7be5b29506ef92934
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 17:59:49 2023 +0100
+
+    Add methods to retrieve role, user, lecturer, and course information
+
+ models.py | 176 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 176 insertions(+)
+
+commit 731c981095fc1087c319f6584b4e873ac881e232
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 17:56:04 2023 +0100
+
+    Refactor User model and add user-related methods
+
+ __pycache__/extensions.cpython-310.pyc      | Bin 402 -> 350 bytes
+ __pycache__/models.cpython-310.pyc          | Bin 4192 -> 7007 bytes
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 3306 -> 3347 bytes
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 8471 -> 8397 bytes
+ models.py                                   | 122 +++++++++++++++++++++++++++-
+ 5 files changed, 119 insertions(+), 3 deletions(-)
+
+commit 01f71d73dcc42f24fb714852484b342fa9bfb349
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 14:12:13 2023 +0100
+
+    Update database and logging functionality
+
+ app.py                |   2 +-
+ blueprints/auth.py    |  16 +++--
+ database/educampus.db | Bin 94208 -> 94208 bytes
+ models.py             | 157 +++++++++++++++++++++++++++++---------------------
+ testarea/pw_hasher.py |  79 ++++++++++++-------------
+ 5 files changed, 142 insertions(+), 112 deletions(-)
+
+commit 63a3d8db3635eeb304b5e5fbe548edb98bfcab71
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:57:53 2023 +0100
+
+    Add new files and update .gitignore
+    
+    This commit adds new files and updates the .gitignore file to exclude the newly generated Python cache files and the users.db binary file.
+
+ .gitignore        |   4 ++++
+ database/users.db | Bin 40960 -> 40960 bytes
+ 2 files changed, 4 insertions(+)
+
+commit ee69e65770093c48366c9fac2f4e7cea45adfae8
+Merge: 6c9a5ed 0188127
+Author: HideakiToro <153170613+HideakiToro@users.noreply.github.com>
+Date:   Thu Dec 14 12:46:49 2023 +0100
+
+    Merge pull request #1 from SiemensHalske/main
+    
+    Updating Backend in Frontend Branch
+
+commit 01881272af1cfb0ece5e4d995e66e41961d54436
+Merge: 32dd27a 6c9a5ed
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:36:28 2023 +0100
+
+    Merge branch 'frontend' of https://github.com/SiemensHalske/Trainex-aber-besser
+
+commit 6c9a5ed4415f4d5bea9dd634ed88bd224f165495
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:25:51 2023 +0100
+
+    Update users.db
+
+ database/users.db | Bin 40960 -> 40960 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit adae82e909eed215c56ee4d7c4a98b141c3c3b2a
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:24:32 2023 +0100
+
+    Add database files to .gitignore
+
+ .gitignore | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 4d2a00f3a7302a3b49cd964911003c30088a9155
+Merge: 47ede5e 2ec3a08 a0c8d3d
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:22:43 2023 +0100
+
+    On frontend: dunnowhattowritehere
+
+commit 2ec3a088929641859ff4e8ad01b6fe1a63870c32
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:22:43 2023 +0100
+
+    index on frontend: 47ede5e adding welcome banner to aktuelles page
+
+commit a0c8d3da4b52899ab743bbe548486bbd89ac7a63
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:22:43 2023 +0100
+
+    untracked files on frontend: 47ede5e adding welcome banner to aktuelles page
+
+ database/educampus.db | Bin 0 -> 94208 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 32dd27ad9d5bc1577b61de5136f962a7851211e5
+Author: Florian Ostendorf <florian.ostendorf@d-velop.de>
+Date:   Thu Dec 14 12:12:09 2023 +0100
+
+    removing .db from git commits
+
+ .gitignore | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit b0f5bfca6e1e372c365a3dd940a9f3353e5e6f9d
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 12:05:23 2023 +0100
+
+    Update .gitignore and remove SSL certificate path from app.py
+
+ .gitignore        |   2 ++
+ app.py            |   2 +-
+ database/users.db | Bin 40960 -> 40960 bytes
+ 3 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 47ede5e6502d87c04db2f78b0000d318ec7c8b9a
+Author: Florian Ostendorf <florian.ostendorf@d-velop.de>
+Date:   Thu Dec 14 12:04:33 2023 +0100
+
+    adding welcome banner to aktuelles page
+
+ database/users.db        | Bin 40960 -> 40960 bytes
+ templates/aktuelles.html |  21 +++++++++++++++++++--
+ templates/error/404.html |   7 +------
+ 3 files changed, 20 insertions(+), 8 deletions(-)
+
+commit d01dd0dac82b86bdc988248ed9f8340a243dd94a
+Merge: 6919e56 af30393
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 11:56:03 2023 +0100
+
+    Merge branch 'main' of https://github.com/SiemensHalske/Trainex-aber-besser
+
+commit 6919e563f569ea42816e8a1456d3856c24cdc7c4
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 14 11:56:01 2023 +0100
+
+    Update SSL configuration and logger name
+
+ app.py                |   4 ++--
+ blueprints/main.py    |   4 ++--
+ database/educampus.db | Bin 0 -> 94208 bytes
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
+commit af3039365e73a44cd2a86cdc1efc628e646341e9
+Author: Florian Ostendorf <florian.ostendorf@d-velop.de>
+Date:   Thu Dec 14 11:32:33 2023 +0100
+
+    making log path relative
+
+ app.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 1cc4584dcd2c4adf8ef15f7dfe26b1ef698b4b74
+Author: Florian Ostendorf <florian.ostendorf@d-velop.de>
+Date:   Thu Dec 14 11:31:24 2023 +0100
+
+    making extension path relative, ignoring all .pyc files
+
+ .gitignore        |   3 +--
+ database/users.db | Bin 40960 -> 40960 bytes
+ extensions.py     |   2 +-
+ 3 files changed, 2 insertions(+), 3 deletions(-)
+
+commit 562f24c2262c4802459480d5a5cd1759fda61ef7
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Wed Dec 13 13:20:48 2023 +0100
+
+    Add debug logging for incoming requests and successful login
+
+ app.py             | 3 +++
+ blueprints/auth.py | 6 ++++++
+ 2 files changed, 9 insertions(+)
+
+commit a3f02ce62e94a4833b99deb55b786fe0309fb11e
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Wed Dec 13 13:11:39 2023 +0100
+
+    Add JWT cookie CSRF protection and disable access token expiration
+
+ app.py            |   2 ++
+ database/users.db | Bin 40960 -> 40960 bytes
+ 2 files changed, 2 insertions(+)
+
+commit f69c95c2e71818d484ac7f08d58e892927ad0857
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 23:36:30 2023 +0100
+
+    Refactor login function to set access_token_cookie
+
+ blueprints/auth.py | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+commit 85ba6948437a0abd7079dad335d6b8aeeabbdddb
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 23:34:16 2023 +0100
+
+    Update access token cookie name
+
+ blueprints/auth.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit f9c67ca8bb69acbe0d1aa28fa09709779bb13b61
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 23:33:16 2023 +0100
+
+    Add JWT token location and secure cookie
+
+ app.py             | 3 +++
+ blueprints/auth.py | 5 -----
+ 2 files changed, 3 insertions(+), 5 deletions(-)
+
+commit 2524bbada8043e22da1021b00d3f7b4ff9cb0736
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 22:51:22 2023 +0100
+
+    Remove unused code in auth.py and update import in main.py
+
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 3078 -> 3306 bytes
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 8282 -> 8471 bytes
+ blueprints/auth.py                          |   1 -
+ blueprints/main.py                          |   6 +-----
+ 4 files changed, 1 insertion(+), 6 deletions(-)
+
+commit 63ebeb3fc191c2b2e182d19013fe6c63ed04ca60
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 22:27:31 2023 +0100
+
+    Fix import issue in auth.py
+
+ blueprints/auth.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit cdd8e8bc7a55d4cbcd84c41de7037e71b01cd529
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 22:25:00 2023 +0100
+
+    Update JWT authentication in app.py and auth.py
+
+ app.py             |  4 +++-
+ blueprints/auth.py | 31 ++++++++++++++++---------------
+ blueprints/main.py | 19 ++++++++++++-------
+ 3 files changed, 31 insertions(+), 23 deletions(-)
+
+commit 8daa80072057e63dac99878efe33a8d89e0b1091
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 20:27:30 2023 +0100
+
+    Add Waitress server for production deployment
+
+ .gitignore                                  |   2 ++
+ app.py                                      |   5 ++++-
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 2988 -> 3078 bytes
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 7560 -> 8282 bytes
+ 4 files changed, 6 insertions(+), 1 deletion(-)
+
+commit f549ee58c8151552da2c30e746f3a827a065697f
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 20:13:15 2023 +0100
+
+    Update login route to accept GET and POST requests
+
+ blueprints/auth.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 6d0bf4018e99e2f00595819dc7dd6345a3d29ecc
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 20:02:28 2023 +0100
+
+    Add certificate and key path variables
+
+ app.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit dbf2b43636a6d8186bb1a9e8d1a9759a41012475
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 19:13:06 2023 +0100
+
+    Add JWT authentication and SSL support
+    
+    This commit adds JWT authentication using the Flask-JWT-Extended library. It also adds SSL support to the application by specifying the SSL certificate and private key paths in the `app.run()` function. Additionally, some code comments and print statements have been updated.
+
+ app.py             | 15 +++++++++------
+ blueprints/auth.py | 11 +++++++----
+ blueprints/main.py | 35 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 51 insertions(+), 10 deletions(-)
+
+commit ea5e8cbe3254de4cf2d13b1eba811f339962792b
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 12 12:17:11 2023 +0100
+
+    Refactor user-related endpoints
+    
+    Add query parameter handling for user endpoints
+    
+    Move error templates
+
+ blueprints/main.py             | 90 ++++++++++++++++++++----------------------
+ templates/{ => error}/404.html |  0
+ templates/{ => error}/405.html |  0
+ templates/{ => error}/500.html |  0
+ 4 files changed, 42 insertions(+), 48 deletions(-)
+
+commit e76ab5348aba73c73812c0e3734ee7391407e15e
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Mon Dec 11 22:42:44 2023 +0100
+
+    Update logging configuration in main.py
+
+ __pycache__/app.cpython-310.pyc             | Bin 1038 -> 4188 bytes
+ __pycache__/models.cpython-310.pyc          | Bin 4066 -> 4192 bytes
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 2756 -> 2988 bytes
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 3366 -> 7560 bytes
+ blueprints/main.py                          |  22 +++++++++++++++++++++-
+ 5 files changed, 21 insertions(+), 1 deletion(-)
+
+commit 2fb8b81cea824cedbf8528260eb7870fc719a9f1
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Mon Dec 11 22:36:57 2023 +0100
+
+    Add error handlers to main blueprint
+
+ blueprints/main.py | 10 +++++++++-
+ logs/test.txt      |  1 +
+ templates/405.html | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ templates/500.html | 56 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 123 insertions(+), 1 deletion(-)
+
+commit 28d4247305985dc3bd542500f8c73492dd4260f0
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Mon Dec 11 21:52:24 2023 +0100
+
+    Add session variable for user_id and implement new routes for retrieving user information
+
+ blueprints/auth.py |  1 +
+ blueprints/main.py | 88 ++++++++++++++++++++++++++++++++++++++++++++++++------
+ models.py          |  3 ++
+ 3 files changed, 83 insertions(+), 9 deletions(-)
+
+commit 6e5ce19053351ccce1fde11fd7167c78171107d7
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Mon Dec 11 21:13:27 2023 +0100
+
+    Add logging endpoint to handle logging requests
+
+ app.py             | 43 ++++++++++++++++---------------
+ blueprints/main.py | 75 +++++++++++++++++++++++++++---------------------------
+ 2 files changed, 61 insertions(+), 57 deletions(-)
+
+commit afe4dd8805feb5c5f2b051f1a2ea2366f79ea281
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 10 23:18:56 2023 +0100
+
+    Update logout route to redirect to auth login
+
+ blueprints/auth.py | 2 +-
+ blueprints/main.py | 4 +---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
+
+commit 366f7876685b0a35da77648d55104fea884b5c78
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 10 23:02:27 2023 +0100
+
+    Refactor logging configuration and add logging endpoint
+
+ app.py             | 40 ++++++++++++++++++++++++++++-------
+ blueprints/auth.py |  2 +-
+ blueprints/main.py | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 94 insertions(+), 9 deletions(-)
+
+commit e4371e4b8f7a30f01de1d81ec78b26cbe5d1ce72
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 10 18:40:58 2023 +0100
+
+    Enable inline suggestions and update log file path
+
+ .vscode/settings.json | 2 +-
+ app.py                | 4 +++-
+ blueprints/auth.py    | 7 +++++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
+
+commit 3a93f3fe4d67f0e130a833504ed59efe68644444
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sun Dec 10 18:36:41 2023 +0100
+
+    Update settings.json and app.py
+
+ .vscode/settings.json     |  2 +-
+ app.py                    | 25 ++++++++++++++++++++++++-
+ testarea/requirements.txt | 18 ++++++++++++++++++
+ 3 files changed, 43 insertions(+), 2 deletions(-)
+
+commit 1a090623c80ebb930985bbc66ec5a1e69469f77c
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 20:58:13 2023 +0100
+
+    Update banner.css and login.html
+
+ database/users.db                  | Bin 40960 -> 40960 bytes
+ requirements.txt                   |  18 +++++++
+ static/banner.css                  |  10 ++--
+ static/logo2.png                   | Bin 0 -> 77759 bytes
+ templates/banner.html              |   2 +-
+ templates/login.html               |  97 ++++++++++++++++++++++++++++---------
+ testarea/requirements_generator.py |  35 +++++++++++++
+ 7 files changed, 134 insertions(+), 28 deletions(-)
+
+commit b584722ec49011437c75ae9adee1249b727075fc
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 10:44:08 2023 +0100
+
+    Add AuditLog model and set_audit_log function
+
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 2378 -> 2756 bytes
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 3366 -> 3366 bytes
+ blueprints/auth.py                          |  17 +++++++++++++++--
+ database/users.db                           | Bin 40960 -> 40960 bytes
+ 4 files changed, 15 insertions(+), 2 deletions(-)
+
+commit 32b7a8486a19ca36610d6b58a5284f7835873c03
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 01:32:52 2023 +0100
+
+    Update database path and import os module
+
+ app.py                                      |   7 ++++---
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 2378 -> 2378 bytes
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit 6d6ffee733cc0e00a8bde901dead00b2701663a6
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 01:22:39 2023 +0100
+
+    Add login route to auth blueprint
+
+ .gitignore         | 0
+ blueprints/auth.py | 1 +
+ 2 files changed, 1 insertion(+)
+
+commit d96b9c0fbe3879d646c8ea0b760c10f2c8893d7a
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 01:20:23 2023 +0100
+
+    .
+
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 2303 -> 2378 bytes
+ blueprints/auth.py                          |   3 +++
+ 2 files changed, 3 insertions(+)
+
+commit 5e11d0817a325948a9c83aebec9a6213c6ef64f8
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 01:19:00 2023 +0100
+
+    Add debug print statement in login function
+
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 2241 -> 2303 bytes
+ blueprints/auth.py                          |   1 +
+ 2 files changed, 1 insertion(+)
+
+commit 06c2301fc9c5b77a21aad8511e7b61669dccbc43
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 00:57:35 2023 +0100
+
+    Add login success message and update login failure message
+
+ blueprints/auth.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 115964ebf3d4ed0b9071f2f2ba8454fd204ca0ae
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Sat Dec 9 00:24:46 2023 +0100
+
+    Fix authentication and session management
+
+ app.py                                      |  32 +++++++++++--
+ blueprints/__pycache__/auth.cpython-310.pyc | Bin 1206 -> 2241 bytes
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 4195 -> 3366 bytes
+ blueprints/auth.py                          |  29 +++++++++++-
+ blueprints/main.py                          |  68 ++++++++++------------------
+ database/users.db                           | Bin 40960 -> 40960 bytes
+ 6 files changed, 80 insertions(+), 49 deletions(-)
+
+commit 56948d995354782c57aa0d6ed58eb533e9797163
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 8 16:16:51 2023 +0100
+
+    Add signal handler and new routes
+
+ app.py                                      |  15 +++
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 2910 -> 4195 bytes
+ blueprints/main.py                          |  48 ++++++++-
+ static/banner.css                           | 155 ++++++++++++++--------------
+ static/logo.gif                             | Bin 0 -> 2712 bytes
+ static/logo2.jpg                            | Bin 0 -> 15696 bytes
+ templates/banner.html                       |  26 ++---
+ 7 files changed, 148 insertions(+), 96 deletions(-)
+
+commit 89cbf96e9ef5b3ac8d66538f81f82ffdb4115a34
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 8 14:43:27 2023 +0100
+
+    Add banner route and update templates
+
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 2643 -> 2910 bytes
+ blueprints/main.py                          |  10 ++++++++++
+ {templates => static}/banner.css            |   0
+ templates/aktuelles.html                    |   6 +++---
+ templates/banner.html                       |  25 ++++++++++++++++++-------
+ templates/cafe.html                         |   6 +++---
+ templates/index.html                        |  16 ++++++++++++----
+ templates/learning.html                     |   6 +++---
+ templates/privates.html                     |   6 +++---
+ templates/settings.html                     |   7 ++++---
+ 10 files changed, 56 insertions(+), 26 deletions(-)
+
+commit 9003fdc2b5c7d2a4aed3686504f81048e88ea132
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 8 13:58:05 2023 +0100
+
+    Update banner iframe source
+
+ templates/cafe.html     | 2 +-
+ templates/index.html    | 2 +-
+ templates/learning.html | 2 +-
+ templates/privates.html | 2 +-
+ templates/settings.html | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 1ccbb984b4f1d7a4641a6a85ec3bc99a896f3ea8
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Fri Dec 8 13:41:06 2023 +0100
+
+    Update database path and form validators
+
+ __pycache__/extensions.cpython-310.pyc       | Bin 294 -> 402 bytes
+ __pycache__/models.cpython-310.pyc           | Bin 966 -> 4066 bytes
+ app.py                                       |   8 +-
+ blueprints/__pycache__/auth.cpython-310.pyc  | Bin 1122 -> 1206 bytes
+ blueprints/__pycache__/main.cpython-310.pyc  | Bin 1103 -> 2643 bytes
+ blueprints/auth.py                           |   9 +-
+ blueprints/main.py                           |  63 ++++++--
+ database/users.db                            | Bin 12288 -> 40960 bytes
+ extensions.py                                |   3 +
+ forms/__pycache__/login_form.cpython-310.pyc | Bin 594 -> 595 bytes
+ forms/login_form.py                          |   6 +-
+ mitarbeiter.db                               | Bin 0 -> 24576 bytes
+ models.py                                    |  70 ++++++++-
+ static/index.js                              |  31 ++--
+ templates/aktuelles.html                     |  30 +++-
+ templates/banner.css                         | 150 +++++++++++++++++++
+ templates/banner.html                        |  51 +++++++
+ templates/cafe.html                          |  30 +++-
+ templates/index.html                         | 214 +--------------------------
+ templates/learning.html                      |  30 +++-
+ templates/login.html                         |  19 ++-
+ templates/logo.gif                           | Bin 0 -> 2712 bytes
+ templates/privates.html                      |  30 +++-
+ templates/settings.html                      |  30 +++-
+ testarea/pw_hasher.py                        |  55 +++++++
+ 25 files changed, 578 insertions(+), 251 deletions(-)
+
+commit b072511a3b85c6d168d0396e26bbba9dfd607bd0
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Thu Dec 7 08:56:20 2023 +0100
+
+    added /static
+
+ app.py                                      |   4 +++-
+ blueprints/__pycache__/main.cpython-310.pyc | Bin 633 -> 1103 bytes
+ blueprints/main.py                          |  15 +++++++++++++++
+ static/index.js                             |  19 +++++++++++++++++++
+ templates/favicon.ico                       | Bin 0 -> 15406 bytes
+ templates/index.html                        |   6 ++++--
+ templates/index.js                          |  18 ------------------
+ templates/login.html                        |  22 ++++++++++++++++++++++
+ 8 files changed, 63 insertions(+), 21 deletions(-)
+
+commit 77721d2af13ae55a759ac077fb6749266945db52
+Author: SiemensHalske <hendrksiemens1@gmail.com>
+Date:   Tue Dec 5 07:48:25 2023 +0100
+
+    eduCampus
+
+ .vscode/settings.json                           |   3 +
+ __init__.py                                     |   0
+ __pycache__/app.cpython-310.pyc                 | Bin 0 -> 1038 bytes
+ __pycache__/extensions.cpython-310.pyc          | Bin 0 -> 294 bytes
+ __pycache__/models.cpython-310.pyc              | Bin 0 -> 966 bytes
+ app.py                                          |  29 ++++
+ blueprints/__init__.py                          |   0
+ blueprints/__pycache__/__init__.cpython-310.pyc | Bin 0 -> 169 bytes
+ blueprints/__pycache__/auth.cpython-310.pyc     | Bin 0 -> 1122 bytes
+ blueprints/__pycache__/main.cpython-310.pyc     | Bin 0 -> 633 bytes
+ blueprints/auth.py                              |  23 +++
+ blueprints/main.py                              |  12 ++
+ database/users.db                               | Bin 0 -> 12288 bytes
+ extensions.py                                   |   5 +
+ forms/__init__.py                               |   0
+ forms/__pycache__/__init__.cpython-310.pyc      | Bin 0 -> 164 bytes
+ forms/__pycache__/login_form.cpython-310.pyc    | Bin 0 -> 594 bytes
+ forms/login_form.py                             |   7 +
+ models.py                                       |  14 ++
+ templates/404.html                              |  13 ++
+ templates/aktuelles.html                        |   1 +
+ templates/cafe.html                             |   1 +
+ templates/index.html                            | 217 ++++++++++++++++++++++++
+ templates/index.js                              |  18 ++
+ templates/learning.html                         |   1 +
+ templates/privates.html                         |   1 +
+ templates/settings.html                         |   1 +
+ 27 files changed, 346 insertions(+)

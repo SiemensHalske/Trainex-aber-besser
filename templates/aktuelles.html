@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='banner.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='body.css') }}">
 <style>
     .page-body{
         position: absolute;
@@ -9,7 +10,7 @@
         left: 0;
         bottom: 0;
         border: none;
-        background-color: lightsteelblue;
+        background-color: transparent;
     }
 
     .rounded-top-banner {
@@ -150,6 +151,14 @@
         font-size: 15px;
         font-weight: bold;
     }
+    .calendar-event-banner-date {
+        height: 50px;
+        width:100%;
+        background-color: transparent;
+        border:none;
+        font-size: 30px;
+        font-weight: bold;
+    }
     .calendar-event-info-parent {
         width:100%;
         height: 400px;
@@ -202,7 +211,7 @@
     }
 </style>
 
-<body style="font-family: Arial, Helvetica, sans-serif;">
+<body>
     <div class="page-body">
         <div class="rounded-top-banner">
             <div class="centered-text">
@@ -212,7 +221,7 @@
         <div class="element-grid">
             <div class="calendar-parent">
                 <div class="calendar-banner">
-                    <button class="calendar-banner-change-button" style="transform:rotate(180deg);">
+                    <button class="calendar-banner-change-button" style="transform:rotate(180deg); margin-left: 5px;">
                         <span class="calendar-banner-change-span">
                             &#10148
                         </span>
@@ -246,9 +255,10 @@
 </body>
 
 <script>
+    let banner = null;
     window.onmessage = function(e){
         if(e.data == 'id'){
-            let banner = document.getElementById("banner").contentWindow.postMessage("aktuelles", "*");
+            banner = document.getElementById("banner").contentWindow.postMessage("aktuelles", "*");
         }   
     }
 
@@ -275,9 +285,9 @@
         }
         button.className = "calendar-cell-selected";
         currentlySelected = button;
-        console.log(id);
         eventInfoParent.innerHTML = "Showing some surely very important Info for Day " + id + "!";
         eventInfoBanner.innerHTML = id + ".01.2024";
+        eventInfoBanner.className = "calendar-event-banner-date";
     }
 
     let notificationsBody = document.getElementById("notificationsBody");
@@ -285,4 +295,6 @@
     notificationsBody.innerHTML += "<div class='notifications-element'>This is a test notification!</div>"
     notificationsBody.innerHTML += "<div class='notifications-element'>This is a second test notification!</div>"
     notificationsBody.innerHTML += "<div class='notifications-element'>This is the last test notification!</div>"
+
+    console.log(document.cookie);
 </script>

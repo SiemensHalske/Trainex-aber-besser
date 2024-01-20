@@ -156,6 +156,21 @@ def logout() -> str:
     return response
 
 
+@auth_bp.route('/get_cookie_id', methods=['GET'])
+def get_cookie_id() -> int:
+    """
+    Route to get the user id from the JWT access token cookie.
+
+    :return: The id of the current user or -1 if the user is not logged in
+    """
+    try:
+        cookie = verify_jwt_in_request(locations=['cookies'])
+        return jsonify(get_jwt_identity()['id'])
+    except:
+        return jsonify(-1)
+    
+
+
 def token_required(f: object) -> object:
     """
     Decorator function to require a valid authentication token.

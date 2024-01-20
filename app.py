@@ -5,6 +5,7 @@ from flask import Flask, request
 from extensions import db, login_manager
 from blueprints.auth import auth_bp
 from blueprints.main import main_bp
+from blueprints.api import api_bp
 from models import User, db
 from sqlalchemy.orm import Session
 import os
@@ -99,11 +100,16 @@ app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
 
 username = 'postgres'
-password = 'zoRRo123'
+password = 'zoRRo123?'
 host = 'localhost'  # localhost or the IP address of your Postgres server
 port = '5432'  # default PostgreSQL port
 database = 'educampus'
-app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{username}:{password}@{host}:{port}/{database}'
+
+try:
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://{username}:{password}@{host}:{port}/{database}'
+except Exception as e:
+    print(f'Error: {e}\nTrying to use a SQLite database instead...')
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///../database/users.db'
 
 jwt = JWTManager(app)
 
@@ -177,7 +183,8 @@ def add_header(response):
 # Register blueprints
 # Register blueprintsk
 app.register_blueprint(auth_bp, url_prefix='/auth')
-app.register_blueprint(main_bp)
+app.register_blueprint(main_bp, url_prefix='/main')
+app.register_blueprint(api_bp, url_prefix='/api')
 
 
 def signal_handler(signal, frame):
